@@ -23,7 +23,7 @@ class User extends Authenticatable {
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'first_name', 'last_name', 'kth_username', 'ugkthid'
     ];
 
     /**
@@ -35,62 +35,23 @@ class User extends Authenticatable {
         'password', 'remember_token',
     ];
 
-    /**
-     * Checks if this user is admin right now on this session.
-     * 
-     * @return boolean false if user 
-     *                       - is not logged in or
-     *                       - is logged in but is not this user or
-     *                       - is logged in and is this user but is not super admin 
-     *                         (ie has 'admin' in Session admin array)
-     */
-    public function isAdmin() {
-        if (!Auth::check() || Auth::user()->id != $this->id) {
-            return false;
-        }
-        return count(Session::get('admin', [])) > 0 && in_array('admin', Session::get('admin', []));
+    public function suggestions() {
+        return $this->belongsToMany('App\Models\Suggestion');
     }
 
-    /**
-     * Checks if this user is admin for anything.
-     * 
-     * @return boolean false if user 
-     *                       - is not logged in or
-     *                       - is logged in but is not this user or
-     *                       - is logged in and is this user but is not admin for anything (has empty admin session)
-     */
-    public function isSomeAdmin() {
-        if (!Auth::check() || Auth::user()->id != $this->id) {
-            return false;
+    public static function createFromKthUsername($username) {
+        $user = self::where('kth_username', $username)->first();
+        if ($user != null) {
+            return $user;
         }
-        return count(Session::get('admin', [])) > 0;
-    }
-
-    /**
-     * Returns true if this user is admin right now for the given entity.
-     * 
-     * @param  Entity  $entity the entity to check for
-     * @return boolean         false if user is not logged in, or this user 
-     *                         is not the logged in one, or the user is not admin for the entity
-     */
-    public function isAdminFor($entity) {
-        if (!Auth::check() || Auth::user()->id != $this->id) {
-            return false;
-        }
-
-        return in_array($entity->pls_group, Session::get('admin', []));
-    }
-
-    /**
-     * Returns all events that are not approved or deleted for the current user as admin.
-     * 
-     * @return Query
-     */
-    public function decisionEvents() {
-        return Event::select('events.*')
-            ->join('entities', 'entities.id', 'events.entity_id')
-            ->whereNull('approved')
-            ->whereIn('pls_group', Session::get('admin', []))
-            ->orderBy('start');
+        $json = json_decode(file_get_contents('https://hodis.datasektionen.se/uid/' . $username));
+        $names = explode(" ", $json->cn);
+        return User::create([
+            'last_name' => $names[count($names) - 1], 
+            'first_name' => implode(" ", array_splice($names, 0, -1)), 
+            'ugkthid' => $json->ugKthid, 
+            'kth_username' => $json->uid, 
+            'email' => $json->uid . '@kth.se'
+        ]);
     }
 }

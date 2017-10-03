@@ -29,13 +29,16 @@ class Kernel extends HttpKernel
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class
         ],
 
         'api' => [
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             'throttle:60,1',
             'bindings',
-        ],
+        ], 
     ];
 
     /**
@@ -52,10 +55,5 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'admin' => \App\Http\Middleware\Admin::class,
-        'isAdminForEntity' => \App\Http\Middleware\IsAdminForEntity::class,
-        'isAdminForEvent' => \App\Http\Middleware\IsAdminForEvent::class,
-        'isUserOrAdminForEvent' => \App\Http\Middleware\IsUserOrAdminForEvent::class,
-        'isSomeAdmin' => \App\Http\Middleware\IsSomeAdmin::class,
     ];
 }

@@ -1,9 +1,12 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Models\Entity;
-use App\Models\Event;
-use App\Helpers\Planner;
+use App\Models\Committee;
+use App\Models\CostCentre;
+use App\Models\BudgetLine;
+use App\Models\Suggestion;
+use App\Models\Account;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,78 +17,177 @@ use App\Helpers\Planner;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('committees', function () {
+	return response()->json(Committee::select('*')->with('costCentres')->get());
+});
 
-Route::get ('events/{id}/{year?}/{week?}', function ($id, $year = null, $week = null) {
-	// Check if entity, year and week exist and set default values
-	$entity = Entity::findOrFail($id);
-	if ($year === null) { $year = date('Y'); }
-	if ($week === null) { $week = date('W'); }
+Route::post('committees', function (Request $request) {
+	$data = json_decode($request->getContent(), true);
+	return Committee::create($data);
+});
 
-	// Find the starting and ending dates for the week
-	$date = new DateTime();
-	$date->setISODate($year, $week, "1");
-	$date->setTime(0,0,0);
-	$startDate = $date->getTimestamp();
-	$endDate   = strtotime('+7days', $startDate);
+Route::get('committees/{id}', function ($id) {
+	return response()->json(Committee::select('id', 'name')->where('id', $id)->with('costCentres')->first());
+});
 
-	// We need a nice highlight on today, so lets find which day is today osv.osv.
-	if ($endDate < time() || $startDate > time()) {
-		$today = -1;
-	} else {
-		$today = (intval(date('w')) + 6) % 7;
-	}
+Route::post('committees/{id}', function ($id, Request $request) {
+	$data = json_decode($request->getContent(), true);
+	$committee = Committee::findOrFail($id);
+	$committee->update($data);
+	return $committee;
+});
 
-	// Get all bookings for the period
-	$query = Event::select('events.id', 'title', 'events.description', 'entity_id', 'start', 'end')
-		->where('start', '<=', date('Y-m-d H:i:s', $endDate))
-		->where('end', '>=', date('Y-m-d H:i:s', $startDate))
-		->join('entities', 'entities.id', 'events.entity_id')
-		->where(function ($query) use ($entity) {
-			$query->where('entity_id', $entity->id)
-				->orWhere('entity_id', $entity->part_of);
-		})
-		->orderBy('start', 'DESC');
+Route::delete('committees/{id}', function ($id) {
+	$committee = Committee::findOrFail($id);
+	$committee->delete();
+	return $committee;
+});
 
-	// We want to show some less events if we are not admin or owner of the event
-	if (!$entity->show_pending_bookings && !in_array($entity->pls_group, Session::get('admin', []))) {
-		$query->where(function ($query) {
-			$query
-				->whereNotNull('approved')
-				->orWhere('show_pending_bookings', true);
-			if (Auth::check())
-				$query->orWhere('booked_by', Auth::user()->id);
+Route::get('committees/{id}/cost-centres', function ($id, Request $request) {
+	$data = json_decode($request->getContent(), true);
+	$committee = Committee::findOrFail($id);
+	return $committee->costCentres;
+});
+
+Route::post('committees/{id}/cost-centres', function ($id, Request $request) {
+	$data = json_decode($request->getContent(), true);
+	$committee = Committee::findOrFail($id);
+	$x = array_merge($data, ['committee_id' => $committee->id]);
+	$costCentre = CostCentre::create($x);
+	return $costCentre;
+});
+
+Route::get('cost-centres/{id}', function ($id) {
+	return CostCentre::findOrFail($id);
+});
+
+Route::post('cost-centres/{id}', function ($id, Request $request) {
+	$data = json_decode($request->getContent(), true);
+	$costCentre = CostCentre::findOrFail($id);
+	$costCentre->update($data);
+	return $costCentre;
+});
+
+Route::delete('cost-centres/{id}', function ($id, Request $request) {
+	$data = json_decode($request->getContent(), true);
+	$costCentre = CostCentre::findOrFail($id);
+	$costCentre->delete();
+	return $costCentre;
+});
+
+Route::get('cost-centres/{id}/budget-lines', function ($id) {
+	return CostCentre::findOrFail($id)->budgetLines;
+});
+
+Route::post('cost-centres/{id}/budget-lines', function ($id, Request $request) {
+	$data = json_decode($request->getContent(), true);
+	$costCentre = CostCentre::findOrFail($id);
+	if (empty($data['name'])) $data['name'] = '';
+	if (empty($data['income'])) $data['income'] = 0;
+	if (empty($data['expenses'])) $data['expenses'] = 0;
+	if (empty($data['type'])) $data['type'] = 'internal';
+	if (empty($data['valid_from'])) $data['valid_from'] = \Carbon\Carbon::now();
+	if (empty($data['valid_to'])) $data['valid_to'] = date("Y") . '-12-31 23:59:59';
+	$x = array_merge($data, ['cost_centre_id' => $costCentre->id]);
+	$budgetLine = BudgetLine::create($x);
+
+	$committee = $budgetLine->costCentre->committee;
+	$committee->expenses();
+	$committee->income();
+	$committee->costCentres->map(function ($costCentre) {
+		return $costCentre->budgetLines->map(function ($budgetLine) use ($costCentre) {
+			$budgetLine->expenses = $budgetLine->expenses / 100;
+			$budgetLine->income = $budgetLine->income / 100;
+			$budgetLine->deleted = $costCentre->budgetLines->map(function ($x) use ($budgetLine) {
+				return $x->suggestion_id == session('suggestion') && $x->parent == $budgetLine->id;
+			})->reduce(function ($a, $b) {
+				return $a || $b;
+			}, false);
+			return $budgetLine;
 		});
+	});
+
+	$res = new \stdClass;
+	$res->budget_line = $budgetLine;
+	$res->committee = $committee;
+	return response()->json($res);
+});
+
+Route::get('budget-lines/{id}', function(Request $request, $id) {
+	return BudgetLine::where('id', $id)->with('accounts')->firstOrFail();
+});
+
+Route::post('budget-lines/{id}', function ($id, Request $request) {
+	$suggestion = Suggestion::findOrFail($request->input('suggestion'));
+	$data = json_decode($request->getContent(), true);
+	$oldBudgetLine =  BudgetLine::findOrFail($id)->first();
+	if ($oldBudgetLine->type == @$data['type'] &&
+		$oldBudgetLine->income == @$data['income'] &&
+		$oldBudgetLine->expenses == @$data['expenses'] &&
+		$oldBudgetLine->name == @$data['name']) {
+		return response()->json(false);
 	}
-
-	$ans = $query->get();
-
-	// Do the actual planning of events
-	$planner = new Planner($startDate, $endDate, $ans);
-	list($tracks, $numTracks) = $planner->planEvents();
-
-	$response = new \stdClass;
-	$response->tracks = [];
-	foreach ($tracks as $date => $content) {
-		$a = new \stdClass;
-		$a->date = new \stdClass;
-		$a->date->yyyymmdd = $date;
-		$a->date->jn = date("j/n", strtotime($date));
-		$a->events = $content;
-		$response->tracks[] = $a;
-
-		foreach ($a->events as &$val) {
-			foreach ($val as &$m) {
-				$m->numtracks = $numTracks[$date];
-				$m->startHi = date("H:i", strtotime($m->start));
-				$m->endHi = date("H:i", strtotime($m->end));
-			}
-		}
+	$budgetLine = BudgetLine::where('id', intval($id))->where('suggestion_id', $suggestion->id)->first();
+	if ($budgetLine === null) {
+		$budgetLine = BudgetLine::where('parent', intval($id))->where('suggestion_id', $suggestion->id)->first();
 	}
+	if ($budgetLine === null) {
+		$old = BudgetLine::where('id', $id)->with('accounts')->first();
+		$budgetLine = $old->replicate();
+		$budgetLine->parent = intval($id);
+		$budgetLine->suggestion_id = $suggestion->id;
+		$budgetLine->save();
+		$budgetLine->accounts()->sync($old->accounts->pluck('id'));
+	}
+	$budgetLine->update($data);
 
-	$response->startDate = date("Y-m-d", $startDate);
-	$response->endDate = date("Y-m-d", $endDate);
-	$response->week = date("W", $startDate);
-	$response->year = date("Y", $startDate);
+	$committee = $budgetLine->costCentre->committee;
+	$budgetLine = $budgetLine->removeIfEqualsParent();
 
-	return response()->json($response)->header('Access-Control-Allow-Origin', '*');
+	$committee->expenses();
+	$committee->income();
+	$committee->costCentres->map(function ($costCentre) {
+		return $costCentre->budgetLines->map(function ($budgetLine) use ($costCentre) {
+			$budgetLine->expenses = $budgetLine->expenses / 100;
+			$budgetLine->income = $budgetLine->income / 100;
+
+			$budgetLine->deleted = $costCentre->budgetLines->map(function ($x) use ($budgetLine) {
+				return $x->suggestion_id == session('suggestion') && $x->parent == $budgetLine->id;
+			})->reduce(function ($a, $b) {
+				return $a || $b;
+			}, false);
+			return $budgetLine;
+		});
+	});
+	return $committee;
+});
+
+Route::post('budget-lines/{id}/accounts/{aid}', function ($id, $aid, Request $request) {
+	$budgetLine = BudgetLine::findOrFail($id);
+	$account = Account::findOrFail($aid);
+	$budgetLine->accounts()->attach($account->id);
+	return $budgetLine;
+});
+
+Route::get('accounts', function(Request $request) {
+	return Account::all();
+});
+
+Route::post('accounts', function (Request $request) {
+	$data = json_decode($request->getContent(), true);
+	return Account::create($data);
+});
+
+Route::get('accounts/{id}', function($id, Request $request) {
+	return Account::findOrFail($id);
+});
+
+Route::get('accounts/number/{number}', function($number, Request $request) {
+	return Account::where('number', $number)->firstOrFail();
+});
+
+Route::delete('suggestions/{id}', function($id, Request $request) {
+	$suggestion = Suggestion::findOrFail($id);
+	$suggestion->delete();
+	return $suggestion;
 });

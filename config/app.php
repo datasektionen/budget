@@ -229,6 +229,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'AuroraForm' => App\Helpers\AuroraForm::class,
+        'Fmt' => App\Helpers\Fmt::class,
+        'PdfParser' => Smalot\PdfParser\Parser::class,
     ],
 
 ];

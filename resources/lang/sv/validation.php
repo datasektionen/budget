@@ -118,6 +118,9 @@ return [
         'startdate' => 'startdatum',
         'enddate' => 'slutdatum',
         'starttime' => 'starttid',
-        'alcohol' => 'alkoholfrågan'
+        'alcohol' => 'alkoholfrågan',
+        'ticket-type' => 'biljettyp',
+        'ffa-end' => 'slutdatum för FFA',
+        'n0llan-limit' => 'reserverade biljetter per nØllegrupp'
     ],
 ];

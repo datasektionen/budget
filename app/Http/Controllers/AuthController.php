@@ -31,7 +31,7 @@ class AuthController extends BaseController {
 		Auth::logout();
 		Session::forget('admin');
 		return redirect('/')
-			->with('success', 'Du är nu utloggad från bokningssystemet.');
+			->with('success', 'Du är nu utloggad.');
 	}
 
 	/**
@@ -64,25 +64,20 @@ class AuthController extends BaseController {
 		// We now have a response. If it is good, parse the json and login user
 		if ($res->getStatusCode() == 200) {
 			$body = json_decode($res->getBody());
-			$user = User::where('kth_username', $body->user)->first();
+			$user = User::where('ugkthid', $body->ugkthid)->first();
 
 			if ($user === null) {
 				// Create new user in our systems if did not exist
 				$user = new User;
-				$user->name = $body->first_name . " " . $body->last_name;
+				$user->first_name = $body->first_name;
+				$user->last_name = $body->last_name;
+				$user->email = $body->emails;
 				$user->kth_username = $body->user;
+				$user->ugkthid = $body->ugkthid;
 				$user->save();
 			}
 
 			Auth::login($user);
-
-			// Get all admin permissions
-			$admin = file_get_contents(env('PLS_API_URL') . '/user/' . $user->kth_username . '/pandora');
-			if ($admin === 'false') {
-				Session::set('admin', []);
-			} else {
-				Session::set('admin', json_decode($admin));
-			}
 		} else {
 			Auth::logout();
 			return redirect('/')->with('error', 'Du loggades inte in.');

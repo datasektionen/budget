@@ -9,7 +9,8 @@
         "laravel/framework": "5.3.*",
         "laravelcollective/html": "^5.2.0",
         "guzzlehttp/guzzle": "^6.2",
-        "johngrogg/ics-parser": "dev-master"
+        "johngrogg/ics-parser": "dev-master",
+        "smalot/pdfparser": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -20,8 +21,7 @@
     },
     "autoload": {
         "classmap": [
-            "database",
-            "app/Http/Controllers/Admin"
+            "database"
         ],
         "psr-4": {
             "App\\": "app/"
@@ -44,8 +44,7 @@
             "php artisan optimize",
             "chmod -R 775 storage",
             "chmod -R 775 public",
-            "php artisan migrate --force",
-            "gulp"
+            "php artisan migrate --force"
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
