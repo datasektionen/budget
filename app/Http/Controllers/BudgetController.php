@@ -62,14 +62,14 @@ class BudgetController extends BaseController {
 			}
 
 			if ($budgetLine->type === 'internal') {
-				$committees[$budgetLine->costCentre->committee_id]['internal'] += $budgetLine->income - $budgetLine->expenses;
+				$committees[$budgetLine->costCentre->committee_id]['internal'] += ($budgetLine->income - $budgetLine->expenses) * $budgetLine->costCentre->repetitions;
 			} else {
-				$committees[$budgetLine->costCentre->committee_id]['external'] += $budgetLine->income - $budgetLine->expenses;
+				$committees[$budgetLine->costCentre->committee_id]['external'] += ($budgetLine->income - $budgetLine->expenses) * $budgetLine->costCentre->repetitions;
 			}
 
-			$committees[$budgetLine->costCentre->committee_id]['income'] += $budgetLine->income;
-			$committees[$budgetLine->costCentre->committee_id]['expenses'] += $budgetLine->expenses;
-			$committees[$budgetLine->costCentre->committee_id]['balance'] += $budgetLine->income - $budgetLine->expenses;
+			$committees[$budgetLine->costCentre->committee_id]['income'] += $budgetLine->income * $budgetLine->costCentre->repetitions;
+			$committees[$budgetLine->costCentre->committee_id]['expenses'] += $budgetLine->expenses * $budgetLine->costCentre->repetitions;
+			$committees[$budgetLine->costCentre->committee_id]['balance'] += ($budgetLine->income - $budgetLine->expenses) * $budgetLine->costCentre->repetitions;
 		}
 		return view('budget.overview')->with('committees', $committees);
 	}
