@@ -2,35 +2,34 @@
 
 @section('title', 'Budgetförslag: ' . $suggestion->name)
 
+@section('action-button')
+	<a href="/suggestions/{{ $suggestion->id }}/edit" class="primary-action">Ändra</a>
+@endsection
+
 @section('content')
+<p>För att göra ändringar i ditt förslag, gå till den nämnd eller projekt du vill ändra och gör dina ändringar. Först måste du dock klicka på <a href="/suggestions/{{ $suggestion->id }}/edit">Ändra</a> på denna sida för att välja att ändra just det här förslaget.</p>
+<div id="budget">
 <table>
 	<tr>
-		<th>
-			Budgetförslag
-		</th>
-		<td>
-			{{ $suggestion->name }}
-		</td>
+		<th>Budgetförslag</th>
+		<td>{{ $suggestion->name }}</td>
 	</tr>
 	<tr>
-		<th>
-			Berörda nämnder
-		</th>
-		<td>
-			{{ Fmt::join($suggestion->committees()->pluck('name')) }}
-		</td>
+		<th>Berörda nämnder</th>
+		<td>{{ Fmt::join($suggestion->committees()->pluck('name')) }}</td>
 	</tr>
 	<tr>
-		<th>
-			Redigeringsbehöriga
-		</th>
-		<td>
-			{{ Fmt::join($suggestion->authors->map(function ($x) { return $x->first_name . ' ' . $x->last_name; })) }}. <a href="/suggestions/{{ $suggestion->id }}/share">Lägg till</a>.
-		</td>
+		<th>Redigeringsbehöriga</th>
+		<td>{{ Fmt::join($suggestion->authors->map(function ($x) { return $x->first_name . ' ' . $x->last_name; })) }}. <a href="/suggestions/{{ $suggestion->id }}/share">Lägg till</a>.</td>
+	</tr>
+	<tr>
+		<th>Genomfört</th>
+		<td>{{ $suggestion->isImplemented() ? 'Ja, ' . $suggestion->implemented_at : 'Nej' }}</td>
 	</tr>
 </table>
 <?php $pre = $post = 0; ?>
 <h2>Ändringar</h2>
+<p>Nedan visas alla ändringar. <a href="/suggestions/{{ $suggestion->id }}/pdf">Klicka här för en PDF-exporterbar version.</a></p>
 <table class="budget">
 	<thead>
 		<tr>
@@ -92,4 +91,5 @@
 		</tr>
 	</tfoot>
 </table>
+</div>
 @endsection

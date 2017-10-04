@@ -3,7 +3,23 @@
 use Illuminate\Database\Eloquent\Model;
 
 class Committee extends Model {
-	protected $fillable = ['name'];
+	protected $fillable = ['name', 'type'];
+
+	public static function all($columns = []) {
+		return parent::select('*')->orderBy('name')->get();
+	}
+
+	public static function committees() {
+		return self::select('*')->where('type', 'committee')->orderBy('name')->get();
+	}
+
+	public static function projects() {
+		return self::select('*')->where('type', 'project')->orderBy('name')->get();
+	}
+
+	public static function other() {
+		return self::select('*')->where('type', 'other')->orderBy('name')->get();
+	}
 
 	public static function now() {
 		return self::select('*')->orderBy('name')->with('costCentres')->get();

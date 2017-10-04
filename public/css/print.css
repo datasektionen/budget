@@ -1,0 +1,22 @@
+@page {
+
+}
+body {
+	font-size: 10pt !important;
+}
+table td, table th {
+	font-size: 10pt !important;
+	padding: 10px;
+	white-space: nowrap;
+}
+.committee td {
+	background: #b0bec5 !important;
+}
+.cost-centre td {
+	background: #eceff1 !important;
+}
+table {
+}
+.old {
+	opacity: 0.5;
+}

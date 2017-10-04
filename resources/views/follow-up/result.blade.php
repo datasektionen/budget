@@ -13,11 +13,35 @@
 @section('content')
 @if (count($error) > 0)
 <h2>Följande kunde inte matchas mot någon budgetpost:</h2>
-<ul>
+<table>
+	<thead>
+		<tr>
+			<th>Nämnd</th>
+			<th>Kostnadsställe</th>
+			<th>Speedledger-id</th>
+			<th>Belopp</th>
+		</tr>
+	</thead>
 @foreach ($error as $err)
-	<li>{{ @$err["budget_line"]["committee"] }} - {{ @$err["budget_line"]["cost_centre"] }} - ({{ @$err["budget_line"]["speedledger_id"] }})</li>
+	<tr>
+		<td>{{ $err["budget_line"]["committee"] }}</td>
+		<td>{{ $err["budget_line"]["cost_centre"] }}</td>
+		<td>({{ $err["budget_line"]["speedledger_id"] }})</td>
+		<td>
+			<table>
+			@foreach ($err["spec"] as $acc)
+				<tr>
+					<td>{{ $acc['account'] }}</td>
+					<td>{{ $acc['name'] }}</td>
+					<td>{{ Fmt::cash($acc['amount']) }}</td>
+				</tr>
+			@endforeach
+			</table>
+		</td>
+	</tr>
 @endforeach
-</ul>
+</table>
+<br/><br/>
 @endif
 
 <div id="budget">
@@ -48,8 +72,8 @@
 			</th>
 		</tr>
 	</thead>
+	<tr class="space"><td></td><td></td><td></td><td></td></tr>
 	<tbody v-for="cost_centre in committee.cost_centres">
-		<tr class="space"><td></td><td></td><td></td><td></td></tr>
 		<tr class="header">
 			<td class="name">
 				<input type="text" v-bind:value="cost_centre.name">
@@ -96,6 +120,7 @@
 				<span v-html="parseFloat(budget_line.booked) || 0"></span> SEK
 			</td>
 		</tr>
+		<tr class="space"><td></td><td></td><td></td><td></td></tr>
 	</tbody>
 </table>
 </div>

@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
 		DB::table('budget_lines')->delete();
 		
 		// Centralt
-		$committees[0] = Committee::create(['name' => 'Centralt']);
+		$committees[0] = Committee::create(['name' => 'Centralt', 'type' => 'committee']);
 		  $costCentres[0] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[0]->id]);
 		    $budgetLine[0] = BudgetLine::create([
 		        'name' => 'Bankavgifter', 
@@ -607,7 +607,7 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[37]->accounts()->attach($account->id);
 		
 		// Demon
-		$committees[1] = Committee::create(['name' => 'Demon']);
+		$committees[1] = Committee::create(['name' => 'Demon', 'type' => 'committee']);
 		  $costCentres[11] = CostCentre::create(['name' => 'Allmänt (inget)', 'committee_id' => $committees[1]->id]);
 		    $budgetLine[38] = BudgetLine::create([
 		        'name' => 'Fika', 
@@ -650,7 +650,7 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[40]->accounts()->attach($account->id);
 		
 		// DESC
-		$committees[2] = Committee::create(['name' => 'DESC']);
+		$committees[2] = Committee::create(['name' => 'DESC', 'type' => 'committee']);
 		  $costCentres[12] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[2]->id]);
 		    $budgetLine[41] = BudgetLine::create([
 		        'name' => 'Fika & teambuilding', 
@@ -721,7 +721,7 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[45]->accounts()->attach($account->id);
 		
 		// Drektoratet
-		$committees[3] = Committee::create(['name' => 'Drektoratet']);
+		$committees[3] = Committee::create(['name' => 'Drektoratet', 'type' => 'committee']);
 		  $costCentres[15] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[3]->id]);
 		    $budgetLine[46] = BudgetLine::create([
 		        'name' => 'Dispositionsfond', 
@@ -861,7 +861,7 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[55]->accounts()->attach($account->id);
 		
 		// Idrottsnämnden
-		$committees[4] = Committee::create(['name' => 'Idrottsnämnden']);
+		$committees[4] = Committee::create(['name' => 'Idrottsnämnden', 'type' => 'committee']);
 		  $costCentres[19] = CostCentre::create(['name' => 'Allmänt (inget)', 'committee_id' => $committees[4]->id]);
 		    $budgetLine[56] = BudgetLine::create([
 		        'name' => 'Fika', 
@@ -943,7 +943,7 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[61]->accounts()->attach($account->id);
 		
 		// Informationsorganet
-		$committees[5] = Committee::create(['name' => 'Informationsorganet']);
+		$committees[5] = Committee::create(['name' => 'Informationsorganet', 'type' => 'committee']);
 		  $costCentres[20] = CostCentre::create(['name' => 'Crash & Bränn', 'committee_id' => $committees[5]->id]);
 		    $budgetLine[62] = BudgetLine::create([
 		        'name' => 'Fika', 
@@ -1108,7 +1108,7 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[73]->accounts()->attach($account->id);
 		
 		// Jämlikhetsnämnden
-		$committees[6] = Committee::create(['name' => 'Jämlikhetsnämnden']);
+		$committees[6] = Committee::create(['name' => 'Jämlikhetsnämnden', 'type' => 'committee']);
 		  $costCentres[23] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[6]->id]);
 		    $budgetLine[74] = BudgetLine::create([
 		        'name' => 'Fika', 
@@ -1125,7 +1125,7 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[74]->accounts()->attach($account->id);
 		
 		// Konglig Östrogennämnden
-		$committees[7] = Committee::create(['name' => 'Konglig Östrogennämnden']);
+		$committees[7] = Committee::create(['name' => 'Konglig Östrogennämnden', 'type' => 'committee']);
 		  $costCentres[24] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[7]->id]);
 		    $budgetLine[75] = BudgetLine::create([
 		        'name' => 'Fika', 
@@ -1170,7 +1170,7 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[77]->accounts()->attach($account->id);
 		
 		// Näringslivsgruppen
-		$committees[8] = Committee::create(['name' => 'Näringslivsgruppen']);
+		$committees[8] = Committee::create(['name' => 'Näringslivsgruppen', 'type' => 'committee']);
 		  $costCentres[27] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[8]->id]);
 		    $budgetLine[78] = BudgetLine::create([
 		        'name' => 'Fika', 
@@ -1805,16 +1805,15 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4025')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4025']);
 		      $budgetLine[122]->accounts()->attach($account->id);
-		  $costCentres[37] = CostCentre::create(['name' => 'Subtotalt', 'committee_id' => $committees[8]->id]);
 		
 		// Prylmångleriet
-		$committees[9] = Committee::create(['name' => 'Prylmångleriet']);
-		  $costCentres[38] = CostCentre::create(['name' => 'Allmänt (inget)', 'committee_id' => $committees[9]->id]);
+		$committees[9] = Committee::create(['name' => 'Prylmångleriet', 'type' => 'committee']);
+		  $costCentres[37] = CostCentre::create(['name' => 'Allmänt (inget)', 'committee_id' => $committees[9]->id]);
 		    $budgetLine[123] = BudgetLine::create([
 		        'name' => 'Fika', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[38]->id, 
+		        'cost_centre_id' => $costCentres[37]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -1827,7 +1826,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning Overaller', 
 		        'income' => 7000000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[38]->id, 
+		        'cost_centre_id' => $costCentres[37]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -1840,7 +1839,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning Prylis', 
 		        'income' => 5000000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[38]->id, 
+		        'cost_centre_id' => $costCentres[37]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -1853,7 +1852,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp Overaller', 
 		        'income' => 0, 
 		        'expenses' => 7000000, 
-		        'cost_centre_id' => $costCentres[38]->id, 
+		        'cost_centre_id' => $costCentres[37]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -1866,7 +1865,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp Prylis', 
 		        'income' => 0, 
 		        'expenses' => 4800000, 
-		        'cost_centre_id' => $costCentres[38]->id, 
+		        'cost_centre_id' => $costCentres[37]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -1877,13 +1876,13 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[127]->accounts()->attach($account->id);
 		
 		// Qulturnämnden
-		$committees[10] = Committee::create(['name' => 'Qulturnämnden']);
-		  $costCentres[39] = CostCentre::create(['name' => 'Allmänt (inget)', 'committee_id' => $committees[10]->id]);
+		$committees[10] = Committee::create(['name' => 'Qulturnämnden', 'type' => 'committee']);
+		  $costCentres[38] = CostCentre::create(['name' => 'Allmänt (inget)', 'committee_id' => $committees[10]->id]);
 		    $budgetLine[128] = BudgetLine::create([
 		        'name' => 'Fika', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[39]->id, 
+		        'cost_centre_id' => $costCentres[38]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -1896,7 +1895,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp av Qultur', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[39]->id, 
+		        'cost_centre_id' => $costCentres[38]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -1909,7 +1908,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Tackmiddag', 
 		        'income' => 0, 
 		        'expenses' => 150000, 
-		        'cost_centre_id' => $costCentres[39]->id, 
+		        'cost_centre_id' => $costCentres[38]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -1925,7 +1924,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Qulturella event', 
 		        'income' => 0, 
 		        'expenses' => 350000, 
-		        'cost_centre_id' => $costCentres[39]->id, 
+		        'cost_centre_id' => $costCentres[38]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -1938,7 +1937,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Ny QN-hylla', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[39]->id, 
+		        'cost_centre_id' => $costCentres[38]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -1949,13 +1948,13 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[132]->accounts()->attach($account->id);
 		
 		// Sektionslokalsgruppen
-		$committees[11] = Committee::create(['name' => 'Sektionslokalsgruppen']);
-		  $costCentres[40] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[11]->id]);
+		$committees[11] = Committee::create(['name' => 'Sektionslokalsgruppen', 'type' => 'committee']);
+		  $costCentres[39] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[11]->id]);
 		    $budgetLine[133] = BudgetLine::create([
 		        'name' => 'Fika', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[40]->id, 
+		        'cost_centre_id' => $costCentres[39]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -1968,7 +1967,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp te/kaffe', 
 		        'income' => 0, 
 		        'expenses' => 900000, 
-		        'cost_centre_id' => $costCentres[40]->id, 
+		        'cost_centre_id' => $costCentres[39]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -1981,7 +1980,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp förbrukningsvaror', 
 		        'income' => 0, 
 		        'expenses' => 600000, 
-		        'cost_centre_id' => $costCentres[40]->id, 
+		        'cost_centre_id' => $costCentres[39]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -1994,7 +1993,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp och underhåll av inventarier', 
 		        'income' => 0, 
 		        'expenses' => 1000000, 
-		        'cost_centre_id' => $costCentres[40]->id, 
+		        'cost_centre_id' => $costCentres[39]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2010,7 +2009,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Städmaterial', 
 		        'income' => 0, 
 		        'expenses' => 400000, 
-		        'cost_centre_id' => $costCentres[40]->id, 
+		        'cost_centre_id' => $costCentres[39]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2023,7 +2022,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Underhåll läskkyl', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[40]->id, 
+		        'cost_centre_id' => $costCentres[39]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2042,7 +2041,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Underhåll META-TV', 
 		        'income' => 0, 
 		        'expenses' => 80000, 
-		        'cost_centre_id' => $costCentres[40]->id, 
+		        'cost_centre_id' => $costCentres[39]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2055,7 +2054,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Teambuilding', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[40]->id, 
+		        'cost_centre_id' => $costCentres[39]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2071,7 +2070,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Städfirma', 
 		        'income' => 0, 
 		        'expenses' => 1500000, 
-		        'cost_centre_id' => $costCentres[40]->id, 
+		        'cost_centre_id' => $costCentres[39]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2084,7 +2083,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Städ-MUTA', 
 		        'income' => 0, 
 		        'expenses' => 400000, 
-		        'cost_centre_id' => $costCentres[40]->id, 
+		        'cost_centre_id' => $costCentres[39]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2097,7 +2096,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Tackmaterial', 
 		        'income' => 0, 
 		        'expenses' => 250000, 
-		        'cost_centre_id' => $costCentres[40]->id, 
+		        'cost_centre_id' => $costCentres[39]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2110,7 +2109,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Profilkläder', 
 		        'income' => 0, 
 		        'expenses' => 250000, 
-		        'cost_centre_id' => $costCentres[40]->id, 
+		        'cost_centre_id' => $costCentres[39]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2119,12 +2118,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '0')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '0']);
 		      $budgetLine[144]->accounts()->attach($account->id);
-		  $costCentres[41] = CostCentre::create(['name' => 'Måndagsstädsfest', 'committee_id' => $committees[11]->id]);
+		  $costCentres[40] = CostCentre::create(['name' => 'Måndagsstädsfest', 'committee_id' => $committees[11]->id]);
 		    $budgetLine[145] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 100000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[41]->id, 
+		        'cost_centre_id' => $costCentres[40]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2140,7 +2139,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning Dryck', 
 		        'income' => 300000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[41]->id, 
+		        'cost_centre_id' => $costCentres[40]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2165,7 +2164,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp Mat', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[41]->id, 
+		        'cost_centre_id' => $costCentres[40]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2178,7 +2177,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp Dryck', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[41]->id, 
+		        'cost_centre_id' => $costCentres[40]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2203,7 +2202,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[41]->id, 
+		        'cost_centre_id' => $costCentres[40]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2212,12 +2211,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5411')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5411']);
 		      $budgetLine[149]->accounts()->attach($account->id);
-		  $costCentres[42] = CostCentre::create(['name' => 'EasyTappen / dJulstäd', 'committee_id' => $committees[11]->id]);
+		  $costCentres[41] = CostCentre::create(['name' => 'EasyTappen / dJulstäd', 'committee_id' => $committees[11]->id]);
 		    $budgetLine[150] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 100000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[42]->id, 
+		        'cost_centre_id' => $costCentres[41]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2233,7 +2232,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning Dryck', 
 		        'income' => 300000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[42]->id, 
+		        'cost_centre_id' => $costCentres[41]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2258,7 +2257,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp Mat', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[42]->id, 
+		        'cost_centre_id' => $costCentres[41]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2271,7 +2270,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp Dryck', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[42]->id, 
+		        'cost_centre_id' => $costCentres[41]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2296,7 +2295,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[42]->id, 
+		        'cost_centre_id' => $costCentres[41]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2305,12 +2304,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5411')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5411']);
 		      $budgetLine[154]->accounts()->attach($account->id);
-		  $costCentres[43] = CostCentre::create(['name' => 'X-scapomiddag', 'committee_id' => $committees[11]->id]);
+		  $costCentres[42] = CostCentre::create(['name' => 'X-scapomiddag', 'committee_id' => $committees[11]->id]);
 		    $budgetLine[155] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 400000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[43]->id, 
+		        'cost_centre_id' => $costCentres[42]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2326,7 +2325,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning Dryck', 
 		        'income' => 300000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[43]->id, 
+		        'cost_centre_id' => $costCentres[42]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2351,7 +2350,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp Mat', 
 		        'income' => 0, 
 		        'expenses' => 250000, 
-		        'cost_centre_id' => $costCentres[43]->id, 
+		        'cost_centre_id' => $costCentres[42]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2364,7 +2363,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp Dryck', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[43]->id, 
+		        'cost_centre_id' => $costCentres[42]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2389,7 +2388,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 150000, 
-		        'cost_centre_id' => $costCentres[43]->id, 
+		        'cost_centre_id' => $costCentres[42]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2400,13 +2399,13 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[159]->accounts()->attach($account->id);
 		
 		// Studienämnden
-		$committees[12] = Committee::create(['name' => 'Studienämnden']);
-		  $costCentres[44] = CostCentre::create(['name' => 'Allmänt (inget)', 'committee_id' => $committees[12]->id]);
+		$committees[12] = Committee::create(['name' => 'Studienämnden', 'type' => 'committee']);
+		  $costCentres[43] = CostCentre::create(['name' => 'Allmänt (inget)', 'committee_id' => $committees[12]->id]);
 		    $budgetLine[160] = BudgetLine::create([
 		        'name' => 'Fika/mat till studienämndsmöten (extern)', 
 		        'income' => 0, 
 		        'expenses' => 600000, 
-		        'cost_centre_id' => $costCentres[44]->id, 
+		        'cost_centre_id' => $costCentres[43]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2419,7 +2418,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Arrangemang', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[44]->id, 
+		        'cost_centre_id' => $costCentres[43]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2432,7 +2431,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Teambuilding', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[44]->id, 
+		        'cost_centre_id' => $costCentres[43]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2445,7 +2444,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Fika (intern)', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[44]->id, 
+		        'cost_centre_id' => $costCentres[43]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2456,13 +2455,13 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[163]->accounts()->attach($account->id);
 		
 		// Valberedningen
-		$committees[13] = Committee::create(['name' => 'Valberedningen']);
-		  $costCentres[45] = CostCentre::create(['name' => 'Allmänt (inget)', 'committee_id' => $committees[13]->id]);
+		$committees[13] = Committee::create(['name' => 'Valberedningen', 'type' => 'committee']);
+		  $costCentres[44] = CostCentre::create(['name' => 'Allmänt (inget)', 'committee_id' => $committees[13]->id]);
 		    $budgetLine[164] = BudgetLine::create([
 		        'name' => 'Fika', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[45]->id, 
+		        'cost_centre_id' => $costCentres[44]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2475,7 +2474,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Kandidatutfrågning mat', 
 		        'income' => 0, 
 		        'expenses' => 550000, 
-		        'cost_centre_id' => $costCentres[45]->id, 
+		        'cost_centre_id' => $costCentres[44]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2488,7 +2487,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Rosor', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[45]->id, 
+		        'cost_centre_id' => $costCentres[44]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2501,7 +2500,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Teambuilding', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[45]->id, 
+		        'cost_centre_id' => $costCentres[44]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2517,7 +2516,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Profilkläder', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[45]->id, 
+		        'cost_centre_id' => $costCentres[44]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2528,13 +2527,13 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[168]->accounts()->attach($account->id);
 		
 		// Baknämnden
-		$committees[14] = Committee::create(['name' => 'Baknämnden']);
-		  $costCentres[46] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[14]->id]);
+		$committees[14] = Committee::create(['name' => 'Baknämnden', 'type' => 'committee']);
+		  $costCentres[45] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[14]->id]);
 		    $budgetLine[169] = BudgetLine::create([
 		        'name' => 'Maskiner och redskap', 
 		        'income' => 0, 
 		        'expenses' => 309600, 
-		        'cost_centre_id' => $costCentres[46]->id, 
+		        'cost_centre_id' => $costCentres[45]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2547,7 +2546,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Basingredienser', 
 		        'income' => 0, 
 		        'expenses' => 90400, 
-		        'cost_centre_id' => $costCentres[46]->id, 
+		        'cost_centre_id' => $costCentres[45]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2560,7 +2559,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Teambuilding', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[46]->id, 
+		        'cost_centre_id' => $costCentres[45]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2573,7 +2572,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Hemsida', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[46]->id, 
+		        'cost_centre_id' => $costCentres[45]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2584,13 +2583,13 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[172]->accounts()->attach($account->id);
 		
 		// 
-		$committees[15] = Committee::create(['name' => 'Mottagningen']);
-		  $costCentres[47] = CostCentre::create(['name' => 'MOT-Allmänt', 'committee_id' => $committees[15]->id]);
+		$committees[15] = Committee::create(['name' => 'Mottagningen', 'type' => 'committee']);
+		  $costCentres[46] = CostCentre::create(['name' => 'MOT-Allmänt', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[173] = BudgetLine::create([
 		        'name' => 'Kontorsmaterial', 
 		        'income' => 0, 
 		        'expenses' => 290000, 
-		        'cost_centre_id' => $costCentres[47]->id, 
+		        'cost_centre_id' => $costCentres[46]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2603,7 +2602,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Medaljer', 
 		        'income' => 0, 
 		        'expenses' => 440000, 
-		        'cost_centre_id' => $costCentres[47]->id, 
+		        'cost_centre_id' => $costCentres[46]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2616,7 +2615,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Diverse teknik', 
 		        'income' => 0, 
 		        'expenses' => 900000, 
-		        'cost_centre_id' => $costCentres[47]->id, 
+		        'cost_centre_id' => $costCentres[46]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2629,7 +2628,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Förbrukningsinventarier', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[47]->id, 
+		        'cost_centre_id' => $costCentres[46]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2642,7 +2641,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Förbrukningsmateriel', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[47]->id, 
+		        'cost_centre_id' => $costCentres[46]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2655,7 +2654,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Tryck', 
 		        'income' => 0, 
 		        'expenses' => 1600000, 
-		        'cost_centre_id' => $costCentres[47]->id, 
+		        'cost_centre_id' => $costCentres[46]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2668,7 +2667,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mörkläggning', 
 		        'income' => 0, 
 		        'expenses' => 680000, 
-		        'cost_centre_id' => $costCentres[47]->id, 
+		        'cost_centre_id' => $costCentres[46]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2681,7 +2680,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Sjuk & hälsovård', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[47]->id, 
+		        'cost_centre_id' => $costCentres[46]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2694,7 +2693,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Gåvor', 
 		        'income' => 0, 
 		        'expenses' => 270000, 
-		        'cost_centre_id' => $costCentres[47]->id, 
+		        'cost_centre_id' => $costCentres[46]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2707,7 +2706,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Tygmärken', 
 		        'income' => 0, 
 		        'expenses' => 1400000, 
-		        'cost_centre_id' => $costCentres[47]->id, 
+		        'cost_centre_id' => $costCentres[46]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2720,7 +2719,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Stickers', 
 		        'income' => 0, 
 		        'expenses' => 37000, 
-		        'cost_centre_id' => $costCentres[47]->id, 
+		        'cost_centre_id' => $costCentres[46]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2736,7 +2735,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Bil- och släphyra', 
 		        'income' => 0, 
 		        'expenses' => 350000, 
-		        'cost_centre_id' => $costCentres[47]->id, 
+		        'cost_centre_id' => $costCentres[46]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2749,7 +2748,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Slack', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[47]->id, 
+		        'cost_centre_id' => $costCentres[46]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2762,7 +2761,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Örådsrestaurering', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[47]->id, 
+		        'cost_centre_id' => $costCentres[46]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2775,7 +2774,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Bankkostnader', 
 		        'income' => 0, 
 		        'expenses' => 10000, 
-		        'cost_centre_id' => $costCentres[47]->id, 
+		        'cost_centre_id' => $costCentres[46]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2788,7 +2787,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Intervjufika', 
 		        'income' => 0, 
 		        'expenses' => 75000, 
-		        'cost_centre_id' => $costCentres[47]->id, 
+		        'cost_centre_id' => $costCentres[46]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2797,12 +2796,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '7691')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '7691']);
 		      $budgetLine[188]->accounts()->attach($account->id);
-		  $costCentres[48] = CostCentre::create(['name' => 'Titel', 'committee_id' => $committees[15]->id]);
+		  $costCentres[47] = CostCentre::create(['name' => 'Titel', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[189] = BudgetLine::create([
 		        'name' => 'Titelfika', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[48]->id, 
+		        'cost_centre_id' => $costCentres[47]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2815,7 +2814,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Titelbastu', 
 		        'income' => 0, 
 		        'expenses' => 70000, 
-		        'cost_centre_id' => $costCentres[48]->id, 
+		        'cost_centre_id' => $costCentres[47]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2828,7 +2827,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Titel MUTA', 
 		        'income' => 0, 
 		        'expenses' => 1000000, 
-		        'cost_centre_id' => $costCentres[48]->id, 
+		        'cost_centre_id' => $costCentres[47]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2841,7 +2840,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Teambuilding', 
 		        'income' => 0, 
 		        'expenses' => 405000, 
-		        'cost_centre_id' => $costCentres[48]->id, 
+		        'cost_centre_id' => $costCentres[47]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2854,7 +2853,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Titeltillbehör', 
 		        'income' => 0, 
 		        'expenses' => 45000, 
-		        'cost_centre_id' => $costCentres[48]->id, 
+		        'cost_centre_id' => $costCentres[47]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2863,12 +2862,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5486')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5486']);
 		      $budgetLine[193]->accounts()->attach($account->id);
-		  $costCentres[49] = CostCentre::create(['name' => 'Mörka sidan', 'committee_id' => $committees[15]->id]);
+		  $costCentres[48] = CostCentre::create(['name' => 'Mörka sidan', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[194] = BudgetLine::create([
 		        'name' => 'Drifvartillbehör', 
 		        'income' => 0, 
 		        'expenses' => 1100000, 
-		        'cost_centre_id' => $costCentres[49]->id, 
+		        'cost_centre_id' => $costCentres[48]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2884,7 +2883,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Entr&eacute;prylar', 
 		        'income' => 0, 
 		        'expenses' => 1400000, 
-		        'cost_centre_id' => $costCentres[49]->id, 
+		        'cost_centre_id' => $costCentres[48]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2897,7 +2896,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Entr&eacute;polos', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[49]->id, 
+		        'cost_centre_id' => $costCentres[48]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2910,7 +2909,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Bax-hyra', 
 		        'income' => 0, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[49]->id, 
+		        'cost_centre_id' => $costCentres[48]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2923,7 +2922,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Drifvarbastu', 
 		        'income' => 0, 
 		        'expenses' => 70000, 
-		        'cost_centre_id' => $costCentres[49]->id, 
+		        'cost_centre_id' => $costCentres[48]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2936,7 +2935,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Pärmar & sångböcker', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[49]->id, 
+		        'cost_centre_id' => $costCentres[48]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2949,7 +2948,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Fika drifvarträningar', 
 		        'income' => 0, 
 		        'expenses' => 90000, 
-		        'cost_centre_id' => $costCentres[49]->id, 
+		        'cost_centre_id' => $costCentres[48]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2962,7 +2961,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Drifvarflipper', 
 		        'income' => 0, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[49]->id, 
+		        'cost_centre_id' => $costCentres[48]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2975,7 +2974,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Utklädnad GOD', 
 		        'income' => 0, 
 		        'expenses' => 10000, 
-		        'cost_centre_id' => $costCentres[49]->id, 
+		        'cost_centre_id' => $costCentres[48]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2988,7 +2987,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat första entr&eacute;n', 
 		        'income' => 0, 
 		        'expenses' => 140000, 
-		        'cost_centre_id' => $costCentres[49]->id, 
+		        'cost_centre_id' => $costCentres[48]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -2997,12 +2996,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '7692')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '7692']);
 		      $budgetLine[203]->accounts()->attach($account->id);
-		  $costCentres[50] = CostCentre::create(['name' => 'Ljusa sidan', 'committee_id' => $committees[15]->id]);
+		  $costCentres[49] = CostCentre::create(['name' => 'Ljusa sidan', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[204] = BudgetLine::create([
 		        'name' => 'Daddebyxor och mammeristshorts', 
 		        'income' => 0, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[50]->id, 
+		        'cost_centre_id' => $costCentres[49]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3015,7 +3014,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Daddetillbehör', 
 		        'income' => 0, 
 		        'expenses' => 150000, 
-		        'cost_centre_id' => $costCentres[50]->id, 
+		        'cost_centre_id' => $costCentres[49]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3028,7 +3027,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Doquistillbehör', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[50]->id, 
+		        'cost_centre_id' => $costCentres[49]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3041,7 +3040,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mammeristtillbehör', 
 		        'income' => 0, 
 		        'expenses' => 120000, 
-		        'cost_centre_id' => $costCentres[50]->id, 
+		        'cost_centre_id' => $costCentres[49]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3054,7 +3053,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Ekonomeristtillbehör', 
 		        'income' => 0, 
 		        'expenses' => 80000, 
-		        'cost_centre_id' => $costCentres[50]->id, 
+		        'cost_centre_id' => $costCentres[49]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3067,7 +3066,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Snuttefiltar', 
 		        'income' => 0, 
 		        'expenses' => 40000, 
-		        'cost_centre_id' => $costCentres[50]->id, 
+		        'cost_centre_id' => $costCentres[49]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3080,7 +3079,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Snuttefilt and chill', 
 		        'income' => 0, 
 		        'expenses' => 92000, 
-		        'cost_centre_id' => $costCentres[50]->id, 
+		        'cost_centre_id' => $costCentres[49]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3093,7 +3092,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Förbrukningsmaterial', 
 		        'income' => 0, 
 		        'expenses' => 10000, 
-		        'cost_centre_id' => $costCentres[50]->id, 
+		        'cost_centre_id' => $costCentres[49]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3106,7 +3105,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Förbrukningsinventarier', 
 		        'income' => 0, 
 		        'expenses' => 30000, 
-		        'cost_centre_id' => $costCentres[50]->id, 
+		        'cost_centre_id' => $costCentres[49]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3119,7 +3118,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Tjockumenteristlunch', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[50]->id, 
+		        'cost_centre_id' => $costCentres[49]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3132,7 +3131,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Ekonomeristfika', 
 		        'income' => 0, 
 		        'expenses' => 250000, 
-		        'cost_centre_id' => $costCentres[50]->id, 
+		        'cost_centre_id' => $costCentres[49]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3144,12 +3143,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '7692')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '7692']);
 		      $budgetLine[214]->accounts()->attach($account->id);
-		  $costCentres[51] = CostCentre::create(['name' => 'Personalvård', 'committee_id' => $committees[15]->id]);
+		  $costCentres[50] = CostCentre::create(['name' => 'Personalvård', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[215] = BudgetLine::create([
 		        'name' => 'Fika', 
 		        'income' => 0, 
 		        'expenses' => 700000, 
-		        'cost_centre_id' => $costCentres[51]->id, 
+		        'cost_centre_id' => $costCentres[50]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3170,12 +3169,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '7692')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '7692']);
 		      $budgetLine[215]->accounts()->attach($account->id);
-		  $costCentres[52] = CostCentre::create(['name' => 'MOT-Bil', 'committee_id' => $committees[15]->id]);
+		  $costCentres[51] = CostCentre::create(['name' => 'MOT-Bil', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[216] = BudgetLine::create([
 		        'name' => 'Drivmedel', 
 		        'income' => 0, 
 		        'expenses' => 430000, 
-		        'cost_centre_id' => $costCentres[52]->id, 
+		        'cost_centre_id' => $costCentres[51]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3188,7 +3187,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Övriga personbilskostnader', 
 		        'income' => 0, 
 		        'expenses' => 140000, 
-		        'cost_centre_id' => $costCentres[52]->id, 
+		        'cost_centre_id' => $costCentres[51]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3206,12 +3205,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5820')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5820']);
 		      $budgetLine[217]->accounts()->attach($account->id);
-		  $costCentres[53] = CostCentre::create(['name' => 'MOT-Tröjor ', 'committee_id' => $committees[15]->id]);
+		  $costCentres[52] = CostCentre::create(['name' => 'MOT-Tröjor ', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[218] = BudgetLine::create([
 		        'name' => 'Kläder', 
 		        'income' => 1500000, 
 		        'expenses' => 5000000, 
-		        'cost_centre_id' => $costCentres[53]->id, 
+		        'cost_centre_id' => $costCentres[52]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3227,7 +3226,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Spons', 
 		        'income' => 2500000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[53]->id, 
+		        'cost_centre_id' => $costCentres[52]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3236,12 +3235,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '3051')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3051']);
 		      $budgetLine[219]->accounts()->attach($account->id);
-		  $costCentres[54] = CostCentre::create(['name' => 'Jourveckan', 'committee_id' => $committees[15]->id]);
+		  $costCentres[53] = CostCentre::create(['name' => 'Jourveckan', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[220] = BudgetLine::create([
 		        'name' => 'Lunch', 
 		        'income' => 0, 
 		        'expenses' => 700000, 
-		        'cost_centre_id' => $costCentres[54]->id, 
+		        'cost_centre_id' => $costCentres[53]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3254,7 +3253,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Frukost', 
 		        'income' => 0, 
 		        'expenses' => 1100000, 
-		        'cost_centre_id' => $costCentres[54]->id, 
+		        'cost_centre_id' => $costCentres[53]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3267,7 +3266,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Byggmaterial', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[54]->id, 
+		        'cost_centre_id' => $costCentres[53]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3280,7 +3279,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Spons', 
 		        'income' => 700000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[54]->id, 
+		        'cost_centre_id' => $costCentres[53]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3289,12 +3288,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '3052')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3052']);
 		      $budgetLine[223]->accounts()->attach($account->id);
-		  $costCentres[55] = CostCentre::create(['name' => 'Jourveckoevent', 'committee_id' => $committees[15]->id]);
+		  $costCentres[54] = CostCentre::create(['name' => 'Jourveckoevent', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[224] = BudgetLine::create([
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[55]->id, 
+		        'cost_centre_id' => $costCentres[54]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3307,7 +3306,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning dryck', 
 		        'income' => 700000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[55]->id, 
+		        'cost_centre_id' => $costCentres[54]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3332,7 +3331,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 450000, 
-		        'cost_centre_id' => $costCentres[55]->id, 
+		        'cost_centre_id' => $costCentres[54]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3353,12 +3352,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4025')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4025']);
 		      $budgetLine[226]->accounts()->attach($account->id);
-		  $costCentres[56] = CostCentre::create(['name' => 'TTG-lab', 'committee_id' => $committees[15]->id]);
+		  $costCentres[55] = CostCentre::create(['name' => 'TTG-lab', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[227] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 1005000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[56]->id, 
+		        'cost_centre_id' => $costCentres[55]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3374,7 +3373,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat sittning', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[56]->id, 
+		        'cost_centre_id' => $costCentres[55]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3387,7 +3386,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 800000, 
-		        'cost_centre_id' => $costCentres[56]->id, 
+		        'cost_centre_id' => $costCentres[55]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3412,7 +3411,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning dryck', 
 		        'income' => 300000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[56]->id, 
+		        'cost_centre_id' => $costCentres[55]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3437,7 +3436,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[56]->id, 
+		        'cost_centre_id' => $costCentres[55]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3450,7 +3449,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Avgift', 
 		        'income' => 0, 
 		        'expenses' => 2100000, 
-		        'cost_centre_id' => $costCentres[56]->id, 
+		        'cost_centre_id' => $costCentres[55]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3466,7 +3465,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Serveringstillstånd', 
 		        'income' => 0, 
 		        'expenses' => 110000, 
-		        'cost_centre_id' => $costCentres[56]->id, 
+		        'cost_centre_id' => $costCentres[55]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3475,12 +3474,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '6950')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '6950']);
 		      $budgetLine[233]->accounts()->attach($account->id);
-		  $costCentres[57] = CostCentre::create(['name' => 'TTG-efterkör', 'committee_id' => $committees[15]->id]);
+		  $costCentres[56] = CostCentre::create(['name' => 'TTG-efterkör', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[234] = BudgetLine::create([
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[57]->id, 
+		        'cost_centre_id' => $costCentres[56]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3505,7 +3504,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning dryck', 
 		        'income' => 800000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[57]->id, 
+		        'cost_centre_id' => $costCentres[56]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3526,12 +3525,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '3025')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3025']);
 		      $budgetLine[235]->accounts()->attach($account->id);
-		  $costCentres[58] = CostCentre::create(['name' => 'Sektionsgasque', 'committee_id' => $committees[15]->id]);
+		  $costCentres[57] = CostCentre::create(['name' => 'Sektionsgasque', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[236] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 1035000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[58]->id, 
+		        'cost_centre_id' => $costCentres[57]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3547,7 +3546,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[58]->id, 
+		        'cost_centre_id' => $costCentres[57]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3560,7 +3559,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck sittning ', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[58]->id, 
+		        'cost_centre_id' => $costCentres[57]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3585,7 +3584,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[58]->id, 
+		        'cost_centre_id' => $costCentres[57]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3594,12 +3593,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5463')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5463']);
 		      $budgetLine[239]->accounts()->attach($account->id);
-		  $costCentres[59] = CostCentre::create(['name' => 'Sektionsgasque efterkör', 'committee_id' => $committees[15]->id]);
+		  $costCentres[58] = CostCentre::create(['name' => 'Sektionsgasque efterkör', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[240] = BudgetLine::create([
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[59]->id, 
+		        'cost_centre_id' => $costCentres[58]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3624,7 +3623,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning dryck', 
 		        'income' => 800000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[59]->id, 
+		        'cost_centre_id' => $costCentres[58]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3645,12 +3644,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '3025')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3025']);
 		      $budgetLine[241]->accounts()->attach($account->id);
-		  $costCentres[60] = CostCentre::create(['name' => 'Kultmiddag', 'committee_id' => $committees[15]->id]);
+		  $costCentres[59] = CostCentre::create(['name' => 'Kultmiddag', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[242] = BudgetLine::create([
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 1400000, 
-		        'cost_centre_id' => $costCentres[60]->id, 
+		        'cost_centre_id' => $costCentres[59]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3663,7 +3662,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Resekostnader', 
 		        'income' => 0, 
 		        'expenses' => 75000, 
-		        'cost_centre_id' => $costCentres[60]->id, 
+		        'cost_centre_id' => $costCentres[59]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3672,12 +3671,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5800')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5800']);
 		      $budgetLine[243]->accounts()->attach($account->id);
-		  $costCentres[61] = CostCentre::create(['name' => 'Tjejfika', 'committee_id' => $committees[15]->id]);
+		  $costCentres[60] = CostCentre::create(['name' => 'Tjejfika', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[244] = BudgetLine::create([
 		        'name' => 'Fika', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[61]->id, 
+		        'cost_centre_id' => $costCentres[60]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3686,12 +3685,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4045')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4045']);
 		      $budgetLine[244]->accounts()->attach($account->id);
-		  $costCentres[62] = CostCentre::create(['name' => 'Inaug', 'committee_id' => $committees[15]->id]);
+		  $costCentres[61] = CostCentre::create(['name' => 'Inaug', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[245] = BudgetLine::create([
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[62]->id, 
+		        'cost_centre_id' => $costCentres[61]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3700,12 +3699,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '7692')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '7692']);
 		      $budgetLine[245]->accounts()->attach($account->id);
-		  $costCentres[63] = CostCentre::create(['name' => 'INDA', 'committee_id' => $committees[15]->id]);
+		  $costCentres[62] = CostCentre::create(['name' => 'INDA', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[246] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 176000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[63]->id, 
+		        'cost_centre_id' => $costCentres[62]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3721,7 +3720,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 250000, 
-		        'cost_centre_id' => $costCentres[63]->id, 
+		        'cost_centre_id' => $costCentres[62]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3734,7 +3733,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 60000, 
-		        'cost_centre_id' => $costCentres[63]->id, 
+		        'cost_centre_id' => $costCentres[62]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3747,7 +3746,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[63]->id, 
+		        'cost_centre_id' => $costCentres[62]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3772,7 +3771,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Barkit', 
 		        'income' => 0, 
 		        'expenses' => 30000, 
-		        'cost_centre_id' => $costCentres[63]->id, 
+		        'cost_centre_id' => $costCentres[62]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3781,12 +3780,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4031')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4031']);
 		      $budgetLine[250]->accounts()->attach($account->id);
-		  $costCentres[64] = CostCentre::create(['name' => 'INDA efterkör', 'committee_id' => $committees[15]->id]);
+		  $costCentres[63] = CostCentre::create(['name' => 'INDA efterkör', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[251] = BudgetLine::create([
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[64]->id, 
+		        'cost_centre_id' => $costCentres[63]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3811,7 +3810,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning dryck', 
 		        'income' => 450000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[64]->id, 
+		        'cost_centre_id' => $costCentres[63]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3832,8 +3831,22 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '3025')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3025']);
 		      $budgetLine[252]->accounts()->attach($account->id);
-		  $costCentres[65] = CostCentre::create(['name' => 'INDO', 'committee_id' => $committees[15]->id]);
+		  $costCentres[64] = CostCentre::create(['name' => 'INDO', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[253] = BudgetLine::create([
+		        'name' => 'Mat', 
+		        'income' => 0, 
+		        'expenses' => 100000, 
+		        'cost_centre_id' => $costCentres[64]->id, 
+		        'type' => 'internal', 
+		        'valid_from' => '2017-01-01 00:00:00', 
+		        'valid_to' => '2017-12-31 23:59:59', 
+		        'suggestion_id' => 1
+		    ]);
+		      $account = Account::where('number', '7692')->first();
+		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '7692']);
+		      $budgetLine[253]->accounts()->attach($account->id);
+		  $costCentres[65] = CostCentre::create(['name' => 'INMA', 'committee_id' => $committees[15]->id]);
+		    $budgetLine[254] = BudgetLine::create([
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
@@ -3845,12 +3858,12 @@ class DatabaseSeeder extends Seeder
 		    ]);
 		      $account = Account::where('number', '7692')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '7692']);
-		      $budgetLine[253]->accounts()->attach($account->id);
-		  $costCentres[66] = CostCentre::create(['name' => 'INMA', 'committee_id' => $committees[15]->id]);
-		    $budgetLine[254] = BudgetLine::create([
+		      $budgetLine[254]->accounts()->attach($account->id);
+		  $costCentres[66] = CostCentre::create(['name' => 'INEK', 'committee_id' => $committees[15]->id]);
+		    $budgetLine[255] = BudgetLine::create([
 		        'name' => 'Mat', 
 		        'income' => 0, 
-		        'expenses' => 100000, 
+		        'expenses' => 50000, 
 		        'cost_centre_id' => $costCentres[66]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
@@ -3859,27 +3872,13 @@ class DatabaseSeeder extends Seeder
 		    ]);
 		      $account = Account::where('number', '7692')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '7692']);
-		      $budgetLine[254]->accounts()->attach($account->id);
-		  $costCentres[67] = CostCentre::create(['name' => 'INEK', 'committee_id' => $committees[15]->id]);
-		    $budgetLine[255] = BudgetLine::create([
-		        'name' => 'Mat', 
-		        'income' => 0, 
-		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[67]->id, 
-		        'type' => 'internal', 
-		        'valid_from' => '2017-01-01 00:00:00', 
-		        'valid_to' => '2017-12-31 23:59:59', 
-		        'suggestion_id' => 1
-		    ]);
-		      $account = Account::where('number', '7692')->first();
-		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '7692']);
 		      $budgetLine[255]->accounts()->attach($account->id);
-		  $costCentres[68] = CostCentre::create(['name' => 'Kräftis', 'committee_id' => $committees[15]->id]);
+		  $costCentres[67] = CostCentre::create(['name' => 'Kräftis', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[256] = BudgetLine::create([
 		        'name' => 'Frukost', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[68]->id, 
+		        'cost_centre_id' => $costCentres[67]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3892,7 +3891,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Hyra bord & stolar', 
 		        'income' => 0, 
 		        'expenses' => 150000, 
-		        'cost_centre_id' => $costCentres[68]->id, 
+		        'cost_centre_id' => $costCentres[67]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3905,7 +3904,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 120000, 
-		        'cost_centre_id' => $costCentres[68]->id, 
+		        'cost_centre_id' => $costCentres[67]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3918,7 +3917,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 120000, 
-		        'cost_centre_id' => $costCentres[68]->id, 
+		        'cost_centre_id' => $costCentres[67]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3931,7 +3930,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Tackgåva', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[68]->id, 
+		        'cost_centre_id' => $costCentres[67]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3944,7 +3943,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Partytält', 
 		        'income' => 0, 
 		        'expenses' => 80000, 
-		        'cost_centre_id' => $costCentres[68]->id, 
+		        'cost_centre_id' => $costCentres[67]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3953,12 +3952,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5410')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5410']);
 		      $budgetLine[261]->accounts()->attach($account->id);
-		  $costCentres[69] = CostCentre::create(['name' => 'TTG-föreläsning', 'committee_id' => $committees[15]->id]);
+		  $costCentres[68] = CostCentre::create(['name' => 'TTG-föreläsning', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[262] = BudgetLine::create([
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 60000, 
-		        'cost_centre_id' => $costCentres[69]->id, 
+		        'cost_centre_id' => $costCentres[68]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3971,7 +3970,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 27000, 
-		        'cost_centre_id' => $costCentres[69]->id, 
+		        'cost_centre_id' => $costCentres[68]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3984,7 +3983,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Förbrukningsmaterial', 
 		        'income' => 0, 
 		        'expenses' => 25000, 
-		        'cost_centre_id' => $costCentres[69]->id, 
+		        'cost_centre_id' => $costCentres[68]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -3993,12 +3992,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5460')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5460']);
 		      $budgetLine[264]->accounts()->attach($account->id);
-		  $costCentres[70] = CostCentre::create(['name' => 'Sångarafton', 'committee_id' => $committees[15]->id]);
+		  $costCentres[69] = CostCentre::create(['name' => 'Sångarafton', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[265] = BudgetLine::create([
 		        'name' => 'Dryck', 
 		        'income' => 150000, 
 		        'expenses' => 110000, 
-		        'cost_centre_id' => $costCentres[70]->id, 
+		        'cost_centre_id' => $costCentres[69]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4007,12 +4006,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4021')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4021']);
 		      $budgetLine[265]->accounts()->attach($account->id);
-		  $costCentres[71] = CostCentre::create(['name' => 'Storasyskonmiddag', 'committee_id' => $committees[15]->id]);
+		  $costCentres[70] = CostCentre::create(['name' => 'Storasyskonmiddag', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[266] = BudgetLine::create([
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 120000, 
-		        'cost_centre_id' => $costCentres[71]->id, 
+		        'cost_centre_id' => $costCentres[70]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4025,7 +4024,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[71]->id, 
+		        'cost_centre_id' => $costCentres[70]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4038,7 +4037,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 30000, 
-		        'cost_centre_id' => $costCentres[71]->id, 
+		        'cost_centre_id' => $costCentres[70]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4051,7 +4050,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Lokalhyra', 
 		        'income' => 0, 
 		        'expenses' => 40000, 
-		        'cost_centre_id' => $costCentres[71]->id, 
+		        'cost_centre_id' => $costCentres[70]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4060,12 +4059,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5010')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5010']);
 		      $budgetLine[269]->accounts()->attach($account->id);
-		  $costCentres[72] = CostCentre::create(['name' => 'Favvodaddemiddag', 'committee_id' => $committees[15]->id]);
+		  $costCentres[71] = CostCentre::create(['name' => 'Favvodaddemiddag', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[270] = BudgetLine::create([
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 720000, 
-		        'cost_centre_id' => $costCentres[72]->id, 
+		        'cost_centre_id' => $costCentres[71]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4078,7 +4077,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Resekostnader', 
 		        'income' => 0, 
 		        'expenses' => 130000, 
-		        'cost_centre_id' => $costCentres[72]->id, 
+		        'cost_centre_id' => $costCentres[71]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4087,12 +4086,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5800')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5800']);
 		      $budgetLine[271]->accounts()->attach($account->id);
-		  $costCentres[73] = CostCentre::create(['name' => 'FOO', 'committee_id' => $committees[15]->id]);
+		  $costCentres[72] = CostCentre::create(['name' => 'FOO', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[272] = BudgetLine::create([
 		        'name' => 'Småsyskonfika', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[73]->id, 
+		        'cost_centre_id' => $costCentres[72]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4105,7 +4104,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Lunch', 
 		        'income' => 0, 
 		        'expenses' => 600000, 
-		        'cost_centre_id' => $costCentres[73]->id, 
+		        'cost_centre_id' => $costCentres[72]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4118,7 +4117,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[73]->id, 
+		        'cost_centre_id' => $costCentres[72]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4127,12 +4126,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5463')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5463']);
 		      $budgetLine[274]->accounts()->attach($account->id);
-		  $costCentres[74] = CostCentre::create(['name' => 'Champagnefrukost', 'committee_id' => $committees[15]->id]);
+		  $costCentres[73] = CostCentre::create(['name' => 'Champagnefrukost', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[275] = BudgetLine::create([
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 80000, 
-		        'cost_centre_id' => $costCentres[74]->id, 
+		        'cost_centre_id' => $costCentres[73]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4145,7 +4144,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 30000, 
-		        'cost_centre_id' => $costCentres[74]->id, 
+		        'cost_centre_id' => $costCentres[73]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4158,7 +4157,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 40000, 
-		        'cost_centre_id' => $costCentres[74]->id, 
+		        'cost_centre_id' => $costCentres[73]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4167,12 +4166,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5463')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5463']);
 		      $budgetLine[277]->accounts()->attach($account->id);
-		  $costCentres[75] = CostCentre::create(['name' => 'Champagnecroquet', 'committee_id' => $committees[15]->id]);
+		  $costCentres[74] = CostCentre::create(['name' => 'Champagnecroquet', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[278] = BudgetLine::create([
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 80000, 
-		        'cost_centre_id' => $costCentres[75]->id, 
+		        'cost_centre_id' => $costCentres[74]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4185,7 +4184,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 30000, 
-		        'cost_centre_id' => $costCentres[75]->id, 
+		        'cost_centre_id' => $costCentres[74]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4198,7 +4197,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 40000, 
-		        'cost_centre_id' => $costCentres[75]->id, 
+		        'cost_centre_id' => $costCentres[74]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4207,12 +4206,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5463')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5463']);
 		      $budgetLine[280]->accounts()->attach($account->id);
-		  $costCentres[76] = CostCentre::create(['name' => 'Nattorientering', 'committee_id' => $committees[15]->id]);
+		  $costCentres[75] = CostCentre::create(['name' => 'Nattorientering', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[281] = BudgetLine::create([
 		        'name' => 'Fika', 
 		        'income' => 0, 
 		        'expenses' => 80000, 
-		        'cost_centre_id' => $costCentres[76]->id, 
+		        'cost_centre_id' => $costCentres[75]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4228,7 +4227,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Varma mackor', 
 		        'income' => 80000, 
 		        'expenses' => 70000, 
-		        'cost_centre_id' => $costCentres[76]->id, 
+		        'cost_centre_id' => $costCentres[75]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4244,7 +4243,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Korv', 
 		        'income' => 0, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[76]->id, 
+		        'cost_centre_id' => $costCentres[75]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4257,7 +4256,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Sponsrad station', 
 		        'income' => 700000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[76]->id, 
+		        'cost_centre_id' => $costCentres[75]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4273,7 +4272,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 250000, 
-		        'cost_centre_id' => $costCentres[76]->id, 
+		        'cost_centre_id' => $costCentres[75]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4286,7 +4285,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[76]->id, 
+		        'cost_centre_id' => $costCentres[75]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4299,7 +4298,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Förbrukningsmaterial', 
 		        'income' => 0, 
 		        'expenses' => 150000, 
-		        'cost_centre_id' => $costCentres[76]->id, 
+		        'cost_centre_id' => $costCentres[75]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4312,7 +4311,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Middag ', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[76]->id, 
+		        'cost_centre_id' => $costCentres[75]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4325,7 +4324,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Spons middag', 
 		        'income' => 700000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[76]->id, 
+		        'cost_centre_id' => $costCentres[75]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4337,12 +4336,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '3029')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3029']);
 		      $budgetLine[289]->accounts()->attach($account->id);
-		  $costCentres[77] = CostCentre::create(['name' => 'Laserkrig', 'committee_id' => $committees[15]->id]);
+		  $costCentres[76] = CostCentre::create(['name' => 'Laserkrig', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[290] = BudgetLine::create([
 		        'name' => 'Biljetter ', 
 		        'income' => 700000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[77]->id, 
+		        'cost_centre_id' => $costCentres[76]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4355,7 +4354,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Lokalhyra', 
 		        'income' => 0, 
 		        'expenses' => 1600000, 
-		        'cost_centre_id' => $costCentres[77]->id, 
+		        'cost_centre_id' => $costCentres[76]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4368,7 +4367,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 350000, 
-		        'cost_centre_id' => $costCentres[77]->id, 
+		        'cost_centre_id' => $costCentres[76]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4381,7 +4380,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 20000, 
-		        'cost_centre_id' => $costCentres[77]->id, 
+		        'cost_centre_id' => $costCentres[76]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4394,7 +4393,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 55000, 
-		        'cost_centre_id' => $costCentres[77]->id, 
+		        'cost_centre_id' => $costCentres[76]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4403,12 +4402,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4021')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4021']);
 		      $budgetLine[294]->accounts()->attach($account->id);
-		  $costCentres[78] = CostCentre::create(['name' => 'Pusharpub', 'committee_id' => $committees[15]->id]);
+		  $costCentres[77] = CostCentre::create(['name' => 'Pusharpub', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[295] = BudgetLine::create([
 		        'name' => 'Mat', 
 		        'income' => 210000, 
 		        'expenses' => 210000, 
-		        'cost_centre_id' => $costCentres[78]->id, 
+		        'cost_centre_id' => $costCentres[77]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4421,7 +4420,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 20000, 
-		        'cost_centre_id' => $costCentres[78]->id, 
+		        'cost_centre_id' => $costCentres[77]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4434,7 +4433,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Barkit', 
 		        'income' => 0, 
 		        'expenses' => 30000, 
-		        'cost_centre_id' => $costCentres[78]->id, 
+		        'cost_centre_id' => $costCentres[77]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4447,7 +4446,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[78]->id, 
+		        'cost_centre_id' => $costCentres[77]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4460,7 +4459,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp dryck ', 
 		        'income' => 0, 
 		        'expenses' => 1300000, 
-		        'cost_centre_id' => $costCentres[78]->id, 
+		        'cost_centre_id' => $costCentres[77]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4485,7 +4484,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning dryck', 
 		        'income' => 2000000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[78]->id, 
+		        'cost_centre_id' => $costCentres[77]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4510,7 +4509,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Skrivarkvot', 
 		        'income' => 0, 
 		        'expenses' => 20000, 
-		        'cost_centre_id' => $costCentres[78]->id, 
+		        'cost_centre_id' => $costCentres[77]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4519,12 +4518,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '0')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '0']);
 		      $budgetLine[301]->accounts()->attach($account->id);
-		  $costCentres[79] = CostCentre::create(['name' => 'nØllegasque - utan efterkör', 'committee_id' => $committees[15]->id]);
+		  $costCentres[78] = CostCentre::create(['name' => 'nØllegasque - utan efterkör', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[302] = BudgetLine::create([
 		        'name' => 'Biljetter sittning', 
 		        'income' => 5940000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[79]->id, 
+		        'cost_centre_id' => $costCentres[78]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4540,7 +4539,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Biljetter efterkör', 
 		        'income' => 400000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[79]->id, 
+		        'cost_centre_id' => $costCentres[78]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4553,7 +4552,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mackor', 
 		        'income' => 0, 
 		        'expenses' => 750000, 
-		        'cost_centre_id' => $costCentres[79]->id, 
+		        'cost_centre_id' => $costCentres[78]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4566,7 +4565,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Hyra maskiner', 
 		        'income' => 0, 
 		        'expenses' => 2800000, 
-		        'cost_centre_id' => $costCentres[79]->id, 
+		        'cost_centre_id' => $costCentres[78]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4579,7 +4578,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Live-underhållning', 
 		        'income' => 0, 
 		        'expenses' => 280000, 
-		        'cost_centre_id' => $costCentres[79]->id, 
+		        'cost_centre_id' => $costCentres[78]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4592,7 +4591,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 400000, 
-		        'cost_centre_id' => $costCentres[79]->id, 
+		        'cost_centre_id' => $costCentres[78]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4605,7 +4604,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Ordningsvakter', 
 		        'income' => 0, 
 		        'expenses' => 1237000, 
-		        'cost_centre_id' => $costCentres[79]->id, 
+		        'cost_centre_id' => $costCentres[78]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4618,7 +4617,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'MF personal', 
 		        'income' => 0, 
 		        'expenses' => 560000, 
-		        'cost_centre_id' => $costCentres[79]->id, 
+		        'cost_centre_id' => $costCentres[78]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4631,7 +4630,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Städavgift', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[79]->id, 
+		        'cost_centre_id' => $costCentres[78]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4644,7 +4643,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Personalmat', 
 		        'income' => 0, 
 		        'expenses' => 450000, 
-		        'cost_centre_id' => $costCentres[79]->id, 
+		        'cost_centre_id' => $costCentres[78]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4657,7 +4656,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Sittningsmat', 
 		        'income' => 0, 
 		        'expenses' => 6000000, 
-		        'cost_centre_id' => $costCentres[79]->id, 
+		        'cost_centre_id' => $costCentres[78]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4670,7 +4669,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 2500000, 
-		        'cost_centre_id' => $costCentres[79]->id, 
+		        'cost_centre_id' => $costCentres[78]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4695,7 +4694,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[79]->id, 
+		        'cost_centre_id' => $costCentres[78]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4708,7 +4707,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Bastu', 
 		        'income' => 0, 
 		        'expenses' => 70000, 
-		        'cost_centre_id' => $costCentres[79]->id, 
+		        'cost_centre_id' => $costCentres[78]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4721,7 +4720,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Förbrukningsinventarier', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[79]->id, 
+		        'cost_centre_id' => $costCentres[78]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4734,7 +4733,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Utklädnad', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[79]->id, 
+		        'cost_centre_id' => $costCentres[78]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4747,7 +4746,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Lokalhyra', 
 		        'income' => 0, 
 		        'expenses' => 2200000, 
-		        'cost_centre_id' => $costCentres[79]->id, 
+		        'cost_centre_id' => $costCentres[78]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4760,7 +4759,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Bussar', 
 		        'income' => 0, 
 		        'expenses' => 1400000, 
-		        'cost_centre_id' => $costCentres[79]->id, 
+		        'cost_centre_id' => $costCentres[78]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4773,7 +4772,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Serveringstillstånd', 
 		        'income' => 0, 
 		        'expenses' => 60000, 
-		        'cost_centre_id' => $costCentres[79]->id, 
+		        'cost_centre_id' => $costCentres[78]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4782,12 +4781,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '0')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '0']);
 		      $budgetLine[320]->accounts()->attach($account->id);
-		  $costCentres[80] = CostCentre::create(['name' => 'nØllegasque - efterkör i META', 'committee_id' => $committees[15]->id]);
+		  $costCentres[79] = CostCentre::create(['name' => 'nØllegasque - efterkör i META', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[321] = BudgetLine::create([
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 315000, 
-		        'cost_centre_id' => $costCentres[80]->id, 
+		        'cost_centre_id' => $costCentres[79]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4812,7 +4811,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning dryck', 
 		        'income' => 500000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[80]->id, 
+		        'cost_centre_id' => $costCentres[79]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4837,7 +4836,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Utökat tillstånd', 
 		        'income' => 0, 
 		        'expenses' => 60000, 
-		        'cost_centre_id' => $costCentres[80]->id, 
+		        'cost_centre_id' => $costCentres[79]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4850,7 +4849,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Korv ', 
 		        'income' => 200000, 
 		        'expenses' => 150000, 
-		        'cost_centre_id' => $costCentres[80]->id, 
+		        'cost_centre_id' => $costCentres[79]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4862,12 +4861,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4029')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4029']);
 		      $budgetLine[324]->accounts()->attach($account->id);
-		  $costCentres[81] = CostCentre::create(['name' => 'nØllebanquette', 'committee_id' => $committees[15]->id]);
+		  $costCentres[80] = CostCentre::create(['name' => 'nØllebanquette', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[325] = BudgetLine::create([
 		        'name' => 'Biljetter ', 
 		        'income' => 1330000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[81]->id, 
+		        'cost_centre_id' => $costCentres[80]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4883,7 +4882,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 3500000, 
-		        'cost_centre_id' => $costCentres[81]->id, 
+		        'cost_centre_id' => $costCentres[80]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4896,7 +4895,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 1500000, 
-		        'cost_centre_id' => $costCentres[81]->id, 
+		        'cost_centre_id' => $costCentres[80]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4921,7 +4920,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Städavgift', 
 		        'income' => 0, 
 		        'expenses' => 20000, 
-		        'cost_centre_id' => $costCentres[81]->id, 
+		        'cost_centre_id' => $costCentres[80]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4934,7 +4933,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[81]->id, 
+		        'cost_centre_id' => $costCentres[80]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4947,7 +4946,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Live-underhållning', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[81]->id, 
+		        'cost_centre_id' => $costCentres[80]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4960,7 +4959,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Hyra porslin', 
 		        'income' => 0, 
 		        'expenses' => 700000, 
-		        'cost_centre_id' => $costCentres[81]->id, 
+		        'cost_centre_id' => $costCentres[80]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4973,7 +4972,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Personal RN', 
 		        'income' => 0, 
 		        'expenses' => 225000, 
-		        'cost_centre_id' => $costCentres[81]->id, 
+		        'cost_centre_id' => $costCentres[80]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -4989,7 +4988,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Nymble personal', 
 		        'income' => 0, 
 		        'expenses' => 225000, 
-		        'cost_centre_id' => $costCentres[81]->id, 
+		        'cost_centre_id' => $costCentres[80]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5002,7 +5001,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Garderob', 
 		        'income' => 0, 
 		        'expenses' => 70000, 
-		        'cost_centre_id' => $costCentres[81]->id, 
+		        'cost_centre_id' => $costCentres[80]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5015,7 +5014,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Resultatjustering', 
 		        'income' => 4426700, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[81]->id, 
+		        'cost_centre_id' => $costCentres[80]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5024,12 +5023,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '0')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '0']);
 		      $budgetLine[335]->accounts()->attach($account->id);
-		  $costCentres[82] = CostCentre::create(['name' => 'nØllan games', 'committee_id' => $committees[15]->id]);
+		  $costCentres[81] = CostCentre::create(['name' => 'nØllan games', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[336] = BudgetLine::create([
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 60000, 
-		        'cost_centre_id' => $costCentres[82]->id, 
+		        'cost_centre_id' => $costCentres[81]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5042,7 +5041,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Förbrukningsmaterial', 
 		        'income' => 0, 
 		        'expenses' => 20000, 
-		        'cost_centre_id' => $costCentres[82]->id, 
+		        'cost_centre_id' => $costCentres[81]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5051,12 +5050,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5460')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5460']);
 		      $budgetLine[337]->accounts()->attach($account->id);
-		  $costCentres[83] = CostCentre::create(['name' => 'Genrepspub', 'committee_id' => $committees[15]->id]);
+		  $costCentres[82] = CostCentre::create(['name' => 'Genrepspub', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[338] = BudgetLine::create([
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 33000, 
-		        'cost_centre_id' => $costCentres[83]->id, 
+		        'cost_centre_id' => $costCentres[82]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5069,7 +5068,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 333300, 
-		        'cost_centre_id' => $costCentres[83]->id, 
+		        'cost_centre_id' => $costCentres[82]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5094,7 +5093,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning dryck', 
 		        'income' => 500000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[83]->id, 
+		        'cost_centre_id' => $costCentres[82]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5119,7 +5118,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Korv ', 
 		        'income' => 150000, 
 		        'expenses' => 150000, 
-		        'cost_centre_id' => $costCentres[83]->id, 
+		        'cost_centre_id' => $costCentres[82]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5131,12 +5130,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4029')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4029']);
 		      $budgetLine[341]->accounts()->attach($account->id);
-		  $costCentres[84] = CostCentre::create(['name' => 'Hurry Scurry ', 'committee_id' => $committees[15]->id]);
+		  $costCentres[83] = CostCentre::create(['name' => 'Hurry Scurry ', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[342] = BudgetLine::create([
 		        'name' => 'Utklädnader', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[84]->id, 
+		        'cost_centre_id' => $costCentres[83]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5149,7 +5148,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Förbrukningsmateriel', 
 		        'income' => 0, 
 		        'expenses' => 150000, 
-		        'cost_centre_id' => $costCentres[84]->id, 
+		        'cost_centre_id' => $costCentres[83]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5158,12 +5157,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5460')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5460']);
 		      $budgetLine[343]->accounts()->attach($account->id);
-		  $costCentres[85] = CostCentre::create(['name' => 'Tenta Recovery', 'committee_id' => $committees[15]->id]);
+		  $costCentres[84] = CostCentre::create(['name' => 'Tenta Recovery', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[344] = BudgetLine::create([
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 150000, 
-		        'cost_centre_id' => $costCentres[85]->id, 
+		        'cost_centre_id' => $costCentres[84]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5176,7 +5175,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Hyra inventarier & verktyg', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[85]->id, 
+		        'cost_centre_id' => $costCentres[84]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5189,7 +5188,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Spons', 
 		        'income' => 1150000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[85]->id, 
+		        'cost_centre_id' => $costCentres[84]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5205,7 +5204,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 150000, 
-		        'cost_centre_id' => $costCentres[85]->id, 
+		        'cost_centre_id' => $costCentres[84]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5214,12 +5213,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4021')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4021']);
 		      $budgetLine[347]->accounts()->attach($account->id);
-		  $costCentres[86] = CostCentre::create(['name' => 'LQ', 'committee_id' => $committees[15]->id]);
+		  $costCentres[85] = CostCentre::create(['name' => 'LQ', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[348] = BudgetLine::create([
 		        'name' => 'Byggmaterial ', 
 		        'income' => 0, 
 		        'expenses' => 250000, 
-		        'cost_centre_id' => $costCentres[86]->id, 
+		        'cost_centre_id' => $costCentres[85]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5232,7 +5231,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Förbrukningsmateriel', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[86]->id, 
+		        'cost_centre_id' => $costCentres[85]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5245,7 +5244,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Verktyg', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[86]->id, 
+		        'cost_centre_id' => $costCentres[85]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5258,7 +5257,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Sjukvård', 
 		        'income' => 0, 
 		        'expenses' => 10000, 
-		        'cost_centre_id' => $costCentres[86]->id, 
+		        'cost_centre_id' => $costCentres[85]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5271,7 +5270,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Korv ', 
 		        'income' => 300000, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[86]->id, 
+		        'cost_centre_id' => $costCentres[85]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5287,7 +5286,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Spons', 
 		        'income' => 700000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[86]->id, 
+		        'cost_centre_id' => $costCentres[85]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5300,7 +5299,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 5000, 
-		        'cost_centre_id' => $costCentres[86]->id, 
+		        'cost_centre_id' => $costCentres[85]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5309,12 +5308,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5463')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5463']);
 		      $budgetLine[354]->accounts()->attach($account->id);
-		  $costCentres[87] = CostCentre::create(['name' => 'NBF', 'committee_id' => $committees[15]->id]);
+		  $costCentres[86] = CostCentre::create(['name' => 'NBF', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[355] = BudgetLine::create([
 		        'name' => 'Biljetter ', 
 		        'income' => 860000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[87]->id, 
+		        'cost_centre_id' => $costCentres[86]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5330,7 +5329,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[87]->id, 
+		        'cost_centre_id' => $costCentres[86]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5343,7 +5342,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck ', 
 		        'income' => 0, 
 		        'expenses' => 430000, 
-		        'cost_centre_id' => $costCentres[87]->id, 
+		        'cost_centre_id' => $costCentres[86]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5383,7 +5382,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 150000, 
-		        'cost_centre_id' => $costCentres[87]->id, 
+		        'cost_centre_id' => $costCentres[86]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5396,7 +5395,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Utklädnader', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[87]->id, 
+		        'cost_centre_id' => $costCentres[86]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5409,7 +5408,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 70000, 
-		        'cost_centre_id' => $costCentres[87]->id, 
+		        'cost_centre_id' => $costCentres[86]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5422,7 +5421,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Förbrukningsinventarier', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[87]->id, 
+		        'cost_centre_id' => $costCentres[86]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5431,12 +5430,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5410')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5410']);
 		      $budgetLine[361]->accounts()->attach($account->id);
-		  $costCentres[88] = CostCentre::create(['name' => 'NBE', 'committee_id' => $committees[15]->id]);
+		  $costCentres[87] = CostCentre::create(['name' => 'NBE', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[362] = BudgetLine::create([
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 550000, 
-		        'cost_centre_id' => $costCentres[88]->id, 
+		        'cost_centre_id' => $costCentres[87]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5461,7 +5460,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning dryck', 
 		        'income' => 1000000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[88]->id, 
+		        'cost_centre_id' => $costCentres[87]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5482,12 +5481,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '3025')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3025']);
 		      $budgetLine[363]->accounts()->attach($account->id);
-		  $costCentres[89] = CostCentre::create(['name' => 'DATA - nØllepubrunda', 'committee_id' => $committees[15]->id]);
+		  $costCentres[88] = CostCentre::create(['name' => 'DATA - nØllepubrunda', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[364] = BudgetLine::create([
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 2400000, 
-		        'cost_centre_id' => $costCentres[89]->id, 
+		        'cost_centre_id' => $costCentres[88]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5512,7 +5511,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning dryck', 
 		        'income' => 4000000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[89]->id, 
+		        'cost_centre_id' => $costCentres[88]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5537,7 +5536,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Serveringstillstånd', 
 		        'income' => 0, 
 		        'expenses' => 60000, 
-		        'cost_centre_id' => $costCentres[89]->id, 
+		        'cost_centre_id' => $costCentres[88]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5550,7 +5549,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[89]->id, 
+		        'cost_centre_id' => $costCentres[88]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5563,7 +5562,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Märken', 
 		        'income' => 2000000, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[89]->id, 
+		        'cost_centre_id' => $costCentres[88]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5579,7 +5578,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Resultatjustering', 
 		        'income' => 0, 
 		        'expenses' => 1470000, 
-		        'cost_centre_id' => $costCentres[89]->id, 
+		        'cost_centre_id' => $costCentres[88]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5588,12 +5587,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '0')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '0']);
 		      $budgetLine[369]->accounts()->attach($account->id);
-		  $costCentres[90] = CostCentre::create(['name' => 'nØlleOsqvik', 'committee_id' => $committees[15]->id]);
+		  $costCentres[89] = CostCentre::create(['name' => 'nØlleOsqvik', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[370] = BudgetLine::create([
 		        'name' => 'Biljetter ', 
 		        'income' => 540000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[90]->id, 
+		        'cost_centre_id' => $costCentres[89]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5609,7 +5608,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 600000, 
-		        'cost_centre_id' => $costCentres[90]->id, 
+		        'cost_centre_id' => $costCentres[89]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5622,7 +5621,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mackor', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[90]->id, 
+		        'cost_centre_id' => $costCentres[89]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5635,7 +5634,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 150000, 
 		        'expenses' => 600000, 
-		        'cost_centre_id' => $costCentres[90]->id, 
+		        'cost_centre_id' => $costCentres[89]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5663,7 +5662,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[90]->id, 
+		        'cost_centre_id' => $costCentres[89]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5676,7 +5675,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Förbrukningsmateriel', 
 		        'income' => 0, 
 		        'expenses' => 75000, 
-		        'cost_centre_id' => $costCentres[90]->id, 
+		        'cost_centre_id' => $costCentres[89]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5689,7 +5688,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Ved', 
 		        'income' => 0, 
 		        'expenses' => 20000, 
-		        'cost_centre_id' => $costCentres[90]->id, 
+		        'cost_centre_id' => $costCentres[89]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5702,7 +5701,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Lokalhyra', 
 		        'income' => 0, 
 		        'expenses' => 175000, 
-		        'cost_centre_id' => $costCentres[90]->id, 
+		        'cost_centre_id' => $costCentres[89]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5715,7 +5714,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Milersättning', 
 		        'income' => 0, 
 		        'expenses' => 60000, 
-		        'cost_centre_id' => $costCentres[90]->id, 
+		        'cost_centre_id' => $costCentres[89]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5728,7 +5727,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Hyra teknik', 
 		        'income' => 0, 
 		        'expenses' => 160000, 
-		        'cost_centre_id' => $costCentres[90]->id, 
+		        'cost_centre_id' => $costCentres[89]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5741,7 +5740,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekor', 
 		        'income' => 0, 
 		        'expenses' => 60000, 
-		        'cost_centre_id' => $costCentres[90]->id, 
+		        'cost_centre_id' => $costCentres[89]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5754,7 +5753,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Spons', 
 		        'income' => 1700000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[90]->id, 
+		        'cost_centre_id' => $costCentres[89]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5763,13 +5762,13 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '3052')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3052']);
 		      $budgetLine[381]->accounts()->attach($account->id);
-		  $costCentres[91] = CostCentre::create(['name' => 'Mitch och Butch', 'committee_id' => $committees[15]->id]);
-		  $costCentres[92] = CostCentre::create(['name' => 'Ny', 'committee_id' => $committees[15]->id]);
+		  $costCentres[90] = CostCentre::create(['name' => 'Mitch och Butch', 'committee_id' => $committees[15]->id]);
+		  $costCentres[91] = CostCentre::create(['name' => 'Ny', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[382] = BudgetLine::create([
 		        'name' => 'Kokosolja', 
 		        'income' => 0, 
 		        'expenses' => 40000, 
-		        'cost_centre_id' => $costCentres[92]->id, 
+		        'cost_centre_id' => $costCentres[91]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5778,12 +5777,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '0')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '0']);
 		      $budgetLine[382]->accounts()->attach($account->id);
-		  $costCentres[93] = CostCentre::create(['name' => 'MOT - Internfest', 'committee_id' => $committees[15]->id]);
+		  $costCentres[92] = CostCentre::create(['name' => 'MOT - Internfest', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[383] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 400000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[93]->id, 
+		        'cost_centre_id' => $costCentres[92]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5799,7 +5798,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Lokalhyra', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[93]->id, 
+		        'cost_centre_id' => $costCentres[92]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5812,7 +5811,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 650000, 
-		        'cost_centre_id' => $costCentres[93]->id, 
+		        'cost_centre_id' => $costCentres[92]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5837,7 +5836,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[93]->id, 
+		        'cost_centre_id' => $costCentres[92]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5850,7 +5849,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[93]->id, 
+		        'cost_centre_id' => $costCentres[92]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5863,7 +5862,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Utkädnader', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[93]->id, 
+		        'cost_centre_id' => $costCentres[92]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5876,7 +5875,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[93]->id, 
+		        'cost_centre_id' => $costCentres[92]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5885,12 +5884,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5463')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5463']);
 		      $budgetLine[389]->accounts()->attach($account->id);
-		  $costCentres[94] = CostCentre::create(['name' => 'MOT-Internfest efterkör', 'committee_id' => $committees[15]->id]);
+		  $costCentres[93] = CostCentre::create(['name' => 'MOT-Internfest efterkör', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[390] = BudgetLine::create([
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[94]->id, 
+		        'cost_centre_id' => $costCentres[93]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5915,7 +5914,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning dryck', 
 		        'income' => 120000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[94]->id, 
+		        'cost_centre_id' => $costCentres[93]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5936,12 +5935,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '3025')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3025']);
 		      $budgetLine[391]->accounts()->attach($account->id);
-		  $costCentres[95] = CostCentre::create(['name' => 'Garpen', 'committee_id' => $committees[15]->id]);
+		  $costCentres[94] = CostCentre::create(['name' => 'Garpen', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[392] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 0, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[95]->id, 
+		        'cost_centre_id' => $costCentres[94]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5957,7 +5956,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 1000000, 
-		        'cost_centre_id' => $costCentres[95]->id, 
+		        'cost_centre_id' => $costCentres[94]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5970,7 +5969,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[95]->id, 
+		        'cost_centre_id' => $costCentres[94]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -5995,7 +5994,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Spons', 
 		        'income' => 1500000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[95]->id, 
+		        'cost_centre_id' => $costCentres[94]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6004,12 +6003,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '0')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '0']);
 		      $budgetLine[395]->accounts()->attach($account->id);
-		  $costCentres[96] = CostCentre::create(['name' => 'plOsqvik', 'committee_id' => $committees[15]->id]);
+		  $costCentres[95] = CostCentre::create(['name' => 'plOsqvik', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[396] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 496000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[96]->id, 
+		        'cost_centre_id' => $costCentres[95]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6025,7 +6024,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 550000, 
-		        'cost_centre_id' => $costCentres[96]->id, 
+		        'cost_centre_id' => $costCentres[95]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6038,7 +6037,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Ved', 
 		        'income' => 0, 
 		        'expenses' => 20000, 
-		        'cost_centre_id' => $costCentres[96]->id, 
+		        'cost_centre_id' => $costCentres[95]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6051,7 +6050,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 350000, 
-		        'cost_centre_id' => $costCentres[96]->id, 
+		        'cost_centre_id' => $costCentres[95]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6076,7 +6075,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 60000, 
-		        'cost_centre_id' => $costCentres[96]->id, 
+		        'cost_centre_id' => $costCentres[95]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6089,7 +6088,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Lokalhyra', 
 		        'income' => 0, 
 		        'expenses' => 175000, 
-		        'cost_centre_id' => $costCentres[96]->id, 
+		        'cost_centre_id' => $costCentres[95]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6102,7 +6101,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Milersättning', 
 		        'income' => 0, 
 		        'expenses' => 60000, 
-		        'cost_centre_id' => $costCentres[96]->id, 
+		        'cost_centre_id' => $costCentres[95]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6115,7 +6114,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Teknik', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[96]->id, 
+		        'cost_centre_id' => $costCentres[95]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6128,7 +6127,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[96]->id, 
+		        'cost_centre_id' => $costCentres[95]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6137,12 +6136,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5411')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5411']);
 		      $budgetLine[404]->accounts()->attach($account->id);
-		  $costCentres[97] = CostCentre::create(['name' => 'Titelöverlämning', 'committee_id' => $committees[15]->id]);
+		  $costCentres[96] = CostCentre::create(['name' => 'Titelöverlämning', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[405] = BudgetLine::create([
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 120000, 
-		        'cost_centre_id' => $costCentres[97]->id, 
+		        'cost_centre_id' => $costCentres[96]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6155,7 +6154,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 45000, 
-		        'cost_centre_id' => $costCentres[97]->id, 
+		        'cost_centre_id' => $costCentres[96]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6167,12 +6166,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '7693')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '7693']);
 		      $budgetLine[406]->accounts()->attach($account->id);
-		  $costCentres[98] = CostCentre::create(['name' => 'Bärbaren', 'committee_id' => $committees[15]->id]);
+		  $costCentres[97] = CostCentre::create(['name' => 'Bärbaren', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[407] = BudgetLine::create([
 		        'name' => 'Läsk ', 
 		        'income' => 750000, 
 		        'expenses' => 700000, 
-		        'cost_centre_id' => $costCentres[98]->id, 
+		        'cost_centre_id' => $costCentres[97]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6188,7 +6187,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Kiosk', 
 		        'income' => 350000, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[98]->id, 
+		        'cost_centre_id' => $costCentres[97]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6204,7 +6203,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Bärbarsrestaurering', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[98]->id, 
+		        'cost_centre_id' => $costCentres[97]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6217,7 +6216,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Diff', 
 		        'income' => 0, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[98]->id, 
+		        'cost_centre_id' => $costCentres[97]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6226,12 +6225,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '3790')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3790']);
 		      $budgetLine[410]->accounts()->attach($account->id);
-		  $costCentres[99] = CostCentre::create(['name' => 'nØllekit', 'committee_id' => $committees[15]->id]);
+		  $costCentres[98] = CostCentre::create(['name' => 'nØllekit', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[411] = BudgetLine::create([
 		        'name' => 'nØllans guide till mottagningen', 
 		        'income' => 0, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[99]->id, 
+		        'cost_centre_id' => $costCentres[98]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6244,7 +6243,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Schlemhäfte', 
 		        'income' => 0, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[99]->id, 
+		        'cost_centre_id' => $costCentres[98]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6257,7 +6256,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Sånghäften', 
 		        'income' => 0, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[99]->id, 
+		        'cost_centre_id' => $costCentres[98]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6270,7 +6269,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Pennor', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[99]->id, 
+		        'cost_centre_id' => $costCentres[98]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6279,12 +6278,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '6110')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '6110']);
 		      $budgetLine[414]->accounts()->attach($account->id);
-		  $costCentres[100] = CostCentre::create(['name' => 'Xning', 'committee_id' => $committees[15]->id]);
+		  $costCentres[99] = CostCentre::create(['name' => 'Xning', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[415] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 1300000, 
 		        'expenses' => 1500000, 
-		        'cost_centre_id' => $costCentres[100]->id, 
+		        'cost_centre_id' => $costCentres[99]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6296,12 +6295,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '7631')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '7631']);
 		      $budgetLine[415]->accounts()->attach($account->id);
-		  $costCentres[101] = CostCentre::create(['name' => 'Phösargasque', 'committee_id' => $committees[15]->id]);
+		  $costCentres[100] = CostCentre::create(['name' => 'Phösargasque', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[416] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 1900000, 
 		        'expenses' => 1900000, 
-		        'cost_centre_id' => $costCentres[101]->id, 
+		        'cost_centre_id' => $costCentres[100]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6314,7 +6313,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning dryck', 
 		        'income' => 300000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[101]->id, 
+		        'cost_centre_id' => $costCentres[100]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6339,7 +6338,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[101]->id, 
+		        'cost_centre_id' => $costCentres[100]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6360,12 +6359,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4025')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4025']);
 		      $budgetLine[418]->accounts()->attach($account->id);
-		  $costCentres[102] = CostCentre::create(['name' => 'Hjälpfesten', 'committee_id' => $committees[15]->id]);
+		  $costCentres[101] = CostCentre::create(['name' => 'Hjälpfesten', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[419] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 60000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[102]->id, 
+		        'cost_centre_id' => $costCentres[101]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6378,7 +6377,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[102]->id, 
+		        'cost_centre_id' => $costCentres[101]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6391,7 +6390,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning dryck', 
 		        'income' => 200000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[102]->id, 
+		        'cost_centre_id' => $costCentres[101]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6416,7 +6415,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 150000, 
-		        'cost_centre_id' => $costCentres[102]->id, 
+		        'cost_centre_id' => $costCentres[101]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6441,7 +6440,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 120000, 
-		        'cost_centre_id' => $costCentres[102]->id, 
+		        'cost_centre_id' => $costCentres[101]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6481,7 +6480,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 30000, 
-		        'cost_centre_id' => $costCentres[102]->id, 
+		        'cost_centre_id' => $costCentres[101]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6490,12 +6489,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5411')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5411']);
 		      $budgetLine[424]->accounts()->attach($account->id);
-		  $costCentres[103] = CostCentre::create(['name' => 'TGT-middag', 'committee_id' => $committees[15]->id]);
+		  $costCentres[102] = CostCentre::create(['name' => 'TGT-middag', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[425] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 605000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[103]->id, 
+		        'cost_centre_id' => $costCentres[102]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6511,7 +6510,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 320000, 
-		        'cost_centre_id' => $costCentres[103]->id, 
+		        'cost_centre_id' => $costCentres[102]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6527,7 +6526,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[103]->id, 
+		        'cost_centre_id' => $costCentres[102]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6555,7 +6554,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[103]->id, 
+		        'cost_centre_id' => $costCentres[102]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6568,7 +6567,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Bastu', 
 		        'income' => 0, 
 		        'expenses' => 70000, 
-		        'cost_centre_id' => $costCentres[103]->id, 
+		        'cost_centre_id' => $costCentres[102]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6581,7 +6580,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[103]->id, 
+		        'cost_centre_id' => $costCentres[102]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6594,7 +6593,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Barkit', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[103]->id, 
+		        'cost_centre_id' => $costCentres[102]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6603,12 +6602,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4031')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4031']);
 		      $budgetLine[431]->accounts()->attach($account->id);
-		  $costCentres[104] = CostCentre::create(['name' => 'Konferenspub', 'committee_id' => $committees[15]->id]);
+		  $costCentres[103] = CostCentre::create(['name' => 'Konferenspub', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[432] = BudgetLine::create([
 		        'name' => 'Mat', 
 		        'income' => 300000, 
 		        'expenses' => 350000, 
-		        'cost_centre_id' => $costCentres[104]->id, 
+		        'cost_centre_id' => $costCentres[103]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6624,7 +6623,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 150000, 
-		        'cost_centre_id' => $costCentres[104]->id, 
+		        'cost_centre_id' => $costCentres[103]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6637,7 +6636,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 20000, 
-		        'cost_centre_id' => $costCentres[104]->id, 
+		        'cost_centre_id' => $costCentres[103]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6650,7 +6649,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 350000, 
-		        'cost_centre_id' => $costCentres[104]->id, 
+		        'cost_centre_id' => $costCentres[103]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6675,7 +6674,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning dryck', 
 		        'income' => 500000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[104]->id, 
+		        'cost_centre_id' => $costCentres[103]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6700,7 +6699,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Resultatjustering', 
 		        'income' => 35000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[104]->id, 
+		        'cost_centre_id' => $costCentres[103]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6709,12 +6708,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '0')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '0']);
 		      $budgetLine[437]->accounts()->attach($account->id);
-		  $costCentres[105] = CostCentre::create(['name' => 'Opengasque', 'committee_id' => $committees[15]->id]);
+		  $costCentres[104] = CostCentre::create(['name' => 'Opengasque', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[438] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 580000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[105]->id, 
+		        'cost_centre_id' => $costCentres[104]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6730,7 +6729,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 600000, 
-		        'cost_centre_id' => $costCentres[105]->id, 
+		        'cost_centre_id' => $costCentres[104]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6743,7 +6742,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 390000, 
-		        'cost_centre_id' => $costCentres[105]->id, 
+		        'cost_centre_id' => $costCentres[104]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6768,7 +6767,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[105]->id, 
+		        'cost_centre_id' => $costCentres[104]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6781,7 +6780,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 70000, 
-		        'cost_centre_id' => $costCentres[105]->id, 
+		        'cost_centre_id' => $costCentres[104]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6794,7 +6793,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Resultatjustering', 
 		        'income' => 580000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[105]->id, 
+		        'cost_centre_id' => $costCentres[104]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6803,12 +6802,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '0')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '0']);
 		      $budgetLine[443]->accounts()->attach($account->id);
-		  $costCentres[106] = CostCentre::create(['name' => 'Opengasque efterkör', 'committee_id' => $committees[15]->id]);
+		  $costCentres[105] = CostCentre::create(['name' => 'Opengasque efterkör', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[444] = BudgetLine::create([
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 700000, 
-		        'cost_centre_id' => $costCentres[106]->id, 
+		        'cost_centre_id' => $costCentres[105]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6833,7 +6832,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning dryck', 
 		        'income' => 1200000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[106]->id, 
+		        'cost_centre_id' => $costCentres[105]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6858,7 +6857,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Resultatjustering', 
 		        'income' => 0, 
 		        'expenses' => 250000, 
-		        'cost_centre_id' => $costCentres[106]->id, 
+		        'cost_centre_id' => $costCentres[105]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6867,12 +6866,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '0')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '0']);
 		      $budgetLine[446]->accounts()->attach($account->id);
-		  $costCentres[107] = CostCentre::create(['name' => 'META-fest', 'committee_id' => $committees[15]->id]);
+		  $costCentres[106] = CostCentre::create(['name' => 'META-fest', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[447] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 530000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[107]->id, 
+		        'cost_centre_id' => $costCentres[106]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6888,7 +6887,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 550000, 
-		        'cost_centre_id' => $costCentres[107]->id, 
+		        'cost_centre_id' => $costCentres[106]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6901,7 +6900,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 390000, 
-		        'cost_centre_id' => $costCentres[107]->id, 
+		        'cost_centre_id' => $costCentres[106]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6926,7 +6925,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[107]->id, 
+		        'cost_centre_id' => $costCentres[106]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6939,7 +6938,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 70000, 
-		        'cost_centre_id' => $costCentres[107]->id, 
+		        'cost_centre_id' => $costCentres[106]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6952,7 +6951,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 1500000, 
-		        'cost_centre_id' => $costCentres[107]->id, 
+		        'cost_centre_id' => $costCentres[106]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6965,7 +6964,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning dryck', 
 		        'income' => 2000000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[107]->id, 
+		        'cost_centre_id' => $costCentres[106]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6978,7 +6977,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Barkit', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[107]->id, 
+		        'cost_centre_id' => $costCentres[106]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -6991,7 +6990,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Resultatjustering', 
 		        'income' => 65000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[107]->id, 
+		        'cost_centre_id' => $costCentres[106]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7000,12 +6999,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '0')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '0']);
 		      $budgetLine[455]->accounts()->attach($account->id);
-		  $costCentres[108] = CostCentre::create(['name' => 'nØlLan', 'committee_id' => $committees[15]->id]);
+		  $costCentres[107] = CostCentre::create(['name' => 'nØlLan', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[456] = BudgetLine::create([
 		        'name' => 'Spons', 
 		        'income' => 350000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[108]->id, 
+		        'cost_centre_id' => $costCentres[107]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7021,7 +7020,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 60000, 
-		        'cost_centre_id' => $costCentres[108]->id, 
+		        'cost_centre_id' => $costCentres[107]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7033,12 +7032,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4029')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4029']);
 		      $budgetLine[457]->accounts()->attach($account->id);
-		  $costCentres[109] = CostCentre::create(['name' => 'MOT-Efterkör & Pub', 'committee_id' => $committees[15]->id]);
+		  $costCentres[108] = CostCentre::create(['name' => 'MOT-Efterkör & Pub', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[458] = BudgetLine::create([
 		        'name' => 'Barkit', 
 		        'income' => 0, 
 		        'expenses' => 570000, 
-		        'cost_centre_id' => $costCentres[109]->id, 
+		        'cost_centre_id' => $costCentres[108]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7051,7 +7050,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[109]->id, 
+		        'cost_centre_id' => $costCentres[108]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7064,7 +7063,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Maskinhyra', 
 		        'income' => 0, 
 		        'expenses' => 70000, 
-		        'cost_centre_id' => $costCentres[109]->id, 
+		        'cost_centre_id' => $costCentres[108]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7077,7 +7076,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[109]->id, 
+		        'cost_centre_id' => $costCentres[108]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7090,7 +7089,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 20000, 
-		        'cost_centre_id' => $costCentres[109]->id, 
+		        'cost_centre_id' => $costCentres[108]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7103,7 +7102,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Förbrukningsmaterial', 
 		        'income' => 0, 
 		        'expenses' => 70000, 
-		        'cost_centre_id' => $costCentres[109]->id, 
+		        'cost_centre_id' => $costCentres[108]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7112,12 +7111,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5460')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5460']);
 		      $budgetLine[463]->accounts()->attach($account->id);
-		  $costCentres[110] = CostCentre::create(['name' => 'Domedagen', 'committee_id' => $committees[15]->id]);
+		  $costCentres[109] = CostCentre::create(['name' => 'Domedagen', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[464] = BudgetLine::create([
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 250000, 
-		        'cost_centre_id' => $costCentres[110]->id, 
+		        'cost_centre_id' => $costCentres[109]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7130,7 +7129,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 150000, 
-		        'cost_centre_id' => $costCentres[110]->id, 
+		        'cost_centre_id' => $costCentres[109]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7146,7 +7145,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Teambuilding', 
 		        'income' => 0, 
 		        'expenses' => 250000, 
-		        'cost_centre_id' => $costCentres[110]->id, 
+		        'cost_centre_id' => $costCentres[109]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7155,12 +7154,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '7631')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '7631']);
 		      $budgetLine[466]->accounts()->attach($account->id);
-		  $costCentres[111] = CostCentre::create(['name' => 'Mottagningstack', 'committee_id' => $committees[15]->id]);
+		  $costCentres[110] = CostCentre::create(['name' => 'Mottagningstack', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[467] = BudgetLine::create([
 		        'name' => 'Biljetter sittning', 
 		        'income' => 304000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[111]->id, 
+		        'cost_centre_id' => $costCentres[110]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7176,7 +7175,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[111]->id, 
+		        'cost_centre_id' => $costCentres[110]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7189,7 +7188,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[111]->id, 
+		        'cost_centre_id' => $costCentres[110]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7214,7 +7213,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[111]->id, 
+		        'cost_centre_id' => $costCentres[110]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7227,7 +7226,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Märken', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[111]->id, 
+		        'cost_centre_id' => $costCentres[110]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7240,7 +7239,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Barkit', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[111]->id, 
+		        'cost_centre_id' => $costCentres[110]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7249,12 +7248,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4031')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4031']);
 		      $budgetLine[472]->accounts()->attach($account->id);
-		  $costCentres[112] = CostCentre::create(['name' => 'Mottagningstack efterkör', 'committee_id' => $committees[15]->id]);
+		  $costCentres[111] = CostCentre::create(['name' => 'Mottagningstack efterkör', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[473] = BudgetLine::create([
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 1000000, 
-		        'cost_centre_id' => $costCentres[112]->id, 
+		        'cost_centre_id' => $costCentres[111]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7279,7 +7278,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning dryck', 
 		        'income' => 1500000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[112]->id, 
+		        'cost_centre_id' => $costCentres[111]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7304,7 +7303,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Biljetter efterkör', 
 		        'income' => 120000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[112]->id, 
+		        'cost_centre_id' => $costCentres[111]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7313,12 +7312,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '3041')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3041']);
 		      $budgetLine[475]->accounts()->attach($account->id);
-		  $costCentres[113] = CostCentre::create(['name' => 'Ettans fest', 'committee_id' => $committees[15]->id]);
+		  $costCentres[112] = CostCentre::create(['name' => 'Ettans fest', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[476] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 3102000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[113]->id, 
+		        'cost_centre_id' => $costCentres[112]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7334,7 +7333,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 1220000, 
-		        'cost_centre_id' => $costCentres[113]->id, 
+		        'cost_centre_id' => $costCentres[112]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7347,7 +7346,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 550000, 
-		        'cost_centre_id' => $costCentres[113]->id, 
+		        'cost_centre_id' => $costCentres[112]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7372,7 +7371,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Lokalhyra', 
 		        'income' => 0, 
 		        'expenses' => 3000000, 
-		        'cost_centre_id' => $costCentres[113]->id, 
+		        'cost_centre_id' => $costCentres[112]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7385,7 +7384,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Liveframträdanden', 
 		        'income' => 0, 
 		        'expenses' => 400000, 
-		        'cost_centre_id' => $costCentres[113]->id, 
+		        'cost_centre_id' => $costCentres[112]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7398,7 +7397,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 150000, 
-		        'cost_centre_id' => $costCentres[113]->id, 
+		        'cost_centre_id' => $costCentres[112]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7411,7 +7410,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Märken', 
 		        'income' => 0, 
 		        'expenses' => 150000, 
-		        'cost_centre_id' => $costCentres[113]->id, 
+		        'cost_centre_id' => $costCentres[112]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7424,7 +7423,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Tillstånd', 
 		        'income' => 0, 
 		        'expenses' => 110000, 
-		        'cost_centre_id' => $costCentres[113]->id, 
+		        'cost_centre_id' => $costCentres[112]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7433,12 +7432,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '6950')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '6950']);
 		      $budgetLine[483]->accounts()->attach($account->id);
-		  $costCentres[114] = CostCentre::create(['name' => 'Ettans fest efterkör', 'committee_id' => $committees[15]->id]);
+		  $costCentres[113] = CostCentre::create(['name' => 'Ettans fest efterkör', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[484] = BudgetLine::create([
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 230000, 
-		        'cost_centre_id' => $costCentres[114]->id, 
+		        'cost_centre_id' => $costCentres[113]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7463,7 +7462,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning dryck', 
 		        'income' => 400000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[114]->id, 
+		        'cost_centre_id' => $costCentres[113]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7484,12 +7483,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '3025')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3025']);
 		      $budgetLine[485]->accounts()->attach($account->id);
-		  $costCentres[115] = CostCentre::create(['name' => 'KDE', 'committee_id' => $committees[15]->id]);
+		  $costCentres[114] = CostCentre::create(['name' => 'KDE', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[486] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 1800000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[115]->id, 
+		        'cost_centre_id' => $costCentres[114]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7505,7 +7504,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 810000, 
-		        'cost_centre_id' => $costCentres[115]->id, 
+		        'cost_centre_id' => $costCentres[114]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7518,7 +7517,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 550000, 
-		        'cost_centre_id' => $costCentres[115]->id, 
+		        'cost_centre_id' => $costCentres[114]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7543,7 +7542,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Aktivitet', 
 		        'income' => 0, 
 		        'expenses' => 160000, 
-		        'cost_centre_id' => $costCentres[115]->id, 
+		        'cost_centre_id' => $costCentres[114]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7556,7 +7555,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Bastu', 
 		        'income' => 0, 
 		        'expenses' => 70000, 
-		        'cost_centre_id' => $costCentres[115]->id, 
+		        'cost_centre_id' => $costCentres[114]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7569,7 +7568,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inbjudningar', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[115]->id, 
+		        'cost_centre_id' => $costCentres[114]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7588,7 +7587,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[115]->id, 
+		        'cost_centre_id' => $costCentres[114]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7601,7 +7600,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 60000, 
-		        'cost_centre_id' => $costCentres[115]->id, 
+		        'cost_centre_id' => $costCentres[114]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7610,12 +7609,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5411')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5411']);
 		      $budgetLine[493]->accounts()->attach($account->id);
-		  $costCentres[116] = CostCentre::create(['name' => 'MOT-Övriga inkomster', 'committee_id' => $committees[15]->id]);
+		  $costCentres[115] = CostCentre::create(['name' => 'MOT-Övriga inkomster', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[494] = BudgetLine::create([
 		        'name' => 'Äskade pengar CSC', 
 		        'income' => 6540000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[116]->id, 
+		        'cost_centre_id' => $costCentres[115]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7628,7 +7627,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Datorintroduktionssatsning', 
 		        'income' => 4160000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[116]->id, 
+		        'cost_centre_id' => $costCentres[115]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7641,7 +7640,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Daddestudier', 
 		        'income' => 1500000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[116]->id, 
+		        'cost_centre_id' => $costCentres[115]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7650,12 +7649,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '3040')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3040']);
 		      $budgetLine[496]->accounts()->attach($account->id);
-		  $costCentres[117] = CostCentre::create(['name' => 'Lunchrejv', 'committee_id' => $committees[15]->id]);
+		  $costCentres[116] = CostCentre::create(['name' => 'Lunchrejv', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[497] = BudgetLine::create([
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 600000, 
-		        'cost_centre_id' => $costCentres[117]->id, 
+		        'cost_centre_id' => $costCentres[116]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7668,7 +7667,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[117]->id, 
+		        'cost_centre_id' => $costCentres[116]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7681,7 +7680,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Spons', 
 		        'income' => 1150000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[117]->id, 
+		        'cost_centre_id' => $costCentres[116]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7694,7 +7693,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 350000, 
-		        'cost_centre_id' => $costCentres[117]->id, 
+		        'cost_centre_id' => $costCentres[116]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7707,7 +7706,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Hyra maskin & teknik', 
 		        'income' => 0, 
 		        'expenses' => 160000, 
-		        'cost_centre_id' => $costCentres[117]->id, 
+		        'cost_centre_id' => $costCentres[116]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7716,12 +7715,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5210')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5210']);
 		      $budgetLine[501]->accounts()->attach($account->id);
-		  $costCentres[118] = CostCentre::create(['name' => 'Titelspex', 'committee_id' => $committees[15]->id]);
+		  $costCentres[117] = CostCentre::create(['name' => 'Titelspex', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[502] = BudgetLine::create([
 		        'name' => 'Utklädnader', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[118]->id, 
+		        'cost_centre_id' => $costCentres[117]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7734,7 +7733,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Förbrukningsmateriel', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[118]->id, 
+		        'cost_centre_id' => $costCentres[117]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7743,12 +7742,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5460')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5460']);
 		      $budgetLine[503]->accounts()->attach($account->id);
-		  $costCentres[119] = CostCentre::create(['name' => 'Cliffpub', 'committee_id' => $committees[15]->id]);
+		  $costCentres[118] = CostCentre::create(['name' => 'Cliffpub', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[504] = BudgetLine::create([
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 1400000, 
-		        'cost_centre_id' => $costCentres[119]->id, 
+		        'cost_centre_id' => $costCentres[118]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7773,7 +7772,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning dryck', 
 		        'income' => 2000000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[119]->id, 
+		        'cost_centre_id' => $costCentres[118]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7798,7 +7797,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 220000, 
 		        'expenses' => 220000, 
-		        'cost_centre_id' => $costCentres[119]->id, 
+		        'cost_centre_id' => $costCentres[118]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7811,7 +7810,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 20000, 
-		        'cost_centre_id' => $costCentres[119]->id, 
+		        'cost_centre_id' => $costCentres[118]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7824,7 +7823,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[119]->id, 
+		        'cost_centre_id' => $costCentres[118]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7833,12 +7832,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5411')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5411']);
 		      $budgetLine[508]->accounts()->attach($account->id);
-		  $costCentres[120] = CostCentre::create(['name' => 'MOT-Personalpub', 'committee_id' => $committees[15]->id]);
+		  $costCentres[119] = CostCentre::create(['name' => 'MOT-Personalpub', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[509] = BudgetLine::create([
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 600000, 
-		        'cost_centre_id' => $costCentres[120]->id, 
+		        'cost_centre_id' => $costCentres[119]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7863,7 +7862,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning dryck', 
 		        'income' => 1000000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[120]->id, 
+		        'cost_centre_id' => $costCentres[119]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7888,7 +7887,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 120000, 
-		        'cost_centre_id' => $costCentres[120]->id, 
+		        'cost_centre_id' => $costCentres[119]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7901,7 +7900,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Spons', 
 		        'income' => 600000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[120]->id, 
+		        'cost_centre_id' => $costCentres[119]->id, 
 		        'type' => 'internal', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7910,12 +7909,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '3052')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3052']);
 		      $budgetLine[512]->accounts()->attach($account->id);
-		  $costCentres[121] = CostCentre::create(['name' => 'Karaokepub', 'committee_id' => $committees[15]->id]);
+		  $costCentres[120] = CostCentre::create(['name' => 'Karaokepub', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[513] = BudgetLine::create([
 		        'name' => 'Städ', 
 		        'income' => 0, 
 		        'expenses' => 120000, 
-		        'cost_centre_id' => $costCentres[121]->id, 
+		        'cost_centre_id' => $costCentres[120]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7928,7 +7927,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Lokalhyra', 
 		        'income' => 0, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[121]->id, 
+		        'cost_centre_id' => $costCentres[120]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7941,7 +7940,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Teknik', 
 		        'income' => 0, 
 		        'expenses' => 35000, 
-		        'cost_centre_id' => $costCentres[121]->id, 
+		        'cost_centre_id' => $costCentres[120]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7954,7 +7953,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Personal RN', 
 		        'income' => 0, 
 		        'expenses' => 12000, 
-		        'cost_centre_id' => $costCentres[121]->id, 
+		        'cost_centre_id' => $costCentres[120]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7963,12 +7962,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '6800')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '6800']);
 		      $budgetLine[516]->accounts()->attach($account->id);
-		  $costCentres[122] = CostCentre::create(['name' => 'Kårspex', 'committee_id' => $committees[15]->id]);
+		  $costCentres[121] = CostCentre::create(['name' => 'Kårspex', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[517] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 250000, 
 		        'expenses' => 250000, 
-		        'cost_centre_id' => $costCentres[122]->id, 
+		        'cost_centre_id' => $costCentres[121]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7977,12 +7976,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '3041')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3041']);
 		      $budgetLine[517]->accounts()->attach($account->id);
-		  $costCentres[123] = CostCentre::create(['name' => 'Djäfvulsgrottan', 'committee_id' => $committees[15]->id]);
+		  $costCentres[122] = CostCentre::create(['name' => 'Djäfvulsgrottan', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[518] = BudgetLine::create([
 		        'name' => 'Förbrukningsmateriel', 
 		        'income' => 0, 
 		        'expenses' => 10000, 
-		        'cost_centre_id' => $costCentres[123]->id, 
+		        'cost_centre_id' => $costCentres[122]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -7995,7 +7994,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekor', 
 		        'income' => 0, 
 		        'expenses' => 40000, 
-		        'cost_centre_id' => $costCentres[123]->id, 
+		        'cost_centre_id' => $costCentres[122]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8008,7 +8007,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Förbrukningsinventarier', 
 		        'income' => 0, 
 		        'expenses' => 5000, 
-		        'cost_centre_id' => $costCentres[123]->id, 
+		        'cost_centre_id' => $costCentres[122]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8017,12 +8016,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '0')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '0']);
 		      $budgetLine[520]->accounts()->attach($account->id);
-		  $costCentres[124] = CostCentre::create(['name' => 'Väskor', 'committee_id' => $committees[15]->id]);
+		  $costCentres[123] = CostCentre::create(['name' => 'Väskor', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[521] = BudgetLine::create([
 		        'name' => 'Spons', 
 		        'income' => 4000000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[124]->id, 
+		        'cost_centre_id' => $costCentres[123]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8031,12 +8030,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '3051')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3051']);
 		      $budgetLine[521]->accounts()->attach($account->id);
-		  $costCentres[125] = CostCentre::create(['name' => 'Lunchföreläsning', 'committee_id' => $committees[15]->id]);
+		  $costCentres[124] = CostCentre::create(['name' => 'Lunchföreläsning', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[522] = BudgetLine::create([
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 600000, 
-		        'cost_centre_id' => $costCentres[125]->id, 
+		        'cost_centre_id' => $costCentres[124]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8049,7 +8048,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Spons', 
 		        'income' => 1500000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[125]->id, 
+		        'cost_centre_id' => $costCentres[124]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8058,10 +8057,24 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '3052')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3052']);
 		      $budgetLine[523]->accounts()->attach($account->id);
-		  $costCentres[126] = CostCentre::create(['name' => 'Möte med näringslivet', 'committee_id' => $committees[15]->id]);
+		  $costCentres[125] = CostCentre::create(['name' => 'Möte med näringslivet', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[524] = BudgetLine::create([
 		        'name' => 'Spons', 
 		        'income' => 2500000, 
+		        'expenses' => 0, 
+		        'cost_centre_id' => $costCentres[125]->id, 
+		        'type' => 'external', 
+		        'valid_from' => '2017-01-01 00:00:00', 
+		        'valid_to' => '2017-12-31 23:59:59', 
+		        'suggestion_id' => 1
+		    ]);
+		      $account = Account::where('number', '3052')->first();
+		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3052']);
+		      $budgetLine[524]->accounts()->attach($account->id);
+		  $costCentres[126] = CostCentre::create(['name' => 'Jämställdhetsevent', 'committee_id' => $committees[15]->id]);
+		    $budgetLine[525] = BudgetLine::create([
+		        'name' => 'Spons', 
+		        'income' => 1500000, 
 		        'expenses' => 0, 
 		        'cost_centre_id' => $costCentres[126]->id, 
 		        'type' => 'external', 
@@ -8071,11 +8084,11 @@ class DatabaseSeeder extends Seeder
 		    ]);
 		      $account = Account::where('number', '3052')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3052']);
-		      $budgetLine[524]->accounts()->attach($account->id);
-		  $costCentres[127] = CostCentre::create(['name' => 'Jämställdhetsevent', 'committee_id' => $committees[15]->id]);
-		    $budgetLine[525] = BudgetLine::create([
+		      $budgetLine[525]->accounts()->attach($account->id);
+		  $costCentres[127] = CostCentre::create(['name' => 'Giveaway', 'committee_id' => $committees[15]->id]);
+		    $budgetLine[526] = BudgetLine::create([
 		        'name' => 'Spons', 
-		        'income' => 1500000, 
+		        'income' => 1000000, 
 		        'expenses' => 0, 
 		        'cost_centre_id' => $costCentres[127]->id, 
 		        'type' => 'external', 
@@ -8083,13 +8096,13 @@ class DatabaseSeeder extends Seeder
 		        'valid_to' => '2017-12-31 23:59:59', 
 		        'suggestion_id' => 1
 		    ]);
-		      $account = Account::where('number', '3052')->first();
-		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3052']);
-		      $budgetLine[525]->accounts()->attach($account->id);
-		  $costCentres[128] = CostCentre::create(['name' => 'Giveaway', 'committee_id' => $committees[15]->id]);
-		    $budgetLine[526] = BudgetLine::create([
+		      $account = Account::where('number', '3051')->first();
+		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3051']);
+		      $budgetLine[526]->accounts()->attach($account->id);
+		  $costCentres[128] = CostCentre::create(['name' => 'Huvudspons', 'committee_id' => $committees[15]->id]);
+		    $budgetLine[527] = BudgetLine::create([
 		        'name' => 'Spons', 
-		        'income' => 1000000, 
+		        'income' => 0, 
 		        'expenses' => 0, 
 		        'cost_centre_id' => $costCentres[128]->id, 
 		        'type' => 'external', 
@@ -8099,27 +8112,13 @@ class DatabaseSeeder extends Seeder
 		    ]);
 		      $account = Account::where('number', '3051')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3051']);
-		      $budgetLine[526]->accounts()->attach($account->id);
-		  $costCentres[129] = CostCentre::create(['name' => 'Huvudspons', 'committee_id' => $committees[15]->id]);
-		    $budgetLine[527] = BudgetLine::create([
-		        'name' => 'Spons', 
-		        'income' => 0, 
-		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[129]->id, 
-		        'type' => 'external', 
-		        'valid_from' => '2017-01-01 00:00:00', 
-		        'valid_to' => '2017-12-31 23:59:59', 
-		        'suggestion_id' => 1
-		    ]);
-		      $account = Account::where('number', '3051')->first();
-		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3051']);
 		      $budgetLine[527]->accounts()->attach($account->id);
-		  $costCentres[130] = CostCentre::create(['name' => 'BLB', 'committee_id' => $committees[15]->id]);
+		  $costCentres[129] = CostCentre::create(['name' => 'BLB', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[528] = BudgetLine::create([
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 450000, 
-		        'cost_centre_id' => $costCentres[130]->id, 
+		        'cost_centre_id' => $costCentres[129]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8132,7 +8131,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 250000, 
-		        'cost_centre_id' => $costCentres[130]->id, 
+		        'cost_centre_id' => $costCentres[129]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8145,7 +8144,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Spons', 
 		        'income' => 700000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[130]->id, 
+		        'cost_centre_id' => $costCentres[129]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8154,12 +8153,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '3052')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3052']);
 		      $budgetLine[530]->accounts()->attach($account->id);
-		  $costCentres[131] = CostCentre::create(['name' => 'Mörkerpub', 'committee_id' => $committees[15]->id]);
+		  $costCentres[130] = CostCentre::create(['name' => 'Mörkerpub', 'committee_id' => $committees[15]->id]);
 		    $budgetLine[531] = BudgetLine::create([
 		        'name' => 'Försäljning dryck', 
 		        'income' => 1550000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[131]->id, 
+		        'cost_centre_id' => $costCentres[130]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8172,7 +8171,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 1050000, 
-		        'cost_centre_id' => $costCentres[131]->id, 
+		        'cost_centre_id' => $costCentres[130]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8185,7 +8184,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Barkit', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[131]->id, 
+		        'cost_centre_id' => $costCentres[130]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8196,13 +8195,13 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[533]->accounts()->attach($account->id);
 		
 		// 
-		$committees[16] = Committee::create(['name' => 'DKM']);
-		  $costCentres[132] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[16]->id]);
+		$committees[16] = Committee::create(['name' => 'DKM', 'type' => 'committee']);
+		  $costCentres[131] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[16]->id]);
 		    $budgetLine[534] = BudgetLine::create([
 		        'name' => 'Utbildning', 
 		        'income' => 0, 
 		        'expenses' => 800000, 
-		        'cost_centre_id' => $costCentres[132]->id, 
+		        'cost_centre_id' => $costCentres[131]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8215,7 +8214,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Övriga resekostnader', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[132]->id, 
+		        'cost_centre_id' => $costCentres[131]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8228,7 +8227,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Profilkläder', 
 		        'income' => 0, 
 		        'expenses' => 1000000, 
-		        'cost_centre_id' => $costCentres[132]->id, 
+		        'cost_centre_id' => $costCentres[131]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8241,7 +8240,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat intern grupp', 
 		        'income' => 0, 
 		        'expenses' => 1500000, 
-		        'cost_centre_id' => $costCentres[132]->id, 
+		        'cost_centre_id' => $costCentres[131]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8254,7 +8253,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Underhåll', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[132]->id, 
+		        'cost_centre_id' => $costCentres[131]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8267,7 +8266,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Kök/barutrustning', 
 		        'income' => 0, 
 		        'expenses' => 1500000, 
-		        'cost_centre_id' => $costCentres[132]->id, 
+		        'cost_centre_id' => $costCentres[131]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8280,7 +8279,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Tackgåvor', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[132]->id, 
+		        'cost_centre_id' => $costCentres[131]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8293,7 +8292,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp övrigt', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[132]->id, 
+		        'cost_centre_id' => $costCentres[131]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8306,7 +8305,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp inventarier', 
 		        'income' => 0, 
 		        'expenses' => 750000, 
-		        'cost_centre_id' => $costCentres[132]->id, 
+		        'cost_centre_id' => $costCentres[131]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8319,7 +8318,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Lokalhyra', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[132]->id, 
+		        'cost_centre_id' => $costCentres[131]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8328,12 +8327,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5010')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5010']);
 		      $budgetLine[543]->accounts()->attach($account->id);
-		  $costCentres[133] = CostCentre::create(['name' => 'Teambuilding', 'committee_id' => $committees[16]->id]);
+		  $costCentres[132] = CostCentre::create(['name' => 'Teambuilding', 'committee_id' => $committees[16]->id]);
 		    $budgetLine[544] = BudgetLine::create([
 		        'name' => 'Teambuilding', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[133]->id, 
+		        'cost_centre_id' => $costCentres[132]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8348,12 +8347,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '7693')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '7693']);
 		      $budgetLine[544]->accounts()->attach($account->id);
-		  $costCentres[134] = CostCentre::create(['name' => 'Onsdagspubar', 'committee_id' => $committees[16]->id]);
+		  $costCentres[133] = CostCentre::create(['name' => 'Onsdagspubar', 'committee_id' => $committees[16]->id]);
 		    $budgetLine[545] = BudgetLine::create([
 		        'name' => 'Försäljning dryck', 
 		        'income' => 1000000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[134]->id, 
+		        'cost_centre_id' => $costCentres[133]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8378,7 +8377,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning mat', 
 		        'income' => 200000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[134]->id, 
+		        'cost_centre_id' => $costCentres[133]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8391,7 +8390,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Åtgång dryck', 
 		        'income' => 0, 
 		        'expenses' => 560000, 
-		        'cost_centre_id' => $costCentres[134]->id, 
+		        'cost_centre_id' => $costCentres[133]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8416,7 +8415,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp mat', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[134]->id, 
+		        'cost_centre_id' => $costCentres[133]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8429,7 +8428,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[134]->id, 
+		        'cost_centre_id' => $costCentres[133]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8442,7 +8441,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Barkit', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[134]->id, 
+		        'cost_centre_id' => $costCentres[133]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8455,7 +8454,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Förbrukningsmaterial', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[134]->id, 
+		        'cost_centre_id' => $costCentres[133]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8464,13 +8463,13 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5460')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5460']);
 		      $budgetLine[551]->accounts()->attach($account->id);
-		  $costCentres[134]->repetitions = 33; $costCentres[134]->save();
-		  $costCentres[135] = CostCentre::create(['name' => 'Tentapub VT1', 'committee_id' => $committees[16]->id]);
+		  $costCentres[133]->repetitions = 33; $costCentres[133]->save();
+		  $costCentres[134] = CostCentre::create(['name' => 'Tentapub VT1', 'committee_id' => $committees[16]->id]);
 		    $budgetLine[552] = BudgetLine::create([
 		        'name' => 'Försäljning dryck', 
 		        'income' => 2500000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[135]->id, 
+		        'cost_centre_id' => $costCentres[134]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8495,7 +8494,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Åtgång dryck', 
 		        'income' => 0, 
 		        'expenses' => 1825000, 
-		        'cost_centre_id' => $costCentres[135]->id, 
+		        'cost_centre_id' => $costCentres[134]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8520,7 +8519,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[135]->id, 
+		        'cost_centre_id' => $costCentres[134]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8533,7 +8532,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Barkit', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[135]->id, 
+		        'cost_centre_id' => $costCentres[134]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8542,12 +8541,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4031')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4031']);
 		      $budgetLine[555]->accounts()->attach($account->id);
-		  $costCentres[136] = CostCentre::create(['name' => 'Tentapub HT2', 'committee_id' => $committees[16]->id]);
+		  $costCentres[135] = CostCentre::create(['name' => 'Tentapub HT2', 'committee_id' => $committees[16]->id]);
 		    $budgetLine[556] = BudgetLine::create([
 		        'name' => 'Försäljning dryck', 
 		        'income' => 2500000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[136]->id, 
+		        'cost_centre_id' => $costCentres[135]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8572,7 +8571,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Åtgång dryck', 
 		        'income' => 0, 
 		        'expenses' => 1825000, 
-		        'cost_centre_id' => $costCentres[136]->id, 
+		        'cost_centre_id' => $costCentres[135]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8597,7 +8596,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[136]->id, 
+		        'cost_centre_id' => $costCentres[135]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8610,7 +8609,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Barkit', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[136]->id, 
+		        'cost_centre_id' => $costCentres[135]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8619,12 +8618,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4031')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4031']);
 		      $budgetLine[559]->accounts()->attach($account->id);
-		  $costCentres[137] = CostCentre::create(['name' => 'Plums', 'committee_id' => $committees[16]->id]);
+		  $costCentres[136] = CostCentre::create(['name' => 'Plums', 'committee_id' => $committees[16]->id]);
 		    $budgetLine[560] = BudgetLine::create([
 		        'name' => 'Biljetter och bongar', 
 		        'income' => 12500000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[137]->id, 
+		        'cost_centre_id' => $costCentres[136]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8652,7 +8651,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Lokalhyra', 
 		        'income' => 0, 
 		        'expenses' => 2575000, 
-		        'cost_centre_id' => $costCentres[137]->id, 
+		        'cost_centre_id' => $costCentres[136]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8665,7 +8664,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp mat', 
 		        'income' => 0, 
 		        'expenses' => 350000, 
-		        'cost_centre_id' => $costCentres[137]->id, 
+		        'cost_centre_id' => $costCentres[136]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8678,7 +8677,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Åtgång dryck', 
 		        'income' => 0, 
 		        'expenses' => 2500000, 
-		        'cost_centre_id' => $costCentres[137]->id, 
+		        'cost_centre_id' => $costCentres[136]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8703,7 +8702,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Barkit', 
 		        'income' => 0, 
 		        'expenses' => 150000, 
-		        'cost_centre_id' => $costCentres[137]->id, 
+		        'cost_centre_id' => $costCentres[136]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8716,7 +8715,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Is', 
 		        'income' => 0, 
 		        'expenses' => 180000, 
-		        'cost_centre_id' => $costCentres[137]->id, 
+		        'cost_centre_id' => $costCentres[136]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8729,7 +8728,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Bröd', 
 		        'income' => 0, 
 		        'expenses' => 270000, 
-		        'cost_centre_id' => $costCentres[137]->id, 
+		        'cost_centre_id' => $costCentres[136]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8742,7 +8741,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Barkit drinkar', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[137]->id, 
+		        'cost_centre_id' => $costCentres[136]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8755,7 +8754,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Väktare', 
 		        'income' => 0, 
 		        'expenses' => 1100000, 
-		        'cost_centre_id' => $costCentres[137]->id, 
+		        'cost_centre_id' => $costCentres[136]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8768,7 +8767,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'DJ', 
 		        'income' => 0, 
 		        'expenses' => 400000, 
-		        'cost_centre_id' => $costCentres[137]->id, 
+		        'cost_centre_id' => $costCentres[136]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8781,7 +8780,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Tryckkostnader', 
 		        'income' => 0, 
 		        'expenses' => 350000, 
-		        'cost_centre_id' => $costCentres[137]->id, 
+		        'cost_centre_id' => $costCentres[136]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8794,7 +8793,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Glas', 
 		        'income' => 0, 
 		        'expenses' => 720000, 
-		        'cost_centre_id' => $costCentres[137]->id, 
+		        'cost_centre_id' => $costCentres[136]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8807,7 +8806,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Förbrukningsmaterial', 
 		        'income' => 0, 
 		        'expenses' => 150000, 
-		        'cost_centre_id' => $costCentres[137]->id, 
+		        'cost_centre_id' => $costCentres[136]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8820,7 +8819,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Märken', 
 		        'income' => 0, 
 		        'expenses' => 380000, 
-		        'cost_centre_id' => $costCentres[137]->id, 
+		        'cost_centre_id' => $costCentres[136]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8833,7 +8832,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Tillstånd', 
 		        'income' => 0, 
 		        'expenses' => 250000, 
-		        'cost_centre_id' => $costCentres[137]->id, 
+		        'cost_centre_id' => $costCentres[136]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8846,7 +8845,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Bensin', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[137]->id, 
+		        'cost_centre_id' => $costCentres[136]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8859,7 +8858,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Parkeringsbiljetter', 
 		        'income' => 0, 
 		        'expenses' => 20000, 
-		        'cost_centre_id' => $costCentres[137]->id, 
+		        'cost_centre_id' => $costCentres[136]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8872,7 +8871,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Hyrbil', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[137]->id, 
+		        'cost_centre_id' => $costCentres[136]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8885,7 +8884,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[137]->id, 
+		        'cost_centre_id' => $costCentres[136]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8898,7 +8897,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljningsplattform', 
 		        'income' => 0, 
 		        'expenses' => 700000, 
-		        'cost_centre_id' => $costCentres[137]->id, 
+		        'cost_centre_id' => $costCentres[136]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8907,12 +8906,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '6062')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '6062']);
 		      $budgetLine[579]->accounts()->attach($account->id);
-		  $costCentres[138] = CostCentre::create(['name' => 'Reclaim', 'committee_id' => $committees[16]->id]);
+		  $costCentres[137] = CostCentre::create(['name' => 'Reclaim', 'committee_id' => $committees[16]->id]);
 		    $budgetLine[580] = BudgetLine::create([
 		        'name' => 'Försäljning dryck', 
 		        'income' => 1000000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[138]->id, 
+		        'cost_centre_id' => $costCentres[137]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8937,7 +8936,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Biljetter', 
 		        'income' => 1275000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[138]->id, 
+		        'cost_centre_id' => $costCentres[137]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8953,7 +8952,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Åtgång dryck', 
 		        'income' => 0, 
 		        'expenses' => 560000, 
-		        'cost_centre_id' => $costCentres[138]->id, 
+		        'cost_centre_id' => $costCentres[137]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8978,7 +8977,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp mat', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[138]->id, 
+		        'cost_centre_id' => $costCentres[137]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -8991,7 +8990,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[138]->id, 
+		        'cost_centre_id' => $costCentres[137]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9004,7 +9003,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Barkit', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[138]->id, 
+		        'cost_centre_id' => $costCentres[137]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9017,7 +9016,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Märken', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[138]->id, 
+		        'cost_centre_id' => $costCentres[137]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9026,12 +9025,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4027')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4027']);
 		      $budgetLine[586]->accounts()->attach($account->id);
-		  $costCentres[139] = CostCentre::create(['name' => 'Djulmiddag', 'committee_id' => $committees[16]->id]);
+		  $costCentres[138] = CostCentre::create(['name' => 'Djulmiddag', 'committee_id' => $committees[16]->id]);
 		    $budgetLine[587] = BudgetLine::create([
 		        'name' => 'Försäljning dryck', 
 		        'income' => 350000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[139]->id, 
+		        'cost_centre_id' => $costCentres[138]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9056,7 +9055,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Biljetter', 
 		        'income' => 1290000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[139]->id, 
+		        'cost_centre_id' => $costCentres[138]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9072,7 +9071,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Åtgång dryck', 
 		        'income' => 0, 
 		        'expenses' => 225000, 
-		        'cost_centre_id' => $costCentres[139]->id, 
+		        'cost_centre_id' => $costCentres[138]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9097,7 +9096,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp mat', 
 		        'income' => 0, 
 		        'expenses' => 2500000, 
-		        'cost_centre_id' => $costCentres[139]->id, 
+		        'cost_centre_id' => $costCentres[138]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9110,7 +9109,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Lokalhyra prepp', 
 		        'income' => 0, 
 		        'expenses' => 120000, 
-		        'cost_centre_id' => $costCentres[139]->id, 
+		        'cost_centre_id' => $costCentres[138]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9123,7 +9122,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[139]->id, 
+		        'cost_centre_id' => $costCentres[138]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9136,7 +9135,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Djulgran', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[139]->id, 
+		        'cost_centre_id' => $costCentres[138]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9149,7 +9148,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Barkit', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[139]->id, 
+		        'cost_centre_id' => $costCentres[138]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9162,7 +9161,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Märken', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[139]->id, 
+		        'cost_centre_id' => $costCentres[138]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9175,7 +9174,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Engångsartiklar', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[139]->id, 
+		        'cost_centre_id' => $costCentres[138]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9184,12 +9183,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5410')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5410']);
 		      $budgetLine[596]->accounts()->attach($account->id);
-		  $costCentres[140] = CostCentre::create(['name' => 'Mästeristsittning', 'committee_id' => $committees[16]->id]);
+		  $costCentres[139] = CostCentre::create(['name' => 'Mästeristsittning', 'committee_id' => $committees[16]->id]);
 		    $budgetLine[597] = BudgetLine::create([
 		        'name' => 'Försäljning dryck', 
 		        'income' => 1000000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[140]->id, 
+		        'cost_centre_id' => $costCentres[139]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9214,7 +9213,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Biljetter', 
 		        'income' => 700000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[140]->id, 
+		        'cost_centre_id' => $costCentres[139]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9230,7 +9229,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp mat', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[140]->id, 
+		        'cost_centre_id' => $costCentres[139]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9243,7 +9242,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Åtgång Dryck', 
 		        'income' => 0, 
 		        'expenses' => 660000, 
-		        'cost_centre_id' => $costCentres[140]->id, 
+		        'cost_centre_id' => $costCentres[139]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9268,7 +9267,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Märken', 
 		        'income' => 0, 
 		        'expenses' => 350000, 
-		        'cost_centre_id' => $costCentres[140]->id, 
+		        'cost_centre_id' => $costCentres[139]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9281,7 +9280,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 125000, 
-		        'cost_centre_id' => $costCentres[140]->id, 
+		        'cost_centre_id' => $costCentres[139]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9294,7 +9293,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Barkit', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[140]->id, 
+		        'cost_centre_id' => $costCentres[139]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9303,12 +9302,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4031')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4031']);
 		      $budgetLine[603]->accounts()->attach($account->id);
-		  $costCentres[141] = CostCentre::create(['name' => 'Klubbmästarmiddag', 'committee_id' => $committees[16]->id]);
+		  $costCentres[140] = CostCentre::create(['name' => 'Klubbmästarmiddag', 'committee_id' => $committees[16]->id]);
 		    $budgetLine[604] = BudgetLine::create([
 		        'name' => 'Försäljning dryck', 
 		        'income' => 200000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[141]->id, 
+		        'cost_centre_id' => $costCentres[140]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9333,7 +9332,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Biljetter', 
 		        'income' => 300000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[141]->id, 
+		        'cost_centre_id' => $costCentres[140]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9349,7 +9348,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Cigarrer', 
 		        'income' => 0, 
 		        'expenses' => 40000, 
-		        'cost_centre_id' => $costCentres[141]->id, 
+		        'cost_centre_id' => $costCentres[140]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9362,7 +9361,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Åtgång dryck', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[141]->id, 
+		        'cost_centre_id' => $costCentres[140]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9387,7 +9386,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp mat', 
 		        'income' => 0, 
 		        'expenses' => 460000, 
-		        'cost_centre_id' => $costCentres[141]->id, 
+		        'cost_centre_id' => $costCentres[140]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9396,12 +9395,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4029')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4029']);
 		      $budgetLine[608]->accounts()->attach($account->id);
-		  $costCentres[142] = CostCentre::create(['name' => 'Cliffmiddag', 'committee_id' => $committees[16]->id]);
+		  $costCentres[141] = CostCentre::create(['name' => 'Cliffmiddag', 'committee_id' => $committees[16]->id]);
 		    $budgetLine[609] = BudgetLine::create([
 		        'name' => 'Försäljning dryck', 
 		        'income' => 300000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[142]->id, 
+		        'cost_centre_id' => $costCentres[141]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9426,7 +9425,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Biljetter', 
 		        'income' => 350000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[142]->id, 
+		        'cost_centre_id' => $costCentres[141]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9442,7 +9441,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Åtgång dryck', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[142]->id, 
+		        'cost_centre_id' => $costCentres[141]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9467,7 +9466,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp mat', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[142]->id, 
+		        'cost_centre_id' => $costCentres[141]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9476,12 +9475,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4029')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4029']);
 		      $budgetLine[612]->accounts()->attach($account->id);
-		  $costCentres[143] = CostCentre::create(['name' => 'Sommarosqvik', 'committee_id' => $committees[16]->id]);
+		  $costCentres[142] = CostCentre::create(['name' => 'Sommarosqvik', 'committee_id' => $committees[16]->id]);
 		    $budgetLine[613] = BudgetLine::create([
 		        'name' => 'Försäljning dryck', 
 		        'income' => 0, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[143]->id, 
+		        'cost_centre_id' => $costCentres[142]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9506,7 +9505,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Biljetter', 
 		        'income' => 700000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[143]->id, 
+		        'cost_centre_id' => $costCentres[142]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9522,7 +9521,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp mat', 
 		        'income' => 0, 
 		        'expenses' => 700000, 
-		        'cost_centre_id' => $costCentres[143]->id, 
+		        'cost_centre_id' => $costCentres[142]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9535,7 +9534,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Åtgång dryck', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[143]->id, 
+		        'cost_centre_id' => $costCentres[142]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9560,7 +9559,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Lokalhyra', 
 		        'income' => 0, 
 		        'expenses' => 175000, 
-		        'cost_centre_id' => $costCentres[143]->id, 
+		        'cost_centre_id' => $costCentres[142]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9573,7 +9572,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[143]->id, 
+		        'cost_centre_id' => $costCentres[142]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9586,7 +9585,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Barkit', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[143]->id, 
+		        'cost_centre_id' => $costCentres[142]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9599,7 +9598,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Milersättning', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[143]->id, 
+		        'cost_centre_id' => $costCentres[142]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9610,12 +9609,12 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[620]->accounts()->attach($account->id);
 		
 		// Bröllopet
-		$committees[17] = Committee::create(['name' => 'Bröllopet']);
+		$committees[17] = Committee::create(['name' => 'Bröllopet', 'type' => 'project']);
 		    $budgetLine[621] = BudgetLine::create([
 		        'name' => 'Beskrivning', 
 		        'income' => 0, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[143]->id, 
+		        'cost_centre_id' => $costCentres[142]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9624,12 +9623,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '0')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '0']);
 		      $budgetLine[621]->accounts()->attach($account->id);
-		  $costCentres[144] = CostCentre::create(['name' => 'Bröllop', 'committee_id' => $committees[17]->id]);
+		  $costCentres[143] = CostCentre::create(['name' => 'Bröllop', 'committee_id' => $committees[17]->id]);
 		    $budgetLine[622] = BudgetLine::create([
 		        'name' => 'Dryckesförsäljning', 
 		        'income' => 700000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[144]->id, 
+		        'cost_centre_id' => $costCentres[143]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9654,7 +9653,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Biljetter', 
 		        'income' => 4500000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[144]->id, 
+		        'cost_centre_id' => $costCentres[143]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9670,7 +9669,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Lokalhyra', 
 		        'income' => 0, 
 		        'expenses' => 1200000, 
-		        'cost_centre_id' => $costCentres[144]->id, 
+		        'cost_centre_id' => $costCentres[143]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9683,7 +9682,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Catering/mat', 
 		        'income' => 0, 
 		        'expenses' => 2400000, 
-		        'cost_centre_id' => $costCentres[144]->id, 
+		        'cost_centre_id' => $costCentres[143]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9696,7 +9695,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Åtgång dryck sittning', 
 		        'income' => 0, 
 		        'expenses' => 700000, 
-		        'cost_centre_id' => $costCentres[144]->id, 
+		        'cost_centre_id' => $costCentres[143]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9721,7 +9720,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Porslinshyra', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[144]->id, 
+		        'cost_centre_id' => $costCentres[143]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9734,7 +9733,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Åtgång dryck efterkör', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[144]->id, 
+		        'cost_centre_id' => $costCentres[143]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9759,7 +9758,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekorationer', 
 		        'income' => 0, 
 		        'expenses' => 1440000, 
-		        'cost_centre_id' => $costCentres[144]->id, 
+		        'cost_centre_id' => $costCentres[143]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9768,12 +9767,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5411')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5411']);
 		      $budgetLine[629]->accounts()->attach($account->id);
-		  $costCentres[145] = CostCentre::create(['name' => 'Svensexa/Möhippa', 'committee_id' => $committees[17]->id]);
+		  $costCentres[144] = CostCentre::create(['name' => 'Svensexa/Möhippa', 'committee_id' => $committees[17]->id]);
 		    $budgetLine[630] = BudgetLine::create([
 		        'name' => 'Dryckesförsäljning', 
 		        'income' => 450000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[145]->id, 
+		        'cost_centre_id' => $costCentres[144]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9786,7 +9785,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Åtgång dryck', 
 		        'income' => 0, 
 		        'expenses' => 380000, 
-		        'cost_centre_id' => $costCentres[145]->id, 
+		        'cost_centre_id' => $costCentres[144]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9799,7 +9798,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekor', 
 		        'income' => 0, 
 		        'expenses' => 130000, 
-		        'cost_centre_id' => $costCentres[145]->id, 
+		        'cost_centre_id' => $costCentres[144]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9808,12 +9807,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5411')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5411']);
 		      $budgetLine[632]->accounts()->attach($account->id);
-		  $costCentres[146] = CostCentre::create(['name' => 'Bröllopsresan', 'committee_id' => $committees[17]->id]);
+		  $costCentres[145] = CostCentre::create(['name' => 'Bröllopsresan', 'committee_id' => $committees[17]->id]);
 		    $budgetLine[633] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 2240000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[146]->id, 
+		        'cost_centre_id' => $costCentres[145]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9826,7 +9825,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Flygbiljetter', 
 		        'income' => 0, 
 		        'expenses' => 2900000, 
-		        'cost_centre_id' => $costCentres[146]->id, 
+		        'cost_centre_id' => $costCentres[145]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9839,7 +9838,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Boende', 
 		        'income' => 0, 
 		        'expenses' => 2400000, 
-		        'cost_centre_id' => $costCentres[146]->id, 
+		        'cost_centre_id' => $costCentres[145]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9852,7 +9851,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Spons', 
 		        'income' => 500000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[146]->id, 
+		        'cost_centre_id' => $costCentres[145]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9863,13 +9862,13 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[636]->accounts()->attach($account->id);
 		
 		// Sångboksgruppen
-		$committees[18] = Committee::create(['name' => 'Sångboksgruppen']);
-		  $costCentres[147] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[18]->id]);
+		$committees[18] = Committee::create(['name' => 'Sångboksgruppen', 'type' => 'project']);
+		  $costCentres[146] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[18]->id]);
 		    $budgetLine[637] = BudgetLine::create([
 		        'name' => 'Fika', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[147]->id, 
+		        'cost_centre_id' => $costCentres[146]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9880,13 +9879,13 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[637]->accounts()->attach($account->id);
 		
 		// STUDS 2017
-		$committees[19] = Committee::create(['name' => 'STUDS 2017']);
-		  $costCentres[148] = CostCentre::create(['name' => 'Företagsevent', 'committee_id' => $committees[19]->id]);
+		$committees[19] = Committee::create(['name' => 'STUDS 2017', 'type' => 'project']);
+		  $costCentres[147] = CostCentre::create(['name' => 'Företagsevent', 'committee_id' => $committees[19]->id]);
 		    $budgetLine[638] = BudgetLine::create([
 		        'name' => 'Företagsevent', 
 		        'income' => 86000000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[148]->id, 
+		        'cost_centre_id' => $costCentres[147]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9899,7 +9898,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Presenter etc', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[148]->id, 
+		        'cost_centre_id' => $costCentres[147]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9908,12 +9907,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '6072')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '6072']);
 		      $budgetLine[639]->accounts()->attach($account->id);
-		  $costCentres[149] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[19]->id]);
+		  $costCentres[148] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[19]->id]);
 		    $budgetLine[640] = BudgetLine::create([
 		        'name' => 'Teambuilding', 
 		        'income' => 0, 
 		        'expenses' => 8600000, 
-		        'cost_centre_id' => $costCentres[149]->id, 
+		        'cost_centre_id' => $costCentres[148]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9929,7 +9928,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Fika', 
 		        'income' => 0, 
 		        'expenses' => 3020000, 
-		        'cost_centre_id' => $costCentres[149]->id, 
+		        'cost_centre_id' => $costCentres[148]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9942,7 +9941,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Licenser', 
 		        'income' => 0, 
 		        'expenses' => 80000, 
-		        'cost_centre_id' => $costCentres[149]->id, 
+		        'cost_centre_id' => $costCentres[148]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9955,7 +9954,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Tryck', 
 		        'income' => 0, 
 		        'expenses' => 2000000, 
-		        'cost_centre_id' => $costCentres[149]->id, 
+		        'cost_centre_id' => $costCentres[148]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9968,7 +9967,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Kontokortsavgifter', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[149]->id, 
+		        'cost_centre_id' => $costCentres[148]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9981,7 +9980,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Webbavgifter', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[149]->id, 
+		        'cost_centre_id' => $costCentres[148]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -9994,7 +9993,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Bidrag KTH', 
 		        'income' => 14000000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[149]->id, 
+		        'cost_centre_id' => $costCentres[148]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10003,12 +10002,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '3989')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3989']);
 		      $budgetLine[646]->accounts()->attach($account->id);
-		  $costCentres[150] = CostCentre::create(['name' => 'Resa', 'committee_id' => $committees[19]->id]);
+		  $costCentres[149] = CostCentre::create(['name' => 'Resa', 'committee_id' => $committees[19]->id]);
 		    $budgetLine[647] = BudgetLine::create([
 		        'name' => 'Resekostnader', 
 		        'income' => 0, 
 		        'expenses' => 67500000, 
-		        'cost_centre_id' => $costCentres[150]->id, 
+		        'cost_centre_id' => $costCentres[149]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10021,7 +10020,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Telefoni', 
 		        'income' => 0, 
 		        'expenses' => 1500000, 
-		        'cost_centre_id' => $costCentres[150]->id, 
+		        'cost_centre_id' => $costCentres[149]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10034,7 +10033,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Event under resan', 
 		        'income' => 0, 
 		        'expenses' => 16500000, 
-		        'cost_centre_id' => $costCentres[150]->id, 
+		        'cost_centre_id' => $costCentres[149]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10045,13 +10044,13 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[649]->accounts()->attach($account->id);
 		
 		// dÅre 2017
-		$committees[20] = Committee::create(['name' => 'dÅre 2017']);
-		  $costCentres[151] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[20]->id]);
+		$committees[20] = Committee::create(['name' => 'dÅre 2017', 'type' => 'project']);
+		  $costCentres[150] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[20]->id]);
 		    $budgetLine[650] = BudgetLine::create([
 		        'name' => 'Möten och Teambuilding', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[151]->id, 
+		        'cost_centre_id' => $costCentres[150]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10064,7 +10063,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Spons', 
 		        'income' => 500000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[151]->id, 
+		        'cost_centre_id' => $costCentres[150]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10077,7 +10076,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Tackmiddag', 
 		        'income' => 0, 
 		        'expenses' => 120000, 
-		        'cost_centre_id' => $costCentres[151]->id, 
+		        'cost_centre_id' => $costCentres[150]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10089,12 +10088,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '7693')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '7693']);
 		      $budgetLine[652]->accounts()->attach($account->id);
-		  $costCentres[152] = CostCentre::create(['name' => 'Resan', 'committee_id' => $committees[20]->id]);
+		  $costCentres[151] = CostCentre::create(['name' => 'Resan', 'committee_id' => $committees[20]->id]);
 		    $budgetLine[653] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 12480000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[152]->id, 
+		        'cost_centre_id' => $costCentres[151]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10107,7 +10106,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Boende, Liftkort', 
 		        'income' => 0, 
 		        'expenses' => 8947000, 
-		        'cost_centre_id' => $costCentres[152]->id, 
+		        'cost_centre_id' => $costCentres[151]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10120,7 +10119,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Bussresa', 
 		        'income' => 0, 
 		        'expenses' => 2500000, 
-		        'cost_centre_id' => $costCentres[152]->id, 
+		        'cost_centre_id' => $costCentres[151]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10133,7 +10132,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Tygmärken', 
 		        'income' => 0, 
 		        'expenses' => 120000, 
-		        'cost_centre_id' => $costCentres[152]->id, 
+		        'cost_centre_id' => $costCentres[151]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10146,7 +10145,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mössor', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[152]->id, 
+		        'cost_centre_id' => $costCentres[151]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10159,7 +10158,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Event i Åre', 
 		        'income' => 0, 
 		        'expenses' => 360000, 
-		        'cost_centre_id' => $costCentres[152]->id, 
+		        'cost_centre_id' => $costCentres[151]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10170,13 +10169,13 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[658]->accounts()->attach($account->id);
 		
 		// METAspexet 2017
-		$committees[21] = Committee::create(['name' => 'METAspexet 2017']);
-		  $costCentres[153] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[21]->id]);
+		$committees[21] = Committee::create(['name' => 'METAspexet 2017', 'type' => 'project']);
+		  $costCentres[152] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[21]->id]);
 		    $budgetLine[659] = BudgetLine::create([
 		        'name' => 'Företagsspons', 
 		        'income' => 3000000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[153]->id, 
+		        'cost_centre_id' => $costCentres[152]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10195,7 +10194,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'IT-kostnader', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[153]->id, 
+		        'cost_centre_id' => $costCentres[152]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10208,7 +10207,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Teambuilding', 
 		        'income' => 0, 
 		        'expenses' => 792000, 
-		        'cost_centre_id' => $costCentres[153]->id, 
+		        'cost_centre_id' => $costCentres[152]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10221,7 +10220,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Fika', 
 		        'income' => 0, 
 		        'expenses' => 636000, 
-		        'cost_centre_id' => $costCentres[153]->id, 
+		        'cost_centre_id' => $costCentres[152]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10234,7 +10233,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp förbrukningsinv.', 
 		        'income' => 0, 
 		        'expenses' => 85000, 
-		        'cost_centre_id' => $costCentres[153]->id, 
+		        'cost_centre_id' => $costCentres[152]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10247,7 +10246,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Tryckkostnader', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[153]->id, 
+		        'cost_centre_id' => $costCentres[152]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10260,7 +10259,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Tröjor', 
 		        'income' => 1300000, 
 		        'expenses' => 1300000, 
-		        'cost_centre_id' => $costCentres[153]->id, 
+		        'cost_centre_id' => $costCentres[152]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10272,12 +10271,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4044')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4044']);
 		      $budgetLine[665]->accounts()->attach($account->id);
-		  $costCentres[154] = CostCentre::create(['name' => 'Föreställning', 'committee_id' => $committees[21]->id]);
+		  $costCentres[153] = CostCentre::create(['name' => 'Föreställning', 'committee_id' => $committees[21]->id]);
 		    $budgetLine[666] = BudgetLine::create([
 		        'name' => 'Lokalkostnader', 
 		        'income' => 0, 
 		        'expenses' => 2000000, 
-		        'cost_centre_id' => $costCentres[154]->id, 
+		        'cost_centre_id' => $costCentres[153]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10290,7 +10289,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inhyrd personal teater', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[154]->id, 
+		        'cost_centre_id' => $costCentres[153]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10303,7 +10302,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Teknik', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[154]->id, 
+		        'cost_centre_id' => $costCentres[153]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10316,7 +10315,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Transport', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[154]->id, 
+		        'cost_centre_id' => $costCentres[153]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10329,7 +10328,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Biljettförsäljning', 
 		        'income' => 3280000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[154]->id, 
+		        'cost_centre_id' => $costCentres[153]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10342,7 +10341,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Märken', 
 		        'income' => 250000, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[154]->id, 
+		        'cost_centre_id' => $costCentres[153]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10358,7 +10357,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Virke, färg & material', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[154]->id, 
+		        'cost_centre_id' => $costCentres[153]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10371,7 +10370,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Rekvisita, smink & hår', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[154]->id, 
+		        'cost_centre_id' => $costCentres[153]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10384,7 +10383,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Kläder & accessoarer', 
 		        'income' => 0, 
 		        'expenses' => 500000, 
-		        'cost_centre_id' => $costCentres[154]->id, 
+		        'cost_centre_id' => $costCentres[153]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10393,12 +10392,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4044')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4044']);
 		      $budgetLine[674]->accounts()->attach($account->id);
-		  $costCentres[155] = CostCentre::create(['name' => 'Fester', 'committee_id' => $committees[21]->id]);
+		  $costCentres[154] = CostCentre::create(['name' => 'Fester', 'committee_id' => $committees[21]->id]);
 		    $budgetLine[675] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 2300000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[155]->id, 
+		        'cost_centre_id' => $costCentres[154]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10414,7 +10413,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Fsljn dryck', 
 		        'income' => 1000000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[155]->id, 
+		        'cost_centre_id' => $costCentres[154]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10439,7 +10438,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 2100000, 
-		        'cost_centre_id' => $costCentres[155]->id, 
+		        'cost_centre_id' => $costCentres[154]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10452,7 +10451,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[155]->id, 
+		        'cost_centre_id' => $costCentres[154]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10465,7 +10464,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 1000000, 
-		        'cost_centre_id' => $costCentres[155]->id, 
+		        'cost_centre_id' => $costCentres[154]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10486,12 +10485,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '4025')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '4025']);
 		      $budgetLine[679]->accounts()->attach($account->id);
-		  $costCentres[156] = CostCentre::create(['name' => 'N&empty;llespex', 'committee_id' => $committees[21]->id]);
+		  $costCentres[155] = CostCentre::create(['name' => 'N&empty;llespex', 'committee_id' => $committees[21]->id]);
 		    $budgetLine[680] = BudgetLine::create([
 		        'name' => 'Lokalhyra', 
 		        'income' => 0, 
 		        'expenses' => 1130000, 
-		        'cost_centre_id' => $costCentres[156]->id, 
+		        'cost_centre_id' => $costCentres[155]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10504,7 +10503,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Teknik', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[156]->id, 
+		        'cost_centre_id' => $costCentres[155]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10517,7 +10516,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekor & smink', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[156]->id, 
+		        'cost_centre_id' => $costCentres[155]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10530,7 +10529,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'PR', 
 		        'income' => 0, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[156]->id, 
+		        'cost_centre_id' => $costCentres[155]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10543,7 +10542,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Transport', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[156]->id, 
+		        'cost_centre_id' => $costCentres[155]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10556,7 +10555,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Märkesförsäljning', 
 		        'income' => 0, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[156]->id, 
+		        'cost_centre_id' => $costCentres[155]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10569,7 +10568,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Biljettförsäljning', 
 		        'income' => 0, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[156]->id, 
+		        'cost_centre_id' => $costCentres[155]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10580,13 +10579,13 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[686]->accounts()->attach($account->id);
 		
 		// Vårbalen 2017
-		$committees[22] = Committee::create(['name' => 'Vårbalen 2017']);
-		  $costCentres[157] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[22]->id]);
+		$committees[22] = Committee::create(['name' => 'Vårbalen 2017', 'type' => 'project']);
+		  $costCentres[156] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[22]->id]);
 		    $budgetLine[687] = BudgetLine::create([
 		        'name' => 'Tryck', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[157]->id, 
+		        'cost_centre_id' => $costCentres[156]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10599,7 +10598,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekoration', 
 		        'income' => 0, 
 		        'expenses' => 300000, 
-		        'cost_centre_id' => $costCentres[157]->id, 
+		        'cost_centre_id' => $costCentres[156]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10612,7 +10611,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Tillstånd', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[157]->id, 
+		        'cost_centre_id' => $costCentres[156]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10621,12 +10620,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '0')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '0']);
 		      $budgetLine[689]->accounts()->attach($account->id);
-		  $costCentres[158] = CostCentre::create(['name' => 'Sittning', 'committee_id' => $committees[22]->id]);
+		  $costCentres[157] = CostCentre::create(['name' => 'Sittning', 'committee_id' => $committees[22]->id]);
 		    $budgetLine[690] = BudgetLine::create([
 		        'name' => 'Biljetter', 
 		        'income' => 5150000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[158]->id, 
+		        'cost_centre_id' => $costCentres[157]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10639,7 +10638,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Lokalhyra', 
 		        'income' => 0, 
 		        'expenses' => 5000000, 
-		        'cost_centre_id' => $costCentres[158]->id, 
+		        'cost_centre_id' => $costCentres[157]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10652,7 +10651,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Mat', 
 		        'income' => 0, 
 		        'expenses' => 2500000, 
-		        'cost_centre_id' => $costCentres[158]->id, 
+		        'cost_centre_id' => $costCentres[157]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10665,7 +10664,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dryck', 
 		        'income' => 0, 
 		        'expenses' => 1000000, 
-		        'cost_centre_id' => $costCentres[158]->id, 
+		        'cost_centre_id' => $costCentres[157]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10674,12 +10673,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '0')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '0']);
 		      $budgetLine[693]->accounts()->attach($account->id);
-		  $costCentres[159] = CostCentre::create(['name' => 'Efterkör', 'committee_id' => $committees[22]->id]);
+		  $costCentres[158] = CostCentre::create(['name' => 'Efterkör', 'committee_id' => $committees[22]->id]);
 		    $budgetLine[694] = BudgetLine::create([
 		        'name' => 'Dryck', 
 		        'income' => 2000000, 
 		        'expenses' => 1500000, 
-		        'cost_centre_id' => $costCentres[159]->id, 
+		        'cost_centre_id' => $costCentres[158]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10692,7 +10691,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Tilltugg', 
 		        'income' => 0, 
 		        'expenses' => 200000, 
-		        'cost_centre_id' => $costCentres[159]->id, 
+		        'cost_centre_id' => $costCentres[158]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10705,7 +10704,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Liveunderhållning', 
 		        'income' => 0, 
 		        'expenses' => 800000, 
-		        'cost_centre_id' => $costCentres[159]->id, 
+		        'cost_centre_id' => $costCentres[158]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10714,12 +10713,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '0')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '0']);
 		      $budgetLine[696]->accounts()->attach($account->id);
-		  $costCentres[160] = CostCentre::create(['name' => 'Teambuilding', 'committee_id' => $committees[22]->id]);
+		  $costCentres[159] = CostCentre::create(['name' => 'Teambuilding', 'committee_id' => $committees[22]->id]);
 		    $budgetLine[697] = BudgetLine::create([
 		        'name' => 'Fika ledningsgruppen', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[160]->id, 
+		        'cost_centre_id' => $costCentres[159]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10732,7 +10731,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Fika projektgruppen', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[160]->id, 
+		        'cost_centre_id' => $costCentres[159]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10745,7 +10744,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Middag ledningsgruppen', 
 		        'income' => 0, 
 		        'expenses' => 50000, 
-		        'cost_centre_id' => $costCentres[160]->id, 
+		        'cost_centre_id' => $costCentres[159]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10758,7 +10757,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Aktivitet projektgruppen', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[160]->id, 
+		        'cost_centre_id' => $costCentres[159]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10767,12 +10766,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '0')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '0']);
 		      $budgetLine[700]->accounts()->attach($account->id);
-		  $costCentres[161] = CostCentre::create(['name' => 'Övrigt', 'committee_id' => $committees[22]->id]);
+		  $costCentres[160] = CostCentre::create(['name' => 'Övrigt', 'committee_id' => $committees[22]->id]);
 		    $budgetLine[701] = BudgetLine::create([
 		        'name' => 'Spons', 
 		        'income' => 1000000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[161]->id, 
+		        'cost_centre_id' => $costCentres[160]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10785,7 +10784,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Drivmedel bil', 
 		        'income' => 0, 
 		        'expenses' => 100000, 
-		        'cost_centre_id' => $costCentres[161]->id, 
+		        'cost_centre_id' => $costCentres[160]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10796,13 +10795,13 @@ class DatabaseSeeder extends Seeder
 		      $budgetLine[702]->accounts()->attach($account->id);
 		
 		// Jubileum 2018
-		$committees[23] = Committee::create(['name' => 'Jubileum 2018']);
-		  $costCentres[162] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[23]->id]);
+		$committees[23] = Committee::create(['name' => 'Jubileum 2018', 'type' => 'project']);
+		  $costCentres[161] = CostCentre::create(['name' => 'Allmänt', 'committee_id' => $committees[23]->id]);
 		    $budgetLine[703] = BudgetLine::create([
 		        'name' => 'Jubileumsfond', 
 		        'income' => 22400000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[162]->id, 
+		        'cost_centre_id' => $costCentres[161]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10815,7 +10814,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Teambuilding', 
 		        'income' => 0, 
 		        'expenses' => 1000000, 
-		        'cost_centre_id' => $costCentres[162]->id, 
+		        'cost_centre_id' => $costCentres[161]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10828,7 +10827,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Hyra av fordon', 
 		        'income' => 0, 
 		        'expenses' => 1025000, 
-		        'cost_centre_id' => $costCentres[162]->id, 
+		        'cost_centre_id' => $costCentres[161]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10841,7 +10840,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Drivmedel', 
 		        'income' => 0, 
 		        'expenses' => 2000000, 
-		        'cost_centre_id' => $costCentres[162]->id, 
+		        'cost_centre_id' => $costCentres[161]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10850,12 +10849,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5611')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5611']);
 		      $budgetLine[706]->accounts()->attach($account->id);
-		  $costCentres[163] = CostCentre::create(['name' => 'Bankett', 'committee_id' => $committees[23]->id]);
+		  $costCentres[162] = CostCentre::create(['name' => 'Bankett', 'committee_id' => $committees[23]->id]);
 		    $budgetLine[707] = BudgetLine::create([
 		        'name' => 'Biljettförsäljning', 
 		        'income' => 14000000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[163]->id, 
+		        'cost_centre_id' => $costCentres[162]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10871,7 +10870,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp mat', 
 		        'income' => 0, 
 		        'expenses' => 14000000, 
-		        'cost_centre_id' => $costCentres[163]->id, 
+		        'cost_centre_id' => $costCentres[162]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10884,7 +10883,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 7000000, 
-		        'cost_centre_id' => $costCentres[163]->id, 
+		        'cost_centre_id' => $costCentres[162]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10909,7 +10908,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Lokalhyra', 
 		        'income' => 0, 
 		        'expenses' => 3000000, 
-		        'cost_centre_id' => $costCentres[163]->id, 
+		        'cost_centre_id' => $costCentres[162]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10922,7 +10921,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekor', 
 		        'income' => 0, 
 		        'expenses' => 1000000, 
-		        'cost_centre_id' => $costCentres[163]->id, 
+		        'cost_centre_id' => $costCentres[162]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10931,12 +10930,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5411')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5411']);
 		      $budgetLine[711]->accounts()->attach($account->id);
-		  $costCentres[164] = CostCentre::create(['name' => 'Efterkör', 'committee_id' => $committees[23]->id]);
+		  $costCentres[163] = CostCentre::create(['name' => 'Efterkör', 'committee_id' => $committees[23]->id]);
 		    $budgetLine[712] = BudgetLine::create([
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 2500000, 
-		        'cost_centre_id' => $costCentres[164]->id, 
+		        'cost_centre_id' => $costCentres[163]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10961,7 +10960,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Försäljning dryck', 
 		        'income' => 3125000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[164]->id, 
+		        'cost_centre_id' => $costCentres[163]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -10982,12 +10981,12 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '3025')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '3025']);
 		      $budgetLine[713]->accounts()->attach($account->id);
-		  $costCentres[165] = CostCentre::create(['name' => 'Slutfest', 'committee_id' => $committees[23]->id]);
+		  $costCentres[164] = CostCentre::create(['name' => 'Slutfest', 'committee_id' => $committees[23]->id]);
 		    $budgetLine[714] = BudgetLine::create([
 		        'name' => 'Biljettförsäljning', 
 		        'income' => 35000000, 
 		        'expenses' => 0, 
-		        'cost_centre_id' => $costCentres[165]->id, 
+		        'cost_centre_id' => $costCentres[164]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -11003,7 +11002,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp mat', 
 		        'income' => 0, 
 		        'expenses' => 28000000, 
-		        'cost_centre_id' => $costCentres[165]->id, 
+		        'cost_centre_id' => $costCentres[164]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -11016,7 +11015,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Inköp dryck', 
 		        'income' => 0, 
 		        'expenses' => 14000000, 
-		        'cost_centre_id' => $costCentres[165]->id, 
+		        'cost_centre_id' => $costCentres[164]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -11041,7 +11040,7 @@ class DatabaseSeeder extends Seeder
 		        'name' => 'Dekor', 
 		        'income' => 0, 
 		        'expenses' => 1000000, 
-		        'cost_centre_id' => $costCentres[165]->id, 
+		        'cost_centre_id' => $costCentres[164]->id, 
 		        'type' => 'external', 
 		        'valid_from' => '2017-01-01 00:00:00', 
 		        'valid_to' => '2017-12-31 23:59:59', 
@@ -11050,7 +11049,7 @@ class DatabaseSeeder extends Seeder
 		      $account = Account::where('number', '5411')->first();
 		      if ($account === null) $account = Account::create(['name' => '', 'description' => '', 'number' => '5411']);
 		      $budgetLine[717]->accounts()->attach($account->id);
-		  $costCentres[166] = CostCentre::create(['name' => 'Totalt', 'committee_id' => $committees[23]->id]);
+		  $costCentres[165] = CostCentre::create(['name' => 'Totalt', 'committee_id' => $committees[23]->id]);
 		
 		$user = User::create(['ugkthid' => '', 'kth_username' => '', 'first_name' => 'Importerat från', 'last_name' => 'Spreadsheet', 'email' => 'jonas@jdahl.se']);
 		$suggestion = Suggestion::create(['name' => 'Import från Spreadsheet', 'description' => 'Import från Google Drive', 'valid_from' => '2017-01-01 00:00:00', 'valid_to' => '2017-12-31 23:59:00', 'created_by' => $user->id, 'implemented_at' => \Carbon\Carbon::now(), 'implemented_by' => $user->id]);

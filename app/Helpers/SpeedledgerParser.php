@@ -22,7 +22,10 @@ class SpeedledgerParser {
 		array_reverse($this->pages);
 		$collection = [];
 		while (count($this->pages) !== 0) {
-		    $collection[] = $this->parsePage(end($this->pages));
+		    $collect = $this->parsePage(end($this->pages));
+		    if ($collect !== false) {
+		    	$collection[] = $collect;
+		    }
 		    array_pop($this->pages);
 		}
 		return $collection;
@@ -34,8 +37,12 @@ class SpeedledgerParser {
 
 		$this->parsePageNumber();
 		if ($this->res["page"]["number"] > 1) {
-			return [];
+			return false;
 		}
+		$this->res["budget_line"]["speedledger_id"] = null;
+		$this->res["budget_line"]["committee"] = null;
+		$this->res["budget_line"]["cost_centre"] = null;
+		$this->res["budget_line"]["budget_line"] = null;
 		$this->parsePrinted();
 		$this->parseOrganisation();
 		$this->parsePeriod();
@@ -44,6 +51,9 @@ class SpeedledgerParser {
 		$this->parseCostCentre();
 		$this->parseReport();
 
+		if (strpos($this->res["budget_line"]["speedledger_id"], "MKM") === 0) {
+			return false;
+		}
 		return $this->res;
 	}
 
@@ -153,6 +163,7 @@ class SpeedledgerParser {
 		// Perioden
 		array_pop($this->text);
 
+		$this->res["spec"] = [];
 		while (strpos(end($this->text), "Rörelseresultat") === false) {
 			$this->parseLine();
 			array_pop($this->text);

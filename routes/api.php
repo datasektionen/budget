@@ -54,7 +54,27 @@ Route::post('committees/{id}/cost-centres', function ($id, Request $request) {
 	$committee = Committee::findOrFail($id);
 	$x = array_merge($data, ['committee_id' => $committee->id]);
 	$costCentre = CostCentre::create($x);
-	return $costCentre;
+
+	$committee = $costCentre->committee;
+	$committee->expenses();
+	$committee->income();
+	$committee->costCentres->map(function ($costCentre) {
+		return $costCentre->budgetLines->map(function ($budgetLine) use ($costCentre) {
+			$budgetLine->expenses = $budgetLine->expenses / 100;
+			$budgetLine->income = $budgetLine->income / 100;
+			$budgetLine->deleted = $costCentre->budgetLines->map(function ($x) use ($budgetLine) {
+				return $x->suggestion_id == session('suggestion') && $x->parent == $budgetLine->id;
+			})->reduce(function ($a, $b) {
+				return $a || $b;
+			}, false);
+			return $budgetLine;
+		});
+	});
+
+	$res = new \stdClass;
+	$res->cost_centre = $costCentre;
+	$res->committee = $committee;
+	return response()->json($res);
 });
 
 Route::get('cost-centres/{id}', function ($id) {

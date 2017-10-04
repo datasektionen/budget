@@ -10,4 +10,12 @@ class Account extends Model {
      */
     protected $hidden = ['updated_at', 'created_at'];
     protected $fillable = ['name', 'description', 'number'];
+
+    public static function all($columns = []) {
+    	return self::select('*')->orderBy('number')->get();
+    }
+
+    public function budgetLines() {
+        return $this->belongsToMany('App\Models\BudgetLine');
+    }
 }

@@ -37,6 +37,10 @@ class SuggestionController extends BaseController {
 		return view('suggestions.show')->with('suggestion', Suggestion::findOrFail($id));
 	}
 
+	public function getPdf($id, Request $request) {
+		return view('suggestions.pdf')->with('suggestion', Suggestion::findOrFail($id));
+	}
+
 	public function getShare($id, Request $request) {
 		return view('suggestions.share')->with('suggestion', Suggestion::findOrFail($id));
 	}

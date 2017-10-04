@@ -3,12 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Models\Entity;
 use Auth;
-use App\Models\Event;
-use Session;
 
-class IsSomeAdmin
+class HideIfReception
 {
     /**
      * Handle an incoming request.
@@ -18,9 +15,10 @@ class IsSomeAdmin
      * @return mixed
      */
     public function handle($request, Closure $next) {
-        if (count(Session::get('admin', [])) <= 0) {
+        if (env('HIDE') && (!Auth::user() || !Auth::user()->isn0llan())) {
             abort(403);
         }
+
         return $next($request);
     }
 }

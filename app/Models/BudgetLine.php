@@ -1,6 +1,8 @@
 <?php namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+use DB;
 
 class BudgetLine extends Model {    
 	/**
@@ -27,8 +29,24 @@ class BudgetLine extends Model {
         return $this->income - $this->expenses;
     }
 
+    public static function allNow() {
+        return self::where('valid_to', '>', Carbon::now())
+            ->where('valid_from', '<', Carbon::now())
+            ->whereExists(function ($q) {
+                $q->select(DB::raw(1))
+                    ->from('suggestions')
+                    ->whereRaw('suggestions.id = budget_lines.suggestion_id')
+                    ->whereNotNull('implemented_at');
+            })
+            ->with('costCentre')
+            ->get();
+    }
+
     public function removeIfEqualsParent() {
         $parent = $this->parentLine;
+        if ($parent === null) {
+            return $this;
+        }
         if ($this->name != $parent->name) return $this;
         if ($this->income != $parent->income) return $this;
         if ($this->expenses != $parent->expenses) return $this;

@@ -3,27 +3,6 @@
 </template>
 <script>
 
-function fmt(val, decimals, decimalSign, thousandDelimiter) {
-        decimals = decimals || 0;
-        decimalSign = decimalSign || ',';
-        thousandDelimiter = thousandDelimiter || ' ';
-        let sign = val < 0 ? '-' : '';
-        let absValString = String(parseInt(Math.abs(Number(val) || 0).toFixed(decimals)))
-        let firstThousand = absValString.length > 3 ? absValString.length % 3 : 0;
-        return sign 
-            + (firstThousand > 0 ? absValString.substr(0, firstThousand) + thousandDelimiter : '')
-            + (absValString.substr(firstThousand).replace(/(\d{3})(?=\d)/g, "$1" + thousandDelimiter))
-            + (decimals > 0 ? decimalSign + Math.abs(val - Math.abs(Number(val) || 0).toFixed(0)).toFixed(decimals).slice(2) : '')
-    }
-
-    function defmt(val) {
-        val = String(val || '').replace(/(\s)/g, "")
-        if (val.indexOf(',') !== -1) {
-            return val.substr(0, val.indexOf(','))
-        }
-        return val
-    }
-    
 export default {
     props: ['value'],
     data: function() {
@@ -37,11 +16,11 @@ export default {
                 if (this.isInputActive) {
                     return this.value.toString()
                 } else {
-                    return fmt(this.value)
+                    return this.fmt(this.value)
                 }
             },
             set: function(modifiedValue) {
-                let newValue = defmt(modifiedValue)
+                let newValue = this.defmt(modifiedValue)
                 if (isNaN(newValue)) {
                     newValue = 0
                 }
@@ -52,25 +31,6 @@ export default {
     methods: {
         change() {
           this.$emit('change');
-        },
-        fmt: function(val, decimals, decimalSign, thousandDelimiter) {
-            decimals = decimals || 0;
-            decimalSign = decimalSign || ',';
-            thousandDelimiter = thousandDelimiter || ' ';
-            let sign = val < 0 ? '-' : '';
-            let absValString = String(parseInt(Math.abs(Number(val) || 0).toFixed(decimals)))
-            let firstThousand = absValString.length > 3 ? absValString.length % 3 : 0;
-            return sign 
-                + (firstThousand > 0 ? absValString.substr(0, firstThousand) + thousandDelimiter : '')
-                + (absValString.substr(firstThousand).replace(/(\d{3})(?=\d)/g, "$1" + thousandDelimiter))
-                + (decimals > 0 ? decimalSign + Math.abs(val - Math.abs(Number(val) || 0).toFixed(0)).toFixed(decimals).slice(2) : '')
-        },
-        defmt: function(val) {
-            val = String(val || '').replace(/(\s)/g, "")
-            if (val.indexOf(',') !== -1) {
-                return val.substr(0, val.indexOf(','))
-            }
-            return val
         }
     }
 }

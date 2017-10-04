@@ -16,6 +16,33 @@ window.Vue = require('vue');
 
 Vue.component('committee', require('./components/Committee.vue'));
 Vue.component('currency-input', require('./components/CurrencyInput.vue'));
+Vue.component('cost-centre', require('./components/CostCentre.vue'));
+Vue.component('budget-line', require('./components/BudgetLine.vue'));
+Vue.component('alert', require('./components/Alert.vue'));
+
+Vue.mixin({
+  methods: {
+  	fmt: function(val, decimals, decimalSign, thousandDelimiter) {
+        decimals = decimals || 0;
+        decimalSign = decimalSign || ',';
+        thousandDelimiter = thousandDelimiter || ' ';
+        let sign = val < 0 ? '-' : '';
+        let absValString = String(parseInt(Math.abs(Number(val) || 0).toFixed(decimals)))
+        let firstThousand = absValString.length > 3 ? absValString.length % 3 : 0;
+        return sign 
+            + (firstThousand > 0 ? absValString.substr(0, firstThousand) + thousandDelimiter : '')
+            + (absValString.substr(firstThousand).replace(/(\d{3})(?=\d)/g, "$1" + thousandDelimiter))
+            + (decimals > 0 ? decimalSign + Math.abs(val - Math.abs(Number(val) || 0).toFixed(0)).toFixed(decimals).slice(2) : '')
+    },
+    defmt: function(val) {
+        val = String(val || '').replace(/(\s)/g, "")
+        if (val.indexOf(',') !== -1) {
+            return val.substr(0, val.indexOf(','))
+        }
+        return val
+    }
+  }
+})
 
 const app = new Vue({
     el: '#app'

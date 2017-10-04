@@ -10,9 +10,8 @@
     <!-- Fonts -->
     <link href="//aurora.datasektionen.se" rel="stylesheet" type="text/css">
     <link href="/css/style.css" rel="stylesheet" type="text/css">
-    <link href="/css/jquery-ui.css" rel="stylesheet" type="text/css">
-    <link href="/css/jquery.timepicker.css" rel="stylesheet" type="text/css">
     <meta name="theme-color" content="#039BE5">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('head-js')
 </head>
 <body>
@@ -36,6 +35,21 @@
         </header>
         <div id="content">
             @yield('content')
+            <div id="footer" class="row">
+                <div class="col">
+                <p>Hittat något som inte funkar? <a href="https://datasektionen.se/namnder/informationsorganet">IORs Crash &amp; Bränn</a> fixar det så snart som möjligt om du skapar ett issue på Github.</p>
+                <p class="link"><a href="https://github.com/datasektionen/budget/issues" class="button theme-color">Skapa ett issue</a></p>
+            </div>
+            <div class="col">
+                <p>Budgetsystemet är skrivet av <a href="http://dahl.guru">Jonas Dahl</a>.</p>
+            </div>
+            <div class="col">
+                <p>Vill du själv ändra saker här, eller koda något nytt? Tveka inte att komma på en Hackerkväll! För mer info, följ IORs Facebook.
+                </p>
+                <p class="link"><a href="https://www.facebook.com/informationsorganet/" class="button theme-color">IOR på Facebook</a></p>
+            </div>
+                <div class="clear"></div>
+            </div>
         </div>
     </div>
     <script type="text/javascript">
@@ -56,6 +70,9 @@
         @if (Auth::user())
         ,{ str: "Förslag", href: "/suggestions" }
         ,{ str: "Uppföljning", href: "/follow-up" }
+        @if (Auth::user()->isAdmin())
+        ,{ str: "Administration", href: "/admin" }
+        @endif
         @endif
         ]
     }

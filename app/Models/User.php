@@ -35,6 +35,10 @@ class User extends Authenticatable {
         'password', 'remember_token',
     ];
 
+    protected $casts = [
+        'verified' => 'boolean'
+    ];
+
     public function suggestions() {
         return $this->belongsToMany('App\Models\Suggestion');
     }
@@ -53,5 +57,13 @@ class User extends Authenticatable {
             'kth_username' => $json->uid, 
             'email' => $json->uid . '@kth.se'
         ]);
+    }
+
+    public static function isAdmin() {
+        return session('admin') === true;
+    }
+
+    public function isn0llan() {
+        return $this->verified === true;
     }
 }

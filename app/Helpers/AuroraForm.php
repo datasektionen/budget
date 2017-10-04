@@ -35,6 +35,10 @@ class AuroraForm extends FormFacade {
         return self::surround('<input type="datetime-local" name="' . $id . '" id="' . $id . '" value="' . date('Y-m-d\TH:i') . '" />', $label, $id);
     }
 
+    public static function select($id, $label, $options, $default = null) {
+        return self::surround('<div class="select">' . parent::select($id, $options, $default, ['id' => $id]) . '</div>', $label, $id);
+    }
+
     public static function file($id, $label, $default = null) {
         return '<div class="form-entry">' .
                     ($label !== null ?

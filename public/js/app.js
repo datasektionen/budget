@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,8 +70,8 @@
 "use strict";
 
 
-var bind = __webpack_require__(3);
-var isBuffer = __webpack_require__(17);
+var bind = __webpack_require__(4);
+var isBuffer = __webpack_require__(18);
 
 /*global toString:true*/
 
@@ -381,7 +381,7 @@ module.exports = {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(20);
+var normalizeHeaderName = __webpack_require__(21);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -397,10 +397,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(4);
+    adapter = __webpack_require__(5);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(4);
+    adapter = __webpack_require__(5);
   }
   return adapter;
 }
@@ -471,10 +471,107 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(19)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+/* globals __VUE_SSR_CONTEXT__ */
+
+// this module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier /* server only */
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = injectStyles
+  }
+
+  if (hook) {
+    var functional = options.functional
+    var existing = functional
+      ? options.render
+      : options.beforeCreate
+    if (!functional) {
+      // inject component registration as beforeCreate hook
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    } else {
+      // register for functioal component in vue file
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return existing(h, context)
+      }
+    }
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports) {
 
 var g;
@@ -501,7 +598,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -519,19 +616,19 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(21);
-var buildURL = __webpack_require__(23);
-var parseHeaders = __webpack_require__(24);
-var isURLSameOrigin = __webpack_require__(25);
-var createError = __webpack_require__(5);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(26);
+var settle = __webpack_require__(22);
+var buildURL = __webpack_require__(24);
+var parseHeaders = __webpack_require__(25);
+var isURLSameOrigin = __webpack_require__(26);
+var createError = __webpack_require__(6);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(27);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -628,7 +725,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(27);
+      var cookies = __webpack_require__(28);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -706,13 +803,13 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var enhanceError = __webpack_require__(22);
+var enhanceError = __webpack_require__(23);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -731,7 +828,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -743,7 +840,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -769,15 +866,15 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(9);
-module.exports = __webpack_require__(40);
+__webpack_require__(10);
+module.exports = __webpack_require__(46);
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -786,9 +883,9 @@ module.exports = __webpack_require__(40);
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(10);
+__webpack_require__(11);
 
-window.Vue = __webpack_require__(35);
+window.Vue = __webpack_require__(36);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -796,19 +893,43 @@ window.Vue = __webpack_require__(35);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('committee', __webpack_require__(36));
-Vue.component('currency-input', __webpack_require__(50));
+Vue.component('committee', __webpack_require__(37));
+Vue.component('currency-input', __webpack_require__(40));
+Vue.component('cost-centre', __webpack_require__(51));
+Vue.component('budget-line', __webpack_require__(54));
+Vue.component('alert', __webpack_require__(43));
+
+Vue.mixin({
+    methods: {
+        fmt: function fmt(val, decimals, decimalSign, thousandDelimiter) {
+            decimals = decimals || 0;
+            decimalSign = decimalSign || ',';
+            thousandDelimiter = thousandDelimiter || ' ';
+            var sign = val < 0 ? '-' : '';
+            var absValString = String(parseInt(Math.abs(Number(val) || 0).toFixed(decimals)));
+            var firstThousand = absValString.length > 3 ? absValString.length % 3 : 0;
+            return sign + (firstThousand > 0 ? absValString.substr(0, firstThousand) + thousandDelimiter : '') + absValString.substr(firstThousand).replace(/(\d{3})(?=\d)/g, "$1" + thousandDelimiter) + (decimals > 0 ? decimalSign + Math.abs(val - Math.abs(Number(val) || 0).toFixed(0)).toFixed(decimals).slice(2) : '');
+        },
+        defmt: function defmt(val) {
+            val = String(val || '').replace(/(\s)/g, "");
+            if (val.indexOf(',') !== -1) {
+                return val.substr(0, val.indexOf(','));
+            }
+            return val;
+        }
+    }
+});
 
 var app = new Vue({
-  el: '#app'
+    el: '#app'
 });
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-window._ = __webpack_require__(11);
+window._ = __webpack_require__(12);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -817,9 +938,9 @@ window._ = __webpack_require__(11);
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(13);
+  window.$ = window.jQuery = __webpack_require__(14);
 
-  __webpack_require__(14);
+  __webpack_require__(15);
 } catch (e) {}
 
 /**
@@ -828,7 +949,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(15);
+window.axios = __webpack_require__(16);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -862,7 +983,7 @@ if (token) {
 // });
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -17951,10 +18072,10 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(12)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(13)(module)))
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -17982,7 +18103,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -28242,7 +28363,7 @@ return jQuery;
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 /*!
@@ -30625,21 +30746,21 @@ if (typeof jQuery === 'undefined') {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(16);
+module.exports = __webpack_require__(17);
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(3);
-var Axios = __webpack_require__(18);
+var bind = __webpack_require__(4);
+var Axios = __webpack_require__(19);
 var defaults = __webpack_require__(1);
 
 /**
@@ -30673,15 +30794,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(7);
-axios.CancelToken = __webpack_require__(33);
-axios.isCancel = __webpack_require__(6);
+axios.Cancel = __webpack_require__(8);
+axios.CancelToken = __webpack_require__(34);
+axios.isCancel = __webpack_require__(7);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(34);
+axios.spread = __webpack_require__(35);
 
 module.exports = axios;
 
@@ -30690,7 +30811,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports) {
 
 /*!
@@ -30717,7 +30838,7 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30725,10 +30846,10 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(1);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(28);
-var dispatchRequest = __webpack_require__(29);
-var isAbsoluteURL = __webpack_require__(31);
-var combineURLs = __webpack_require__(32);
+var InterceptorManager = __webpack_require__(29);
+var dispatchRequest = __webpack_require__(30);
+var isAbsoluteURL = __webpack_require__(32);
+var combineURLs = __webpack_require__(33);
 
 /**
  * Create a new instance of Axios
@@ -30810,7 +30931,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -31000,7 +31121,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31019,13 +31140,13 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(5);
+var createError = __webpack_require__(6);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -31052,7 +31173,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31080,7 +31201,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31155,7 +31276,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31199,7 +31320,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31274,7 +31395,7 @@ module.exports = (
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31317,7 +31438,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31377,7 +31498,7 @@ module.exports = (
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31436,15 +31557,15 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(30);
-var isCancel = __webpack_require__(6);
+var transformData = __webpack_require__(31);
+var isCancel = __webpack_require__(7);
 var defaults = __webpack_require__(1);
 
 /**
@@ -31522,7 +31643,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31549,7 +31670,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31570,7 +31691,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31591,13 +31712,13 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(7);
+var Cancel = __webpack_require__(8);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -31655,7 +31776,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31689,7 +31810,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41886,14 +42007,14 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(37)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(38)
 /* template */
@@ -41932,103 +42053,6 @@ if (false) {(function () {
 })()}
 
 module.exports = Component.exports
-
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports) {
-
-/* globals __VUE_SSR_CONTEXT__ */
-
-// this module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = injectStyles
-  }
-
-  if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
-      // register for functioal component in vue file
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return existing(h, context)
-      }
-    }
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
 
 
 /***/ }),
@@ -42081,248 +42105,71 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-function fmt(val, decimals, decimalSign, thousandDelimiter) {
-    decimals = decimals || 0;
-    decimalSign = decimalSign || ',';
-    thousandDelimiter = thousandDelimiter || ' ';
-    var sign = val < 0 ? '-' : '';
-    var absValString = String(parseInt(Math.abs(Number(val) || 0).toFixed(decimals)));
-    var firstThousand = absValString.length > 3 ? absValString.length % 3 : 0;
-    return sign + (firstThousand > 0 ? absValString.substr(0, firstThousand) + thousandDelimiter : '') + absValString.substr(firstThousand).replace(/(\d{3})(?=\d)/g, "$1" + thousandDelimiter) + (decimals > 0 ? decimalSign + Math.abs(val - Math.abs(Number(val) || 0).toFixed(0)).toFixed(decimals).slice(2) : '');
-}
-
-function defmt(val) {
-    val = String(val || '').replace(/(\s)/g, "");
-    if (val.indexOf(',') !== -1) {
-        return val.substr(0, val.indexOf(','));
-    }
-    return val;
-}
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['suggestion', 'committeeId', 'userId'],
+    props: ['suggestion', 'committee', 'user'],
     data: function data() {
         return {
-            committee: null,
-            user: null
+            committee_: this.committee
         };
     },
-    created: function created() {
-        var _this = this;
-
-        fetch('/api/committees/' + this.committeeId, {
-            method: 'GET',
-            credentials: 'same-origin',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            }
-        }).then(function (res) {
-            return res.json();
-        }).then(function (json) {
-            _this.committee = json;
-        });
+    mounted: function mounted() {
+        //window.onscroll = this.handleScroll
     },
     methods: {
-        updateBudgetLine: function updateBudgetLine(budget_line) {
-            var _this2 = this;
+        setCommittee: function setCommittee(c) {
+            console.log("Sets committee: ", c);
+            this.committee_ = c;
+        },
+        createCostCentre: function createCostCentre() {
+            var _this = this;
 
-            budget_line.loading = true;
-            console.log('Updating');
-            console.log(budget_line);
-            fetch('/api/budget-lines/' + budget_line.id, {
+            this.committee_.loading = true;
+            fetch('/api/committees/' + this.committee_.id + '/cost-centres', {
                 method: 'POST',
                 credentials: 'same-origin',
                 headers: {
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    'suggestion': this.suggestion ? this.suggestion.id : -1,
-                    'income': budget_line.income * 100,
-                    'expenses': budget_line.expenses * 100,
-                    'name': budget_line.name,
-                    'type': budget_line['type']
+                    'name': this.committee_.new_name,
+                    'speedledger_id': this.committee_.new_speedledger_id
                 })
             }).then(function (res) {
                 return res.json();
             }).then(function (json) {
                 if (json !== false) {
-                    _this2.committee = json;
-                    console.log(json);
-                } else {
-                    console.log('No change');
+                    _this.committee_ = json.committee;
                 }
             });
-        },
-        updateCostCentre: function updateCostCentre(cost_centre) {
-            cost_centre.loading = true;
-            fetch('/api/cost-centres/' + cost_centre.id, {
-                method: 'POST',
-                credentials: 'same-origin',
-                headers: {
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({
-                    'name': cost_centre.name,
-                    'speedledger_id': cost_centre.speedledger_id
-                })
-            }).then(function (res) {
-                return res.json();
-            }).then(function (json) {
-                cost_centre.loading = false;
-            });
-        },
-        createBudgetLine: function createBudgetLine(cost_center) {
-            var _this3 = this;
+        }
+    },
+    updated: function updated() {
+        console.log('Updated!');
+    },
 
-            cost_centre.loading = true;
-            console.log('Adding');
-            console.log(cost_center);
-            fetch('/api/cost-centres/' + cost_center.id + '/budget-lines', {
-                method: 'POST',
-                credentials: 'same-origin',
-                headers: {
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({
-                    'suggestion_id': this.suggestion ? this.suggestion.id : -1,
-                    'income': cost_center.new_income,
-                    'expenses': cost_center.new_expenses,
-                    'name': cost_center.new_name,
-                    'type': cost_center.new_type
-                })
-            }).then(function (res) {
-                return res.json();
-            }).then(function (json) {
-                if (json !== false) {
-                    _this3.committee = json.committee;
-                }
-            });
+    computed: {
+        income: function income() {
+            return [].concat.apply([], this.committee_.cost_centres.map(function (x) {
+                return x.budget_lines.map(function (y) {
+                    return y.deleted ? 0 : y.income * x.repetitions;
+                });
+            })).reduce(function (a, b) {
+                return parseInt(a) + parseInt(b);
+            }, 0);
         },
-        fmt: function fmt(val, decimals, decimalSign, thousandDelimiter) {
-            decimals = decimals || 0;
-            decimalSign = decimalSign || ',';
-            thousandDelimiter = thousandDelimiter || ' ';
-            var sign = val < 0 ? '-' : '';
-            var absValString = String(parseInt(Math.abs(Number(val) || 0).toFixed(decimals)));
-            var firstThousand = absValString.length > 3 ? absValString.length % 3 : 0;
-            return sign + (firstThousand > 0 ? absValString.substr(0, firstThousand) + thousandDelimiter : '') + absValString.substr(firstThousand).replace(/(\d{3})(?=\d)/g, "$1" + thousandDelimiter) + (decimals > 0 ? decimalSign + Math.abs(val - Math.abs(Number(val) || 0).toFixed(0)).toFixed(decimals).slice(2) : '');
+        expenses: function expenses() {
+            return [].concat.apply([], this.committee_.cost_centres.map(function (x) {
+                return x.budget_lines.map(function (y) {
+                    return y.deleted ? 0 : y.expenses * x.repetitions;
+                });
+            })).reduce(function (a, b) {
+                return parseInt(a) + parseInt(b);
+            }, 0);
         },
-        defmt: function defmt(val) {
-            val = String(val || '').replace(/(\s)/g, "");
-            if (val.indexOf(',') !== -1) {
-                return val.substr(0, val.indexOf(','));
-            }
-            return val;
+        balance: function balance() {
+            return this.income - this.expenses;
         }
     }
 });
@@ -42335,794 +42182,169 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "budget" } }, [
-    _vm.committee
-      ? _c(
-          "table",
-          { staticClass: "budget" },
-          [
-            _c("thead", [
-              _c("tr", [
-                _c("th", { staticClass: "name" }, [
-                  _c("span", {
-                    staticClass: "input",
-                    domProps: { innerHTML: _vm._s(_vm.committee.name) }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("th", { staticClass: "accounts" }),
-                _vm._v(" "),
-                _c("th", { staticClass: "accounts" }),
-                _vm._v(" "),
-                _c("th", { staticClass: "col-income plus cash" }, [
-                  _c("span", {
-                    domProps: {
-                      innerHTML: _vm._s(
-                        _vm.fmt(
-                          [].concat
-                            .apply(
-                              [],
-                              _vm.committee.cost_centres.map(function(x) {
-                                return x.budget_lines.map(function(y) {
-                                  return y.deleted
-                                    ? 0
-                                    : y.income * x.repetitions
-                                })
-                              })
-                            )
-                            .reduce(function(a, b) {
-                              return parseInt(a) + parseInt(b)
-                            }, 0)
-                        )
-                      )
-                    }
-                  }),
-                  _vm._v(" \n                    SEK\n                ")
-                ]),
-                _vm._v(" "),
-                _c("th", { staticClass: "col-expenses minus cash" }, [
-                  _c("span", {
-                    domProps: {
-                      innerHTML: _vm._s(
-                        _vm.fmt(
-                          [].concat
-                            .apply(
-                              [],
-                              _vm.committee.cost_centres.map(function(x) {
-                                return x.budget_lines.map(function(y) {
-                                  return y.deleted
-                                    ? 0
-                                    : y.expenses * x.repetitions
-                                })
-                              })
-                            )
-                            .reduce(function(a, b) {
-                              return parseInt(a) + parseInt(b)
-                            }, 0)
-                        )
-                      )
-                    }
-                  }),
-                  _vm._v(" \n                    SEK\n                ")
-                ]),
-                _vm._v(" "),
-                _c("th", { staticClass: "minus cash" }, [
-                  _c("span", {
-                    domProps: {
-                      innerHTML: _vm._s(
-                        _vm.fmt(
-                          [].concat
-                            .apply(
-                              [],
-                              _vm.committee.cost_centres.map(function(x) {
-                                return x.budget_lines.map(function(y) {
-                                  return y.deleted
-                                    ? 0
-                                    : y.income * x.repetitions
-                                })
-                              })
-                            )
-                            .reduce(function(a, b) {
-                              return parseInt(a) + parseInt(b)
-                            }, 0) -
-                            [].concat
-                              .apply(
-                                [],
-                                _vm.committee.cost_centres.map(function(x) {
-                                  return x.budget_lines.map(function(y) {
-                                    return y.deleted
-                                      ? 0
-                                      : y.expenses * x.repetitions
-                                  })
-                                })
-                              )
-                              .reduce(function(a, b) {
-                                return parseInt(a) + parseInt(b)
-                              }, 0)
-                        )
-                      )
-                    }
-                  }),
-                  _vm._v(" \n                    SEK\n                ")
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._l(_vm.committee.cost_centres, function(cost_centre) {
-              return _c(
-                "tbody",
-                [
-                  _vm._m(0, true),
+  return _c(
+    "div",
+    { attrs: { id: "budget" } },
+    [
+      _vm.committee_
+        ? _c(
+            "table",
+            { class: { budget: true, edit: _vm.suggestion } },
+            [
+              _c("thead", { attrs: { id: "thead" } }, [
+                _c("tr", { attrs: { id: "tr" } }, [
+                  _c("th", { staticClass: "name" }, [
+                    _c("span", {
+                      staticClass: "input",
+                      domProps: { innerHTML: _vm._s(_vm.committee_.name) }
+                    })
+                  ]),
                   _vm._v(" "),
-                  _c("tr", { staticClass: "header" }, [
-                    _c("td", { staticClass: "name" }, [
-                      _c("span", { class: { loading: cost_centre.loading } }),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: cost_centre.name,
-                            expression: "cost_centre.name"
-                          }
-                        ],
-                        attrs: {
-                          type: "text",
-                          placeholder: "Namn på kostnadsställe"
-                        },
-                        domProps: { value: cost_centre.name },
-                        on: {
-                          change: function($event) {
-                            _vm.updateCostCentre(cost_centre)
-                          },
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            cost_centre.name = $event.target.value
-                          }
-                        }
-                      })
-                    ]),
+                  _c("th", { staticClass: "accounts" }),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "accounts" }),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "col-income plus cash" }, [
+                    _c("span", {
+                      domProps: { innerHTML: _vm._s(_vm.fmt(_vm.income)) }
+                    }),
+                    _vm._v(" SEK")
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "col-expenses minus cash" }, [
+                    _c("span", {
+                      domProps: { innerHTML: _vm._s(_vm.fmt(_vm.expenses)) }
+                    }),
+                    _vm._v(" SEK")
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "minus cash" }, [
+                    _c("span", {
+                      domProps: { innerHTML: _vm._s(_vm.fmt(this.balance)) }
+                    }),
+                    _vm._v(" SEK")
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.committee_.cost_centres, function(cost_centre) {
+                return _c("cost-centre", {
+                  key: cost_centre.id,
+                  attrs: {
+                    suggestion: _vm.suggestion,
+                    "cost-centre": cost_centre
+                  },
+                  on: { committee: _vm.setCommittee }
+                })
+              }),
+              _vm._v(" "),
+              _vm.suggestion
+                ? _c("tbody", [
+                    _vm._m(0),
                     _vm._v(" "),
-                    _c(
-                      "td",
-                      { staticClass: "accounts", attrs: { colspan: "2" } },
-                      [
+                    _c("tr", { staticClass: "header" }, [
+                      _c("td", { staticClass: "name" }, [
+                        _c("span", {
+                          class: { loading: _vm.committee_.loading }
+                        }),
+                        _vm._v(" "),
                         _c("input", {
                           directives: [
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: cost_centre.speedledger_id,
-                              expression: "cost_centre.speedledger_id"
+                              value: _vm.committee_.new_name,
+                              expression: "committee_.new_name"
                             }
                           ],
-                          staticClass: "speedledger-id",
-                          attrs: { type: "text", placeholder: "Bokf.-id" },
-                          domProps: { value: cost_centre.speedledger_id },
+                          attrs: {
+                            type: "text",
+                            placeholder: "Skapa nytt kostnadsställe..."
+                          },
+                          domProps: { value: _vm.committee_.new_name },
                           on: {
                             change: function($event) {
-                              _vm.updateCostCentre(cost_centre)
+                              _vm.createCostCentre()
                             },
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              cost_centre.speedledger_id = $event.target.value
+                              _vm.committee_.new_name = $event.target.value
                             }
                           }
                         })
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "col-income plus cash" }, [
-                      _c("span", {
-                        domProps: {
-                          innerHTML: _vm._s(
-                            _vm.fmt(
-                              cost_centre.repetitions *
-                                cost_centre.budget_lines
-                                  .map(function(x) {
-                                    return x.deleted ? 0 : x.income
-                                  })
-                                  .reduce(function(a, b) {
-                                    return parseInt(a) + parseInt(b)
-                                  }, 0)
-                            )
-                          )
-                        }
-                      }),
-                      _vm._v(" \n                    SEK\n                ")
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "col-expenses minus cash" }, [
-                      _c("span", {
-                        domProps: {
-                          innerHTML: _vm._s(
-                            _vm.fmt(
-                              cost_centre.repetitions *
-                                cost_centre.budget_lines
-                                  .map(function(x) {
-                                    return x.deleted ? 0 : x.expenses
-                                  })
-                                  .reduce(function(a, b) {
-                                    return parseInt(a) + parseInt(b)
-                                  }, 0)
-                            )
-                          )
-                        }
-                      }),
-                      _vm._v(" \n                    SEK\n                ")
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      {
-                        class: {
-                          cash: true,
-                          minus:
-                            cost_centre.repetitions *
-                              (cost_centre.budget_lines
-                                .map(function(x) {
-                                  return x.deleted ? 0 : x.income
-                                })
-                                .reduce(function(a, b) {
-                                  return parseInt(a) + parseInt(b)
-                                }, 0) -
-                                cost_centre.budget_lines
-                                  .map(function(x) {
-                                    return x.deleted ? 0 : x.expenses
-                                  })
-                                  .reduce(function(a, b) {
-                                    return parseInt(a) + parseInt(b)
-                                  }, 0)) <
-                            0,
-                          plus:
-                            cost_centre.repetitions *
-                              (cost_centre.budget_lines
-                                .map(function(x) {
-                                  return x.deleted ? 0 : x.income
-                                })
-                                .reduce(function(a, b) {
-                                  return parseInt(a) + parseInt(b)
-                                }, 0) -
-                                cost_centre.budget_lines
-                                  .map(function(x) {
-                                    return x.deleted ? 0 : x.expenses
-                                  })
-                                  .reduce(function(a, b) {
-                                    return parseInt(a) + parseInt(b)
-                                  }, 0)) >
-                            0
-                        }
-                      },
-                      [
-                        _c("span", {
-                          domProps: {
-                            innerHTML: _vm._s(
-                              _vm.fmt(
-                                cost_centre.repetitions *
-                                  (cost_centre.budget_lines
-                                    .map(function(x) {
-                                      return x.deleted ? 0 : x.income
-                                    })
-                                    .reduce(function(a, b) {
-                                      return parseInt(a) + parseInt(b)
-                                    }, 0) -
-                                    cost_centre.budget_lines
-                                      .map(function(x) {
-                                        return x.deleted ? 0 : x.expenses
-                                      })
-                                      .reduce(function(a, b) {
-                                        return parseInt(a) + parseInt(b)
-                                      }, 0))
-                              )
-                            )
-                          }
-                        }),
-                        _vm._v(" \n                    SEK\n                ")
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(cost_centre.budget_lines, function(budget_line) {
-                    return _c(
-                      "tr",
-                      {
-                        class: {
-                          suggestion:
-                            _vm.suggestion &&
-                            budget_line.suggestion_id === _vm.suggestion.id,
-                          deleted: budget_line.deleted
-                        }
-                      },
-                      [
-                        _c("td", { staticClass: "description" }, [
-                          _c("span", {
-                            class: { loading: budget_line.loading }
-                          }),
-                          _vm._v(" "),
-                          _vm.suggestion
-                            ? _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: budget_line.name,
-                                    expression: "budget_line.name"
-                                  }
-                                ],
-                                staticClass: "name",
-                                attrs: { type: "text" },
-                                domProps: { value: budget_line.name },
-                                on: {
-                                  change: function($event) {
-                                    _vm.updateBudgetLine(budget_line)
-                                  },
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    budget_line.name = $event.target.value
-                                  }
-                                }
-                              })
-                            : _c("span", {
-                                staticClass: "input",
-                                domProps: {
-                                  innerHTML: _vm._s(budget_line.name)
-                                }
-                              })
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "accounts" }, [
-                          _vm.suggestion
-                            ? _c("div", { staticClass: "select small" }, [
-                                _c(
-                                  "select",
-                                  {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: budget_line["type"],
-                                        expression: "budget_line['type']"
-                                      }
-                                    ],
-                                    on: {
-                                      change: [
-                                        function($event) {
-                                          var $$selectedVal = Array.prototype.filter
-                                            .call(
-                                              $event.target.options,
-                                              function(o) {
-                                                return o.selected
-                                              }
-                                            )
-                                            .map(function(o) {
-                                              var val =
-                                                "_value" in o
-                                                  ? o._value
-                                                  : o.value
-                                              return val
-                                            })
-                                          _vm.$set(
-                                            budget_line,
-                                            "type",
-                                            $event.target.multiple
-                                              ? $$selectedVal
-                                              : $$selectedVal[0]
-                                          )
-                                        },
-                                        function($event) {
-                                          _vm.updateBudgetLine(budget_line)
-                                        }
-                                      ]
-                                    }
-                                  },
-                                  [
-                                    _c(
-                                      "option",
-                                      { attrs: { value: "internal" } },
-                                      [_vm._v("I")]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "option",
-                                      { attrs: { value: "external" } },
-                                      [_vm._v("E")]
-                                    )
-                                  ]
-                                )
-                              ])
-                            : _c("span", {
-                                domProps: {
-                                  innerHTML: _vm._s(
-                                    budget_line["type"] == "internal"
-                                      ? "I"
-                                      : "E"
-                                  )
-                                }
-                              })
-                        ]),
-                        _vm._v(" "),
-                        _c("td", {
-                          staticClass: "accounts",
-                          domProps: {
-                            innerHTML: _vm._s(
-                              budget_line.accounts
-                                .map(function(x) {
-                                  return x.number
-                                })
-                                .join(", ")
-                            )
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "col-income cash plus" }, [
-                          _c("span", { staticClass: "unit" }, [_vm._v("SEK")]),
-                          _vm._v(" "),
-                          _vm.suggestion
-                            ? _c(
-                                "span",
-                                [
-                                  _c("currency-input", {
-                                    staticClass: "income",
-                                    on: {
-                                      change: function($event) {
-                                        _vm.updateBudgetLine(budget_line)
-                                      }
-                                    },
-                                    model: {
-                                      value: budget_line.income,
-                                      callback: function($$v) {
-                                        budget_line.income = $$v
-                                      },
-                                      expression: "budget_line.income"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.suggestion === null
-                            ? _c("span", {
-                                staticClass: "input income",
-                                domProps: {
-                                  innerHTML: _vm._s(_vm.fmt(budget_line.income))
-                                }
-                              })
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "col-expenses cash minus" }, [
-                          _c("span", { staticClass: "unit" }, [_vm._v("SEK")]),
-                          _vm._v(" "),
-                          _vm.suggestion
-                            ? _c(
-                                "span",
-                                [
-                                  _c("currency-input", {
-                                    staticClass: "expenses",
-                                    on: {
-                                      change: function($event) {
-                                        _vm.updateBudgetLine(budget_line)
-                                      }
-                                    },
-                                    model: {
-                                      value: budget_line.expenses,
-                                      callback: function($$v) {
-                                        budget_line.expenses = $$v
-                                      },
-                                      expression: "budget_line.expenses"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.suggestion === null
-                            ? _c("span", {
-                                staticClass: "input expenses",
-                                domProps: {
-                                  innerHTML: _vm._s(
-                                    _vm.fmt(budget_line.expenses)
-                                  )
-                                }
-                              })
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          {
-                            class: {
-                              cash: true,
-                              plus: budget_line.income > budget_line.expenses,
-                              minus: budget_line.income < budget_line.expenses
-                            }
-                          },
-                          [
-                            _c("span", {
-                              domProps: {
-                                innerHTML: _vm._s(
-                                  _vm.fmt(
-                                    budget_line.income - budget_line.expenses
-                                  )
-                                )
-                              }
-                            }),
-                            _vm._v(" SEK\n                ")
-                          ]
-                        )
-                      ]
-                    )
-                  }),
-                  _vm._v(" "),
-                  _vm.suggestion
-                    ? _c("tr", { staticClass: "vague" }, [
-                        _c("td", { staticClass: "description" }, [
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        {
+                          staticClass: "accounts speedledger-id",
+                          attrs: { colspan: "2" }
+                        },
+                        [
                           _c("input", {
                             directives: [
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: cost_centre.new_name,
-                                expression: "cost_centre.new_name"
+                                value: _vm.committee_.new_speedledger_id,
+                                expression: "committee_.new_speedledger_id"
                               }
                             ],
-                            staticClass: "name",
-                            attrs: { type: "text", placeholder: "Skapa ny..." },
-                            domProps: { value: cost_centre.new_name },
+                            staticClass: "speedledger-id",
+                            attrs: { type: "text", placeholder: "Bokf.-id" },
+                            domProps: {
+                              value: _vm.committee_.new_speedledger_id
+                            },
                             on: {
                               change: function($event) {
-                                _vm.createBudgetLine(cost_centre)
+                                _vm.createCostCentre()
                               },
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return
                                 }
-                                cost_centre.new_name = $event.target.value
+                                _vm.committee_.new_speedledger_id =
+                                  $event.target.value
                               }
                             }
                           })
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "accounts" }, [
-                          _c("div", { staticClass: "select small" }, [
-                            _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: cost_centre.new_type,
-                                    expression: "cost_centre.new_type"
-                                  }
-                                ],
-                                on: {
-                                  change: [
-                                    function($event) {
-                                      var $$selectedVal = Array.prototype.filter
-                                        .call($event.target.options, function(
-                                          o
-                                        ) {
-                                          return o.selected
-                                        })
-                                        .map(function(o) {
-                                          var val =
-                                            "_value" in o ? o._value : o.value
-                                          return val
-                                        })
-                                      cost_centre.new_type = $event.target
-                                        .multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0]
-                                    },
-                                    function($event) {
-                                      _vm.createBudgetLine(cost_centre)
-                                    }
-                                  ]
-                                }
-                              },
-                              [
-                                _c("option", { attrs: { value: "" } }),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "internal" } }, [
-                                  _vm._v("I")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "external" } }, [
-                                  _vm._v("E")
-                                ])
-                              ]
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "accounts" }),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "col-income cash plus" }, [
-                          _c("span", { staticClass: "unit" }, [_vm._v("SEK")]),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            [
-                              _c("currency-input", {
-                                staticClass: "income",
-                                on: {
-                                  change: function($event) {
-                                    _vm.createBudgetLine(cost_centre)
-                                  }
-                                },
-                                model: {
-                                  value: cost_centre.new_income,
-                                  callback: function($$v) {
-                                    cost_centre.new_income = $$v
-                                  },
-                                  expression: "cost_centre.new_income"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "col-expenses cash minus" }, [
-                          _c("span", { staticClass: "unit" }, [_vm._v("SEK")]),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            [
-                              _c("currency-input", {
-                                staticClass: "expenses",
-                                on: {
-                                  change: function($event) {
-                                    _vm.createBudgetLine(cost_centre)
-                                  }
-                                },
-                                model: {
-                                  value: cost_centre.new_expenses,
-                                  callback: function($$v) {
-                                    cost_centre.new_expenses = $$v
-                                  },
-                                  expression: "cost_centre.new_expenses"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { class: { cash: true } }, [
-                          _c("span", {
-                            domProps: {
-                              innerHTML: _vm._s(
-                                _vm.fmt(
-                                  cost_centre.new_income -
-                                    cost_centre.new_expenses
-                                )
-                              )
-                            }
-                          }),
-                          _vm._v(" SEK\n                ")
-                        ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "col-income plus cash" }, [
+                        _c("span", {
+                          domProps: { innerHTML: _vm._s(_vm.fmt(0)) }
+                        }),
+                        _vm._v(" SEK")
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "col-expenses minus cash" }, [
+                        _c("span", {
+                          domProps: { innerHTML: _vm._s(_vm.fmt(0)) }
+                        }),
+                        _vm._v(" SEK")
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { class: { cash: true } }, [
+                        _c("span", {
+                          domProps: { innerHTML: _vm._s(_vm.fmt(0)) }
+                        }),
+                        _vm._v(" SEK")
                       ])
-                    : _vm._e()
-                ],
-                2
-              )
-            })
-          ],
-          2
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.suggestion
-      ? _c("div", [
-          _c("div", { staticClass: "alert" }, [
-            _c("div", { staticClass: "content" }, [
-              _c("h2", [
-                _vm._v("Du ändrar nu budgetförslaget "),
-                _c("i", {
-                  domProps: { innerHTML: _vm._s(_vm.suggestion.name) }
-                })
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm.suggestion.authors.length === 1
-                  ? _c("span", [_vm._v("Det kan bara visas av dig.")])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.suggestion.authors.length === 2
-                  ? _c("span", [
-                      _vm._v(
-                        "\n                        Det kan bara visas av dig och \n                        "
-                      ),
-                      _c("span", {
-                        domProps: {
-                          innerHTML: _vm._s(
-                            _vm.suggestion.authors
-                              .filter(function(x) {
-                                return _vm.user != null && x.id != _vm.user.id
-                              })
-                              .map(function(x) {
-                                return x.first_name + " " + x.last_name
-                              })
-                              .join(", ")
-                          )
-                        }
-                      }),
-                      _vm._v(".\n                    ")
                     ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.suggestion.authors.length > 2 &&
-                _vm.suggestion.authors.length < 5
-                  ? _c("span", [
-                      _vm._v(
-                        "\n                        Det kan bara visas av  \n                        "
-                      ),
-                      _c("span", {
-                        domProps: {
-                          innerHTML: _vm._s(
-                            _vm.suggestion.authors
-                              .filter(function(x) {
-                                return _vm.user && x.id != _vm.user.id
-                              })
-                              .map(function(x) {
-                                return x.first_name + " " + x.last_name
-                              })
-                              .join(", ")
-                          )
-                        }
-                      }),
-                      _vm._v(" och dig.\n                    ")
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.suggestion.authors.length >= 5
-                  ? _c("span", [
-                      _vm._v(
-                        "\n                        Det kan bara visas av dig och "
-                      ),
-                      _c("span", {
-                        domProps: {
-                          innerHTML: _vm._s(_vm.suggestion.authors.length)
-                        }
-                      }),
-                      _vm._v(" andra.\n                    ")
-                    ])
-                  : _vm._e(),
-                _vm._v(
-                  "\n                    Ändrade budgetrader är markerade med "
-                ),
-                _c("span", { staticClass: "suggestion" }, [
-                  _vm._v("gråblå bakgrund")
-                ]),
-                _vm._v(".\n                ")
-              ]),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "button",
-                  attrs: { href: "/suggestions/" + _vm.suggestion.id + "/done" }
-                },
-                [_vm._v("Lämna redigeringsläget")]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "alert-push" })
-        ])
-      : _vm._e()
-  ])
+                  ])
+                : _vm._e()
+            ],
+            2
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c("alert", { attrs: { suggestion: _vm.suggestion } })
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -43155,29 +42377,14 @@ if (false) {
 
 /***/ }),
 /* 40 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */,
-/* 45 */,
-/* 46 */,
-/* 47 */,
-/* 48 */,
-/* 49 */,
-/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(37)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(51)
+var __vue_script__ = __webpack_require__(41)
 /* template */
-var __vue_template__ = __webpack_require__(52)
+var __vue_template__ = __webpack_require__(42)
 /* styles */
 var __vue_styles__ = null
 /* scopeId */
@@ -43215,7 +42422,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 51 */
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -43224,24 +42431,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-
-function fmt(val, decimals, decimalSign, thousandDelimiter) {
-    decimals = decimals || 0;
-    decimalSign = decimalSign || ',';
-    thousandDelimiter = thousandDelimiter || ' ';
-    var sign = val < 0 ? '-' : '';
-    var absValString = String(parseInt(Math.abs(Number(val) || 0).toFixed(decimals)));
-    var firstThousand = absValString.length > 3 ? absValString.length % 3 : 0;
-    return sign + (firstThousand > 0 ? absValString.substr(0, firstThousand) + thousandDelimiter : '') + absValString.substr(firstThousand).replace(/(\d{3})(?=\d)/g, "$1" + thousandDelimiter) + (decimals > 0 ? decimalSign + Math.abs(val - Math.abs(Number(val) || 0).toFixed(0)).toFixed(decimals).slice(2) : '');
-}
-
-function defmt(val) {
-    val = String(val || '').replace(/(\s)/g, "");
-    if (val.indexOf(',') !== -1) {
-        return val.substr(0, val.indexOf(','));
-    }
-    return val;
-}
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['value'],
@@ -43256,11 +42445,11 @@ function defmt(val) {
                 if (this.isInputActive) {
                     return this.value.toString();
                 } else {
-                    return fmt(this.value);
+                    return this.fmt(this.value);
                 }
             },
             set: function set(modifiedValue) {
-                var newValue = defmt(modifiedValue);
+                var newValue = this.defmt(modifiedValue);
                 if (isNaN(newValue)) {
                     newValue = 0;
                 }
@@ -43271,29 +42460,12 @@ function defmt(val) {
     methods: {
         change: function change() {
             this.$emit('change');
-        },
-
-        fmt: function fmt(val, decimals, decimalSign, thousandDelimiter) {
-            decimals = decimals || 0;
-            decimalSign = decimalSign || ',';
-            thousandDelimiter = thousandDelimiter || ' ';
-            var sign = val < 0 ? '-' : '';
-            var absValString = String(parseInt(Math.abs(Number(val) || 0).toFixed(decimals)));
-            var firstThousand = absValString.length > 3 ? absValString.length % 3 : 0;
-            return sign + (firstThousand > 0 ? absValString.substr(0, firstThousand) + thousandDelimiter : '') + absValString.substr(firstThousand).replace(/(\d{3})(?=\d)/g, "$1" + thousandDelimiter) + (decimals > 0 ? decimalSign + Math.abs(val - Math.abs(Number(val) || 0).toFixed(0)).toFixed(decimals).slice(2) : '');
-        },
-        defmt: function defmt(val) {
-            val = String(val || '').replace(/(\s)/g, "");
-            if (val.indexOf(',') !== -1) {
-                return val.substr(0, val.indexOf(','));
-            }
-            return val;
         }
     }
 });
 
 /***/ }),
-/* 52 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -43337,6 +42509,1444 @@ if (false) {
      require("vue-hot-reload-api").rerender("data-v-6c6a8c20", module.exports)
   }
 }
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(57)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(44)
+/* template */
+var __vue_template__ = __webpack_require__(45)
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Alert.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Alert.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5c27a2da", Component.options)
+  } else {
+    hotAPI.reload("data-v-5c27a2da", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 44 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['suggestion']
+});
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.suggestion
+    ? _c("div", [
+        _c("div", { staticClass: "alert" }, [
+          _c("div", { staticClass: "content" }, [
+            _c("h2", [
+              _vm._v("Du ändrar nu budgetförslaget "),
+              _c("i", { domProps: { innerHTML: _vm._s(_vm.suggestion.name) } })
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm.suggestion.authors && _vm.suggestion.authors.length === 1
+                ? _c("span", [_vm._v("Det kan bara visas av dig.")])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.suggestion.authors && _vm.suggestion.authors.length === 2
+                ? _c("span", [
+                    _vm._v(
+                      "\n                    Det kan bara visas av dig och \n                    "
+                    ),
+                    _c("span", {
+                      domProps: {
+                        innerHTML: _vm._s(
+                          _vm.suggestion.authors
+                            .filter(function(x) {
+                              return _vm.user != null && x.id != _vm.user.id
+                            })
+                            .map(function(x) {
+                              return x.first_name + " " + x.last_name
+                            })
+                            .join(", ")
+                        )
+                      }
+                    }),
+                    _vm._v(".\n                ")
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.suggestion.authors &&
+              _vm.suggestion.authors.length > 2 &&
+              _vm.suggestion.authors.length < 5
+                ? _c("span", [
+                    _vm._v(
+                      "\n                    Det kan bara visas av  \n                    "
+                    ),
+                    _c("span", {
+                      domProps: {
+                        innerHTML: _vm._s(
+                          _vm.suggestion.authors
+                            .filter(function(x) {
+                              return _vm.user && x.id != _vm.user.id
+                            })
+                            .map(function(x) {
+                              return x.first_name + " " + x.last_name
+                            })
+                            .join(", ")
+                        )
+                      }
+                    }),
+                    _vm._v(" och dig.\n                ")
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.suggestion.authors && _vm.suggestion.authors.length >= 5
+                ? _c("span", [
+                    _vm._v(
+                      "\n                    Det kan bara visas av dig och "
+                    ),
+                    _c("span", {
+                      domProps: {
+                        innerHTML: _vm._s(_vm.suggestion.authors.length)
+                      }
+                    }),
+                    _vm._v(" andra.\n                ")
+                  ])
+                : _vm._e(),
+              _vm._v("\n                Ändrade budgetrader är markerade med "),
+              _c("span", { staticClass: "suggestion" }, [
+                _vm._v("gråblå bakgrund")
+              ]),
+              _vm._v(".\n            ")
+            ]),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "button theme-color",
+                attrs: { href: "/suggestions/" + _vm.suggestion.id + "/done" }
+              },
+              [_vm._v("Lämna redigeringsläget")]
+            )
+          ])
+        ])
+      ])
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-5c27a2da", module.exports)
+  }
+}
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 47 */,
+/* 48 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+/* 49 */,
+/* 50 */,
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(53)
+/* template */
+var __vue_template__ = __webpack_require__(52)
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/CostCentre.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] CostCentre.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3eaed53e", Component.options)
+  } else {
+    hotAPI.reload("data-v-3eaed53e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "tbody",
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("tr", { staticClass: "header" }, [
+        _c("td", { staticClass: "name" }, [
+          _c("span", { class: { loading: _vm.costCentre.loading } }),
+          _vm._v(" "),
+          _vm.suggestion
+            ? _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.costCentre.name,
+                    expression: "costCentre.name"
+                  }
+                ],
+                attrs: { type: "text", placeholder: "Namn på kostnadsställe" },
+                domProps: { value: _vm.costCentre.name },
+                on: {
+                  change: function($event) {
+                    _vm.updateCostCentre()
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.costCentre.name = $event.target.value
+                  }
+                }
+              })
+            : _c("span", {
+                staticClass: "input",
+                domProps: { innerHTML: _vm._s(_vm.costCentre.name) }
+              })
+        ]),
+        _vm._v(" "),
+        _c(
+          "td",
+          { staticClass: "accounts speedledger-id", attrs: { colspan: "2" } },
+          [
+            _vm.suggestion
+              ? _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.costCentre.speedledger_id,
+                      expression: "costCentre.speedledger_id"
+                    }
+                  ],
+                  staticClass: "speedledger-id",
+                  attrs: { type: "text", placeholder: "Bokf.-id" },
+                  domProps: { value: _vm.costCentre.speedledger_id },
+                  on: {
+                    change: function($event) {
+                      _vm.updateCostCentre()
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.costCentre.speedledger_id = $event.target.value
+                    }
+                  }
+                })
+              : _c("span", {
+                  staticClass: "input",
+                  domProps: { innerHTML: _vm._s(_vm.costCentre.speedledger_id) }
+                })
+          ]
+        ),
+        _vm._v(" "),
+        _c("td", { staticClass: "col-income plus cash" }, [
+          _c("span", { domProps: { innerHTML: _vm._s(_vm.fmt(_vm.income)) } }),
+          _vm._v(" SEK")
+        ]),
+        _vm._v(" "),
+        _c("td", { staticClass: "col-expenses minus cash" }, [
+          _c("span", {
+            domProps: { innerHTML: _vm._s(_vm.fmt(_vm.expenses)) }
+          }),
+          _vm._v(" SEK")
+        ]),
+        _vm._v(" "),
+        _c(
+          "td",
+          {
+            class: { cash: true, minus: _vm.balance < 0, plus: _vm.balance > 0 }
+          },
+          [
+            _c("span", {
+              domProps: { innerHTML: _vm._s(_vm.fmt(_vm.balance)) }
+            }),
+            _vm._v(" SEK")
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _vm._l(_vm.costCentre.budget_lines, function(budget_line) {
+        return _c("budget-line", {
+          key: budget_line.id,
+          attrs: { suggestion: _vm.suggestion, "budget-line": budget_line },
+          on: { committee: _vm.setCommittee }
+        })
+      }),
+      _vm._v(" "),
+      _vm.suggestion
+        ? _c("tr", { staticClass: "vague" }, [
+            _c("td", { staticClass: "description" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.costCentre.new_name,
+                    expression: "costCentre.new_name"
+                  }
+                ],
+                staticClass: "name",
+                attrs: { type: "text", placeholder: "Skapa ny..." },
+                domProps: { value: _vm.costCentre.new_name },
+                on: {
+                  change: function($event) {
+                    _vm.createBudgetLine()
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.costCentre.new_name = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", { staticClass: "accounts" }, [
+              _c("div", { staticClass: "select small" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.costCentre.new_type,
+                        expression: "costCentre.new_type"
+                      }
+                    ],
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.costCentre.new_type = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                        function($event) {
+                          _vm.createBudgetLine()
+                        }
+                      ]
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "internal" } }, [
+                      _vm._v("I")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "external" } }, [
+                      _vm._v("E")
+                    ])
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("td", { staticClass: "accounts" }),
+            _vm._v(" "),
+            _c("td", { staticClass: "col-income cash plus" }, [
+              _c("span", { staticClass: "unit" }, [_vm._v("SEK")]),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("currency-input", {
+                    staticClass: "income",
+                    on: {
+                      change: function($event) {
+                        _vm.createBudgetLine()
+                      }
+                    },
+                    model: {
+                      value: _vm.costCentre.new_income,
+                      callback: function($$v) {
+                        _vm.costCentre.new_income = $$v
+                      },
+                      expression: "costCentre.new_income"
+                    }
+                  })
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", { staticClass: "col-expenses cash minus" }, [
+              _c("span", { staticClass: "unit" }, [_vm._v("SEK")]),
+              _vm._v(" "),
+              _c(
+                "span",
+                [
+                  _c("currency-input", {
+                    staticClass: "expenses",
+                    on: {
+                      change: function($event) {
+                        _vm.createBudgetLine()
+                      }
+                    },
+                    model: {
+                      value: _vm.costCentre.new_expenses,
+                      callback: function($$v) {
+                        _vm.costCentre.new_expenses = $$v
+                      },
+                      expression: "costCentre.new_expenses"
+                    }
+                  })
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", { class: { cash: true } }, [
+              _c("span", {
+                domProps: {
+                  innerHTML: _vm._s(
+                    _vm.fmt(
+                      _vm.costCentre.new_income - _vm.costCentre.new_expenses
+                    )
+                  )
+                }
+              }),
+              _vm._v(" SEK\n        ")
+            ])
+          ])
+        : _vm._e()
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", { staticClass: "space" }, [
+      _c("td"),
+      _vm._v(" "),
+      _c("td", { staticClass: "accounts" }),
+      _vm._v(" "),
+      _c("td", { staticClass: "accounts" }),
+      _vm._v(" "),
+      _c("td", { staticClass: "col-income" }),
+      _vm._v(" "),
+      _c("td", { staticClass: "col-expenses" }),
+      _vm._v(" "),
+      _c("td")
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-3eaed53e", module.exports)
+  }
+}
+
+/***/ }),
+/* 53 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['costCentre', 'suggestion'],
+    methods: {
+        updateCostCentre: function updateCostCentre() {
+            var _this = this;
+
+            this.costCentre.loading = true;
+            fetch('/api/cost-centres/' + this.costCentre.id, {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'name': this.costCentre.name,
+                    'speedledger_id': this.costCentre.speedledger_id
+                })
+            }).then(function (res) {
+                return res.json();
+            }).then(function (json) {
+                _this.costCentre.loading = false;
+            });
+        },
+        createBudgetLine: function createBudgetLine() {
+            var _this2 = this;
+
+            this.costCentre.loading = true;
+            fetch('/api/cost-centres/' + this.costCentre.id + '/budget-lines', {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'suggestion_id': this.suggestion ? this.suggestion.id : -1,
+                    'income': this.costCentre.new_income,
+                    'expenses': this.costCentre.new_expenses,
+                    'name': this.costCentre.new_name,
+                    'type': this.costCentre.new_type
+                })
+            }).then(function (res) {
+                return res.json();
+            }).then(function (json) {
+                if (json !== false) {
+                    _this2.costCentre.loading = false;
+                    _this2.$emit('committee', json.committee);
+                }
+            });
+        },
+        setCommittee: function setCommittee(c) {
+            this.$emit('committee', c);
+        }
+    },
+    computed: {
+        income: function income() {
+            return this.costCentre.repetitions * this.costCentre.budget_lines.map(function (x) {
+                return x.deleted ? 0 : x.income;
+            }).reduce(function (a, b) {
+                return parseInt(a) + parseInt(b);
+            }, 0);
+        },
+        expenses: function expenses() {
+            return this.costCentre.repetitions * this.costCentre.budget_lines.map(function (x) {
+                return x.deleted ? 0 : x.expenses;
+            }).reduce(function (a, b) {
+                return parseInt(a) + parseInt(b);
+            }, 0);
+        },
+        balance: function balance() {
+            return this.income - this.expenses;
+        }
+    }
+});
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(55)
+/* template */
+var __vue_template__ = __webpack_require__(56)
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/BudgetLine.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] BudgetLine.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-c80a5c9c", Component.options)
+  } else {
+    hotAPI.reload("data-v-c80a5c9c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 55 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['budgetLine', 'suggestion'],
+    methods: {
+        updateBudgetLine: function updateBudgetLine() {
+            var _this = this;
+
+            this.budgetLine.loading = true;
+            console.log('Updating');
+            fetch('/api/budget-lines/' + this.budgetLine.id, {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'suggestion': this.suggestion ? this.suggestion.id : -1,
+                    'income': this.budgetLine.income * 100,
+                    'expenses': this.budgetLine.expenses * 100,
+                    'name': this.budgetLine.name,
+                    'type': this.budgetLine['type']
+                })
+            }).then(function (res) {
+                return res.json();
+            }).then(function (json) {
+                if (json !== false) {
+                    _this.budgetLine.loading = false;
+                    console.log(json);
+                    _this.$emit('committee', json);
+                }
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "tr",
+    {
+      class: {
+        suggestion:
+          _vm.suggestion && _vm.budgetLine.suggestion_id === _vm.suggestion.id,
+        deleted: _vm.budgetLine.deleted
+      }
+    },
+    [
+      _c("td", { staticClass: "description" }, [
+        _c("span", { class: { loading: _vm.budgetLine.loading } }),
+        _vm._v(" "),
+        _vm.suggestion
+          ? _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.budgetLine.name,
+                  expression: "budgetLine.name"
+                }
+              ],
+              staticClass: "name",
+              attrs: { type: "text" },
+              domProps: { value: _vm.budgetLine.name },
+              on: {
+                change: _vm.updateBudgetLine,
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.budgetLine.name = $event.target.value
+                }
+              }
+            })
+          : _c("span", {
+              staticClass: "input",
+              domProps: { innerHTML: _vm._s(_vm.budgetLine.name) }
+            })
+      ]),
+      _vm._v(" "),
+      _c("td", { staticClass: "accounts" }, [
+        _vm.suggestion
+          ? _c("div", { staticClass: "select small" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.budgetLine["type"],
+                      expression: "budgetLine['type']"
+                    }
+                  ],
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.budgetLine,
+                          "type",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      },
+                      _vm.updateBudgetLine
+                    ]
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "internal" } }, [_vm._v("I")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "external" } }, [_vm._v("E")])
+                ]
+              )
+            ])
+          : _c("span", {
+              domProps: {
+                innerHTML: _vm._s(
+                  _vm.budgetLine["type"] == "internal" ? "I" : "E"
+                )
+              }
+            })
+      ]),
+      _vm._v(" "),
+      _c("td", {
+        staticClass: "accounts",
+        domProps: {
+          innerHTML: _vm._s(
+            _vm.budgetLine.accounts
+              .map(function(x) {
+                return x.number
+              })
+              .join(", ")
+          )
+        }
+      }),
+      _vm._v(" "),
+      _c("td", { staticClass: "col-income cash plus" }, [
+        _c("span", { staticClass: "unit" }, [_vm._v("SEK")]),
+        _vm._v(" "),
+        _vm.suggestion
+          ? _c(
+              "span",
+              [
+                _c("currency-input", {
+                  staticClass: "income",
+                  on: { change: _vm.updateBudgetLine },
+                  model: {
+                    value: _vm.budgetLine.income,
+                    callback: function($$v) {
+                      _vm.budgetLine.income = $$v
+                    },
+                    expression: "budgetLine.income"
+                  }
+                })
+              ],
+              1
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.suggestion === null
+          ? _c("span", {
+              staticClass: "input income",
+              domProps: { innerHTML: _vm._s(_vm.fmt(_vm.budgetLine.income)) }
+            })
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c("td", { staticClass: "col-expenses cash minus" }, [
+        _c("span", { staticClass: "unit" }, [_vm._v("SEK")]),
+        _vm._v(" "),
+        _vm.suggestion
+          ? _c(
+              "span",
+              [
+                _c("currency-input", {
+                  staticClass: "expenses",
+                  on: { change: _vm.updateBudgetLine },
+                  model: {
+                    value: _vm.budgetLine.expenses,
+                    callback: function($$v) {
+                      _vm.budgetLine.expenses = $$v
+                    },
+                    expression: "budgetLine.expenses"
+                  }
+                })
+              ],
+              1
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.suggestion === null
+          ? _c("span", {
+              staticClass: "input expenses",
+              domProps: { innerHTML: _vm._s(_vm.fmt(_vm.budgetLine.expenses)) }
+            })
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c(
+        "td",
+        {
+          class: {
+            cash: true,
+            plus: _vm.budgetLine.income > _vm.budgetLine.expenses,
+            minus: _vm.budgetLine.income < _vm.budgetLine.expenses
+          }
+        },
+        [
+          _c("span", {
+            domProps: {
+              innerHTML: _vm._s(
+                _vm.fmt(_vm.budgetLine.income - _vm.budgetLine.expenses)
+              )
+            }
+          }),
+          _vm._v(" SEK\n        ")
+        ]
+      )
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-c80a5c9c", module.exports)
+  }
+}
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(58);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(59)("0cf4a70e", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5c27a2da\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Alert.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5c27a2da\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Alert.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(48)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n.alert {\n\theight: 100px;\n\tposition: fixed;\n\tright: 0;\n\tbottom: 0;\n\tleft: 0;\n\tmargin: 0;\n\tbackground: #fff;\n\tbox-shadow: 0px -2px 20px rgba(0,0,0,0.1);\n\toverflow: hidden;\n    z-index: 1;\n}\n.alert .content {\n\tmax-width: 1200px;\n\tmargin: 0 auto;\n\tpadding: 10px 30px;\n\tposition: relative;\n}\n.alert .content h2 {\n\tborder: none !important;\n\tmargin: 0 !important;\n\tpadding: 0 !important;\n\tcolor: #e57373 !important;\n\tfont-weight: normal !important;\n}\n.alert .content p {\n\tmargin: 5px 0 0 0 !important;\n}\n.alert .content a.button {\n\tposition: absolute;\n\tright: 30px;\n\ttop: 15px;\n\tcolor: #fff !important;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __webpack_require__(60)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction) {
+  isProduction = _isProduction
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[data-vue-ssr-id~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
 
 /***/ })
 /******/ ]);
