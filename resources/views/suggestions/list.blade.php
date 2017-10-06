@@ -27,18 +27,23 @@
 					<a href="/suggestions/{{ $suggestion->id }}/edit" class="btn theme-color" style="color:#fff;">Ändra</a>
 				@endif
 				@endif
-			</td>
+			</td> 
 			<td><a href="/suggestions/{{ $suggestion->id }}">{{ $suggestion->name }}</a></td>
 			<td>
 			@if ($suggestion->isImplemented())
 				Genomfört {{ $suggestion->implemented_at }}
+			@elseif ($suggestion->isPublic())
+				Inskickat {{ $suggestion->published_at }}
 			@else
-				Inte genomfört
+				Under arbete
 			@endif
 			</td>
 			<td>
 				@if (Auth::user()->isAdmin() && !$suggestion->isImplemented())
 					<a href="/suggestions/{{ $suggestion->id }}/implement">Genomför</a>
+				@endif
+				@if (!Auth::user()->isAdmin() && !$suggestion->isPublic() && !$suggestion->isImplemented())
+					<a href="/suggestions/{{ $suggestion->id }}/publish">Skicka in</a>
 				@endif
 			</td>
 		</tr>

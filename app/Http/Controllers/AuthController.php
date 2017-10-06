@@ -79,7 +79,7 @@ class AuthController extends BaseController {
 
 			// Send get request to pls to ask for permissions
 			$client = new Client();
-			$res = $client->request('GET', env('PLS_API_URL') . '/user/' . $user->kth_username . '/pandora');
+			$res = $client->request('GET', env('PLS_API_URL') . '/user/' . $user->kth_username . '/budget');
 			$pls = json_decode($res->getBody());
 			if (in_array('admin', $pls)) {
 				session(['admin' => true]);

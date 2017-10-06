@@ -67,16 +67,7 @@ class AuroraForm extends FormFacade {
                         '<span id="file-' . $id . '"></span>' .
                     '</div>' .
                     '<div class="clear"></div>' .
-                '</div>' .
-                '<script type="text/javascript">
-                $("#' . $id . '").bind("change", function() { 
-                    var fileName = $(this).val()
-                    if (fileName.match(/fakepath/)) {
-                        fileName = fileName.replace(/.*fakepath(\\\\|\/)/i, \'\');
-                    }
-                    $("#file-' . $id . '").html(fileName)
-                })
-                </script>';
+                '</div>';
     }
 
     public static function submit($label) {

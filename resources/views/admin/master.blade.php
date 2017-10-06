@@ -7,6 +7,8 @@
 			<h3>Administration</h3>
 			<ul>
 				<li><a href="/admin">Start</a></li>
+				<li><a href="/admin/suggestions">Förslag</a></li>
+				<li><a href="/admin/events">Händelser</a></li>
 				<li><a href="/admin/committees">Nämnder och projekt</a></li>
 				<li><a href="/admin/accounts">Kontoplan</a></li>
 			</ul>

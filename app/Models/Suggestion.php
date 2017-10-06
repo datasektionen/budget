@@ -14,16 +14,33 @@ class Suggestion extends Model {
     protected $fillable = ['name', 'description', 'valid_from', 'valid_to', 'created_by', 'implemented_at', 'implemented_by'];
 
     public function budgetLines() {
-    	return $this->hasMany('App\Models\BudgetLine');
+        return $this->hasMany('App\Models\BudgetLine');
+    }
+
+    public function isPublic() {
+        return $this->public_at !== null;
+    }
+
+    public function publish() {
+        $this->public_at = Carbon::now();
+        $this->save();
+    }
+
+    public static function allPublic() {
+        return self::whereNotNull('public_at')->orderBy('public_at')->get();
     }
 
     public function implement() {
         foreach ($this->budgetLines as $budgetLine) {
-            if ($budgetLine->parentLine != null) {
-                $budgetLine->parentLine->valid_to = Carbon::now();
-                $budgetLine->parentLine->save();
+            $parent = $budgetLine->parentLine;
+            if ($parent != null) {
+                $parent->valid_to = $suggestion->valid_from;
+                $parent->save();
             }
-            $budgetLine->valid_from = Carbon::now();
+            $budgetLine->valid_from = $suggestion->valid_from;
+            if ($budgetLine->income === 0 && $budgetLine->expenses === 0) {
+                $budgetLine->valid_to = Carbon::now();
+            }
             $budgetLine->save();
         }
         $this->implemented_at = \Carbon\Carbon::now();

@@ -44,6 +44,8 @@ Vue.mixin({
   }
 })
 
-const app = new Vue({
-    el: '#app'
-});
+if (document.getElementById('app')) {
+    const app = new Vue({
+        el: '#app'
+    });
+}

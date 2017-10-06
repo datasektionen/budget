@@ -23,4 +23,38 @@ class GeneralController extends BaseController {
 			->with('projects', Committee::projects())
 			->with('others', Committee::other());
 	}
+
+	public function getFuzzyfile() {
+		$res['@type'] = 'fuzzyfile';
+		$res['fuzzes'] = [
+			[
+				'name' => 'Rambudget',
+				'str' => 'Rambudget budgetöversikt',
+				'href' => '/overview'
+			],
+			[
+				'name' => 'Dina budgetförslag',
+				'str' => 'budgetförslag förslag lista',
+				'href' => '/suggestions'
+			],
+			[
+				'name' => 'Budgetuppföljning',
+				'str' => 'budgetuppföljning uppföljning speedledger pdf',
+				'href' => '/follow-up'
+			],
+			[
+				'name' => 'Administration',
+				'str' => 'administration admin kassör',
+				'href' => '/admin'
+			]
+		];
+		foreach (Committee::all() as $committee) {
+			$res['fuzzes'][] = [
+				'name' => 'Budget för ' . $committee->name,
+				'str' => 'Budget för ' . $committee->name,
+				'href' => '/committees/' . $committee->id,
+			];
+		}
+		return response()->json($res);
+	}
 }

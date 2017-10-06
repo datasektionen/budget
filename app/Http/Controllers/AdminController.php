@@ -10,6 +10,8 @@ use App\Models\Suggestion;
 use App\Models\User;
 use App\Models\Committee;
 use App\Models\Account;
+use App\Models\BudgetLine;
+use Carbon\Carbon;
 use Auth;
 
 /**
@@ -80,5 +82,29 @@ class AdminController extends BaseController {
 	public function getAccountsBudgetLines($id) {
 		return view('admin.accounts.budget-lines')
 			->with('account', Account::findOrFail($id));
+	}
+
+	public function getSuggestions() {
+		return view('admin.suggestions.index')
+			->with('suggestions', Suggestion::allPublic());
+	}
+
+	public function getEvents() {
+		$futureValidFrom = BudgetLine::where('valid_from', '>', Carbon::now())->orderBy('valid_from')->get()->toArray();
+		$futureValidTo = BudgetLine::where('valid_to', '>', Carbon::now())->orderBy('valid_to')->get()->toArray();
+		$future = [];
+		for ($i = 0, $j = 0; $i < count($futureValidFrom) || $j < count($futureValidTo); $i++, $j++) {
+			if ($i < count($futureValidFrom) && $futureValidFrom[$i]->valid_from->lte($futureValidTo[$j]->valid_to)) {
+				$futureValidFrom[$i]['type'] = 'from';
+				$future[] = $futureValidFrom[$i];
+				$i++;
+			} else {
+				$futureValidTo[$j]['type'] = 'to';
+				$future[] = $futureValidTo[$j];
+				$j++;
+			}
+		}
+		return view('admin.events')
+			->with('future', $future);
 	}
 }

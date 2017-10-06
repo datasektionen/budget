@@ -32,9 +32,11 @@ Route::post('/suggestions/{id}/share', 'SuggestionController@postShare')->middle
 Route::get ('/suggestions/{id}/edit', 'SuggestionController@getEdit')->middleware('auth');
 Route::get ('/suggestions/{id}/done', 'SuggestionController@getDone')->middleware('auth');
 Route::get ('/suggestions/{id}/implement', 'SuggestionController@getImplement')->middleware('auth');
+Route::get ('/suggestions/{id}/publish', 'SuggestionController@getPublish')->middleware('auth');
 Route::get ('/suggestions/{id}/pdf', 'SuggestionController@getPdf')->middleware('auth');
 
 Route::get ('/admin', 'AdminController@getIndex')->middleware('admin');
+Route::get ('/admin/suggestions', 'AdminController@getSuggestions')->middleware('admin');
 Route::get ('/admin/committees', 'AdminController@getCommitteesList')->middleware('admin');
 Route::get ('/admin/committees/{id}/edit', 'AdminController@getCommitteesEdit')->middleware('admin');
 Route::post('/admin/committees/{id}/edit', 'AdminController@postCommitteesEdit')->middleware('admin');
@@ -46,6 +48,9 @@ Route::post('/admin/accounts/{id}/edit', 'AdminController@postAccountsEdit')->mi
 Route::get ('/admin/accounts/new', 'AdminController@getAccountsNew')->middleware('admin');
 Route::post('/admin/accounts/new', 'AdminController@postAccountsNew')->middleware('admin');
 Route::get ('/admin/accounts/{id}/budget-lines', 'AdminController@getAccountsBudgetLines')->middleware('admin');
+Route::get ('/admin/events', 'AdminController@getEvents')->middleware('admin');
+
+Route::get ('/fuzzyfile', 'GeneralController@getFuzzyfile');
 
 Route::get('login', 'AuthController@getLogin')->middleware('guest');
 Route::get('login-complete/{token}', 'AuthController@getLoginComplete');

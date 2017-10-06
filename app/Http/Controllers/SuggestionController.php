@@ -45,9 +45,9 @@ class SuggestionController extends BaseController {
 	 * @return redirect 	to /suggestions with result
 	 */
 	public function postNew(Request $request) {
-		$this->validate($request, ['name' => 'required', 'valid_to' => 'required|regex:/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/']);
+		$this->validate($request, ['name' => 'required', 'valid_to' => 'required|regex:/\d{4}-\d{2}-\d{2}\T\d{2}:\d{2}/']);
 		// Add information about who created the suggestion
-		$data = array_merge($request->all(), ['created_by' => Auth::user()->id]);
+		$data = array_merge($request->all(), ['created_by' => Auth::user()->id, 'valid_from' => date('Y-m-d H:i:s')]);
 
 		// Create and attach to user
 		$suggestion = Suggestion::create($data);
@@ -123,5 +123,16 @@ class SuggestionController extends BaseController {
 			session(['suggestion' => null]);
 		}
 		return redirect('suggestions')->with('success', 'suggestion.implemented');
+	}
+
+	/**
+	 * Publishes a suggestion.
+	 * @param  $id 	     the id of the suggestion to publish
+	 * @return redirect  to the suggestions page
+	 */
+	public function getPublish($id) {
+		$suggestion = Suggestion::findOrFail($id);
+		$suggestion->publish();
+		return redirect('/suggestions')->with('success', 'suggestions.published');
 	}
 }
