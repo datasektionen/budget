@@ -45,6 +45,7 @@ Route::get ('/admin/accounts/{id}/edit', 'AdminController@getAccountsEdit')->mid
 Route::post('/admin/accounts/{id}/edit', 'AdminController@postAccountsEdit')->middleware('admin');
 Route::get ('/admin/accounts/new', 'AdminController@getAccountsNew')->middleware('admin');
 Route::post('/admin/accounts/new', 'AdminController@postAccountsNew')->middleware('admin');
+Route::get ('/admin/accounts/{id}/budget-lines', 'AdminController@getAccountsBudgetLines')->middleware('admin');
 
 Route::get('login', 'AuthController@getLogin')->middleware('guest');
 Route::get('login-complete/{token}', 'AuthController@getLoginComplete');

@@ -76,4 +76,9 @@ class AdminController extends BaseController {
 		Account::create($request->all());
 		return redirect('admin/accounts')->with('success', 'accounts.saved');
 	}
+
+	public function getAccountsBudgetLines($id) {
+		return view('admin.accounts.budget-lines')
+			->with('account', Account::findOrFail($id));
+	}
 }

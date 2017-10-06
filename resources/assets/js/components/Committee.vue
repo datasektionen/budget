@@ -38,7 +38,7 @@
         </tbody>
     </table>
 
-    <alert :suggestion="suggestion" />
+    <alert :suggestion="suggestion"></alert>
 </div>
 </template>
 

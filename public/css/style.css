@@ -32,12 +32,36 @@ tr.section:hover td {
 }
 #footer {
       background: #333;
-      padding: 20px;
-      margin: 30px -50px 100px -50px;
+      max-width: 1240px;
+      margin: 0 auto;
 }
 #footer .col {
       width: 30%;
       margin: 0 1.5%;
+      padding: 30px 20px;
+}
+#footer a.button {
+       background: #78909c;
+       border: none;
+       border-bottom: 4px solid #607d8b;
+}
+td.nowrap {
+      white-space: nowrap;
+}
+@media screen and (max-width: 700px) {
+      #footer {
+            padding: 0 20px;
+      }
+      #footer .col {
+            width: 100%;
+            float: none;
+            border-bottom: 1px solid #555;
+            padding: 20px 0 10px;
+            margin: 0;
+      }
+      #footer .col:nth-child(3) {
+            border: none;
+      }
 }
 #footer p {
       color: #aaa !important;
@@ -416,7 +440,8 @@ table thead th {
 }
 
 #content #budget table.budget tr.header td .input {
-      margin: 0 0 0 14px;
+      padding: 0 0 0 14px;
+      display: block;
 }
 
 #content #budget table.budget tr.header td.name:first-child {
@@ -506,6 +531,12 @@ table thead th {
 #content #budget table.budget ::-ms-input-placeholder { /* Microsoft Edge */
    color: #666;
 }
+#content h1 {
+      padding-top: 20px;
+}
+#content h1:first-child {
+      padding-top: 0px;
+}
 
 .loading {
 	display: block;
@@ -538,6 +569,35 @@ table tfoot th {
       }
 }
 
+
+.message {
+      position: fixed;
+      left: 30px;
+      bottom: 30px;
+      border-radius: 3px;
+      background: #333;
+      color: #eee !important;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      padding: 15px;
+}
+.message h2 {
+      color: #eee !important;
+      border: none !important;
+      font-weight: bold !important;
+      font-size: 1em !important;
+      margin: 0 !important;
+      padding: 0 0 5px 0 !important;
+}
+.message ul {
+      margin: 0 0 0 20px;
+      padding: 0;
+      color: #eee !important;
+}
+.message ul li {
+      margin: 0;
+      padding: 0;
+      color: #eee !important;
+}
 
 
 

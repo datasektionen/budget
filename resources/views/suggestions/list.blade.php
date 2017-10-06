@@ -20,24 +20,24 @@
 	@foreach ($suggestions as $suggestion)
 		<tr>
 			<td style="text-align:center;padding: 5px 0">
+				@if (!$suggestion->isImplemented())
 				@if (session('suggestion') === $suggestion->id)
 					<b>Ändrar just nu (<a href="/suggestions/{{ $suggestion->id }}/done">Färdig</a>)</b>
 				@else
 					<a href="/suggestions/{{ $suggestion->id }}/edit" class="btn theme-color" style="color:#fff;">Ändra</a>
 				@endif
+				@endif
 			</td>
 			<td><a href="/suggestions/{{ $suggestion->id }}">{{ $suggestion->name }}</a></td>
 			<td>
 			@if ($suggestion->isImplemented())
-				Genomfört
+				Genomfört {{ $suggestion->implemented_at }}
 			@else
 				Inte genomfört
 			@endif
-			
-			
 			</td>
 			<td>
-				@if (Auth::user()->isAdmin())
+				@if (Auth::user()->isAdmin() && !$suggestion->isImplemented())
 					<a href="/suggestions/{{ $suggestion->id }}/implement">Genomför</a>
 				@endif
 			</td>

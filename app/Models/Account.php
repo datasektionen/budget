@@ -16,6 +16,6 @@ class Account extends Model {
     }
 
     public function budgetLines() {
-        return $this->belongsToMany('App\Models\BudgetLine');
+        return $this->belongsToMany('App\Models\BudgetLine')->with('costCentre.committee');
     }
 }

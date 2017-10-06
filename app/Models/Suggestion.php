@@ -58,4 +58,15 @@ class Suggestion extends Model {
     public function authors() {
         return $this->belongsToMany('App\Models\User');
     }
+
+    // override the toArray function (called by toJson)
+    public function toArray() {
+        // get the original array to be displayed
+        $data = parent::toArray();
+
+        // change the value of the 'mime' key
+        $data['authors'] = $this->authors;
+
+        return $data;
+    }
 }

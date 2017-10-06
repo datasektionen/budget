@@ -18,10 +18,22 @@ use App\Helpers\SpeedledgerParser;
 class FollowUpController extends BaseController {
 	use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+	/**
+	 * Shows the import PDF from Speedledger view.
+	 * @return view    form with pdf upload
+	 */
 	public function getImport() {
 		return view('follow-up.index');
 	}
 
+	/**
+	 * Handles file upload from import page and
+	 *  1 Parses PDF through SpeedledgerParser
+	 *  2 Generates the budget
+	 *  3 Matches Speedledger report to budget lines
+	 * @param  Request $request the post request
+	 * @return view 			view with the result
+	 */
 	public function postShow(Request $request) {
 		$file = $request->file('report');
 		$parser = new SpeedledgerParser();
@@ -46,7 +58,6 @@ class FollowUpController extends BaseController {
 			});
 			return $committee;
 		});
-
 
 		$update = function (&$fu, &$costCentre) {
 			foreach ($fu["spec"] as &$acc) {

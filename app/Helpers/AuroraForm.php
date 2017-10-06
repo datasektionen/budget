@@ -10,17 +10,29 @@ class AuroraForm extends FormFacade {
     }
 
     private static function surround($element, $label = null, $id = null) {
-        return '<div class="form-entry">' .
-                    ($label !== null ?
-                    '<span class="description">' . 
-                        '<label for="' . ($id === null ? '' : $id) . '">' . $label . ':</label>' . 
-                    '</span>' 
-                    : '') .
-                    '<div class="input">' . 
-                        $element . 
-                    '</div>' .
-                    '<div class="clear"></div>' .
-                '</div>';
+        $vId = ($id === null ? '' : $id);
+
+        $x = '<div class="form-entry">';
+        
+        if ($label !== null) {
+            $x.= '<span class="description">';
+            if (is_array($label)) {
+                $x.= '<label for="' . $vId . '">' . $label['label'] . ':</label>'; 
+                if (isset($label['description'])) {
+                    $x.= '<span class="desc">' . $label['description'] . '</span>';
+                }
+            } else {
+                $x.= '<label for="' . $vId . '">' . $label . ':</label>';
+            }
+            $x.= '</span>';
+        }
+        $x.=     '<div class="input">' . 
+                     $element . 
+                 '</div>' .
+                 '<div class="clear"></div>' .
+             '</div>';
+
+        return $x;
     }
 
     public static function text($id, $label, $default = null) {
@@ -32,7 +44,10 @@ class AuroraForm extends FormFacade {
     }
 
     public static function datetime($id, $label, $default = null) {
-        return self::surround('<input type="datetime-local" name="' . $id . '" id="' . $id . '" value="' . date('Y-m-d\TH:i') . '" />', $label, $id);
+        if ($default === null) {
+            $default = date('Y-m-d\TH:i');   
+        }
+        return self::surround('<input type="datetime-local" name="' . $id . '" id="' . $id . '" value="' . $default . '" />', $label, $id);
     }
 
     public static function select($id, $label, $options, $default = null) {

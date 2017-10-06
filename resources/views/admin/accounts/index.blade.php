@@ -20,7 +20,7 @@
 	<tr>
 		<td><a href="/admin/accounts/{{ $account->id }}/edit">{{ $account->number }}</a></td>
 		<td>{{ $account->name }}</td>
-		<td>{{ $account->budgetLines()->count() }}</td>
+		<td><a href="/admin/accounts/{{ $account->id }}/budget-lines">{{ $account->budgetLines()->count() }}</a></td>
 	</tr>
 	@endforeach
 </table>
