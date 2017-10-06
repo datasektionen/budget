@@ -14,7 +14,7 @@ class Suggestion extends Model {
     protected $fillable = ['name', 'description', 'valid_from', 'valid_to', 'created_by', 'implemented_at', 'implemented_by'];
 
     public function budgetLines() {
-        return $this->hasMany('App\Models\BudgetLine');
+        return $this->hasMany('App\Models\BudgetLine')->with('parentLine');
     }
 
     public function isPublic() {

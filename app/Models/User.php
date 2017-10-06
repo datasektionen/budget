@@ -66,4 +66,8 @@ class User extends Authenticatable {
     public function isn0llan() {
         return $this->verified === true;
     }
+
+    public function getNameAttribute() {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 }

@@ -24,7 +24,16 @@
 	</tr>
 	<tr>
 		<th>Genomfört</th>
-		<td>{{ $suggestion->isImplemented() ? 'Ja, ' . $suggestion->implemented_at : 'Nej' }}</td>
+		<td>
+			@if ($suggestion->isImplemented())
+				Ja
+			@else
+				Nej 
+				@if (Auth::user()->isAdmin())
+					<a href="/suggestions/{{ $suggestion->id }}/implement" class="btn theme-color" style="color:#fff;">Genomför</a>
+				@endif
+			@endif
+		</td>
 	</tr>
 </table>
 <?php $pre = $post = 0; ?>

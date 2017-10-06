@@ -33,7 +33,7 @@
 			@if ($suggestion->isImplemented())
 				Genomfört {{ $suggestion->implemented_at }}
 			@elseif ($suggestion->isPublic())
-				Inskickat {{ $suggestion->published_at }}
+				Inskickat {{ $suggestion->public_at }}
 			@else
 				Under arbete
 			@endif
