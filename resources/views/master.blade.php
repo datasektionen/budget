@@ -10,7 +10,7 @@
     <!-- Fonts -->
     <link href="//aurora.datasektionen.se" rel="stylesheet" type="text/css">
     <link href="/css/style.css" rel="stylesheet" type="text/css">
-    <meta name="theme-color" content="#039BE5">
+    <meta name="theme-color" content="#607d8b">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('head-js')
 </head>
