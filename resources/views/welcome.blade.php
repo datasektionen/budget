@@ -16,7 +16,7 @@
 	<h3>Projekten</h3>
 	<ul>
 		@foreach ($projects as $project)
-		<li><a href="/committee/{{ $project->id }}">{{ $project->name }}</a></li>
+		<li><a href="/committees/{{ $project->id }}">{{ $project->name }}</a></li>
 		@endforeach
 	</ul>
 </div>
@@ -24,7 +24,7 @@
 	<h3>Övrigt</h3>
 	<ul>
 		@foreach ($others as $other)
-		<li><a href="/committee/{{ $other->id }}">{{ $other->name }}</a></li>
+		<li><a href="/committees/{{ $other->id }}">{{ $other->name }}</a></li>
 		@endforeach
 	</ul>
 </div>
