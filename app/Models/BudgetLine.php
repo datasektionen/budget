@@ -14,11 +14,18 @@ class BudgetLine extends Model {
     protected $fillable = ['name', 'income', 'expenses', 'cost_centre_id', 'type', 'valid_from', 'valid_to', 'suggestion_id'];
 
     public function accounts() {
-        return $this->belongsToMany('App\Models\Account');
+        return $this->belongsToMany('App\Models\Account')->orderBy('number');
     }
 
     public function costCentre() {
         return $this->belongsTo('App\Models\CostCentre');
+    }
+
+    public function followUps($id = null) {
+        if ($id !== null) {
+            $this->belongsToMany('App\Models\FollowUp')->withPivot('booked')->where('follow_up_id', $id);
+        }
+        return $this->belongsToMany('App\Models\FollowUp')->withPivot('booked');
     }
 
     public function parentLine() {

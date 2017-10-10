@@ -42107,9 +42107,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['suggestion', 'committee', 'user'],
+    props: ['suggestion', 'committee', 'user', 'booked'],
     data: function data() {
         return {
             committee_: this.committee
@@ -42225,7 +42227,18 @@ var render = function() {
                       domProps: { innerHTML: _vm._s(_vm.fmt(this.balance)) }
                     }),
                     _vm._v(" SEK")
-                  ])
+                  ]),
+                  _vm._v(" "),
+                  _vm.booked
+                    ? _c("th", { staticClass: "minus cash" }, [
+                        _c("span", {
+                          domProps: {
+                            innerHTML: _vm._s(_vm.fmt(_vm.committee_.booked))
+                          }
+                        }),
+                        _vm._v(" SEK")
+                      ])
+                    : _vm._e()
                 ])
               ]),
               _vm._v(" "),
@@ -42233,6 +42246,7 @@ var render = function() {
                 return _c("cost-centre", {
                   key: cost_centre.id,
                   attrs: {
+                    booked: _vm.booked,
                     suggestion: _vm.suggestion,
                     "cost-centre": cost_centre
                   },
@@ -42334,7 +42348,16 @@ var render = function() {
                           domProps: { innerHTML: _vm._s(_vm.fmt(0)) }
                         }),
                         _vm._v(" SEK")
-                      ])
+                      ]),
+                      _vm._v(" "),
+                      _vm.booked
+                        ? _c("td", { class: { cash: true } }, [
+                            _c("span", {
+                              domProps: { innerHTML: _vm._s(_vm.fmt(0)) }
+                            }),
+                            _vm._v(" SEK")
+                          ])
+                        : _vm._e()
                     ])
                   ])
                 : _vm._e()
@@ -42619,9 +42642,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['costCentre', 'suggestion'],
+    props: ['costCentre', 'suggestion', 'booked'],
     methods: {
         updateCostCentre: function updateCostCentre() {
             var _this = this;
@@ -42802,13 +42830,38 @@ var render = function() {
             }),
             _vm._v(" SEK")
           ]
-        )
+        ),
+        _vm._v(" "),
+        _vm.booked
+          ? _c(
+              "td",
+              {
+                class: {
+                  cash: true,
+                  plus: _vm.balance < _vm.costCentre.booked,
+                  minus: _vm.balance > _vm.costCentre.booked
+                }
+              },
+              [
+                _c("span", {
+                  domProps: {
+                    innerHTML: _vm._s(_vm.fmt(_vm.costCentre.booked))
+                  }
+                }),
+                _vm._v(" SEK")
+              ]
+            )
+          : _vm._e()
       ]),
       _vm._v(" "),
       _vm._l(_vm.costCentre.budget_lines, function(budget_line) {
         return _c("budget-line", {
           key: budget_line.id,
-          attrs: { suggestion: _vm.suggestion, "budget-line": budget_line },
+          attrs: {
+            booked: _vm.booked,
+            suggestion: _vm.suggestion,
+            "budget-line": budget_line
+          },
           on: { committee: _vm.setCommittee }
         })
       }),
@@ -42956,7 +43009,18 @@ var render = function() {
                 }
               }),
               _vm._v(" SEK\n        ")
-            ])
+            ]),
+            _vm._v(" "),
+            _vm.booked
+              ? _c("td", [
+                  _c("span", {
+                    domProps: {
+                      innerHTML: _vm._s(_vm.fmt(_vm.costCentre.booked))
+                    }
+                  }),
+                  _vm._v(" SEK\n        ")
+                ])
+              : _vm._e()
           ])
         : _vm._e()
     ],
@@ -42978,6 +43042,8 @@ var staticRenderFns = [
       _c("td", { staticClass: "col-income" }),
       _vm._v(" "),
       _c("td", { staticClass: "col-expenses" }),
+      _vm._v(" "),
+      _c("td"),
       _vm._v(" "),
       _c("td")
     ])
@@ -43081,9 +43147,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['budgetLine', 'suggestion'],
+    props: ['budgetLine', 'suggestion', 'booked'],
+    created: function created() {
+        console.log(this.budgetLine);
+    },
+
     methods: {
         updateBudgetLine: function updateBudgetLine() {
             var _this = this;
@@ -43113,6 +43186,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this.$emit('committee', json);
                 }
             });
+        },
+        replaceIntervals: function replaceIntervals(x) {
+            console.log(x);
+            if (x.length <= 1) {
+                return x;
+            }
+            var res = [];
+            var intervalStart = -1;
+            for (var i = 1; i < x.length; i++) {
+                if (x[i - 1] == x[i] - 1) {
+                    if (intervalStart === -1) {
+                        intervalStart = x[i - 1];
+                    } else {
+                        // Skip
+                    }
+                } else {
+                    if (intervalStart === -1) {
+                        res.push(x[i - 1]);
+                        intervalStart = -1;
+                    } else {
+                        res.push(intervalStart + '-' + x[i - 1]);
+                        intervalStart = -1;
+                    }
+                }
+            }
+            if (intervalStart !== -1) {
+                res.push(intervalStart + '-' + x[x.length - 1]);
+            } else {
+                res.push(x[x.length - 1]);
+            }
+            console.log(res);
+            return res;
         }
     }
 });
@@ -43224,10 +43329,12 @@ var render = function() {
         staticClass: "accounts",
         domProps: {
           innerHTML: _vm._s(
-            _vm.budgetLine.accounts
-              .map(function(x) {
-                return x.number
-              })
+            _vm
+              .replaceIntervals(
+                _vm.budgetLine.accounts.map(function(x) {
+                  return x.number
+                })
+              )
               .join(", ")
           )
         }
@@ -43254,14 +43361,10 @@ var render = function() {
               ],
               1
             )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.suggestion === null
-          ? _c("span", {
+          : _c("span", {
               staticClass: "input income",
               domProps: { innerHTML: _vm._s(_vm.fmt(_vm.budgetLine.income)) }
             })
-          : _vm._e()
       ]),
       _vm._v(" "),
       _c("td", { staticClass: "col-expenses cash minus" }, [
@@ -43285,14 +43388,10 @@ var render = function() {
               ],
               1
             )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.suggestion === null
-          ? _c("span", {
+          : _c("span", {
               staticClass: "input expenses",
               domProps: { innerHTML: _vm._s(_vm.fmt(_vm.budgetLine.expenses)) }
             })
-          : _vm._e()
       ]),
       _vm._v(" "),
       _c(
@@ -43314,7 +43413,31 @@ var render = function() {
           }),
           _vm._v(" SEK\n        ")
         ]
-      )
+      ),
+      _vm._v(" "),
+      _vm.booked
+        ? _c(
+            "td",
+            {
+              class: {
+                nowrap: true,
+                cash: true,
+                minus:
+                  _vm.budgetLine.booked <
+                  _vm.budgetLine.income - _vm.budgetLine.expenses,
+                plus:
+                  _vm.budgetLine.booked >
+                  _vm.budgetLine.income - _vm.budgetLine.expenses
+              }
+            },
+            [
+              _c("span", {
+                domProps: { innerHTML: _vm._s(_vm.fmt(_vm.budgetLine.booked)) }
+              }),
+              _vm._v(" SEK\n        ")
+            ]
+          )
+        : _vm._e()
     ]
   )
 }

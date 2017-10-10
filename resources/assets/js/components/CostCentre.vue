@@ -7,6 +7,7 @@
         <td class="col-income"></td>
         <td class="col-expenses"></td>
         <td></td>
+        <td></td>
     </tr>
     <tr class="header">
         <td class="name">
@@ -21,8 +22,9 @@
         <td class="col-income plus cash"><span v-html="fmt(income)"></span> SEK</td>
         <td class="col-expenses minus cash"><span v-html="fmt(expenses)"></span> SEK</td>
         <td v-bind:class="{ cash:true, minus: balance < 0, plus: balance > 0}"><span v-html="fmt(balance)"></span> SEK</td>
+        <td v-if="booked" v-bind:class="{ cash:true, plus: balance < costCentre.booked, minus: balance > costCentre.booked}"><span v-html="fmt(costCentre.booked)"></span> SEK</td>
     </tr>
-    <budget-line v-for="budget_line in costCentre.budget_lines" :suggestion="suggestion" :budget-line="budget_line" :key="budget_line.id" v-on:committee="setCommittee"></budget-line>
+    <budget-line v-for="budget_line in costCentre.budget_lines" :booked="booked" :suggestion="suggestion" :budget-line="budget_line" :key="budget_line.id" v-on:committee="setCommittee"></budget-line>
     <tr class="vague" v-if="suggestion">
         <td class="description">
             <input class="name" type="text" v-model="costCentre.new_name" v-on:change="createBudgetLine()" placeholder="Skapa ny...">
@@ -48,6 +50,9 @@
         <td v-bind:class="{ cash: true }">
             <span v-html="fmt(costCentre.new_income - costCentre.new_expenses)"></span> SEK
         </td>
+        <td v-if="booked">
+            <span v-html="fmt(costCentre.booked)"></span> SEK
+        </td>
     </tr>
 </tbody>
 </template>
@@ -55,7 +60,7 @@
 
 <script>
 export default {
-    props: ['costCentre', 'suggestion'],
+    props: ['costCentre', 'suggestion', 'booked'],
     methods: {
         updateCostCentre: function () {
             this.costCentre.loading = true;

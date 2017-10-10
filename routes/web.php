@@ -21,7 +21,8 @@ Route::get('/committees/{id}', 'BudgetController@getCommittee')->middleware('hid
 Route::get('/overview', 'BudgetController@getOverview')->middleware('hide-if-reception');
 
 Route::get ('/follow-up', 'FollowUpController@getImport')->middleware('hide-if-reception');
-Route::post('/follow-up', 'FollowUpController@postShow')->middleware('hide-if-reception');
+Route::post('/follow-up', 'FollowUpController@postImport')->middleware('hide-if-reception');
+Route::get ('/follow-up/{id}', 'FollowUpController@getShow')->middleware('hide-if-reception');
 
 Route::get ('/suggestions', 'SuggestionController@getList')->middleware('auth');
 Route::get ('/suggestions/new', 'SuggestionController@getNew')->middleware('auth');

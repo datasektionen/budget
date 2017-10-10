@@ -9,6 +9,28 @@ class Committee extends Model {
 		return parent::select('*')->orderBy('name')->get();
 	}
 
+	public static function allWithColumns() {
+		$committees = self::all();
+		foreach ($committees as $committee) { 
+			$committee->expenses();
+			$committee->income();
+			$committee->costCentres->map(function ($costCentre) {
+				return $costCentre->budgetLines->map(function ($budgetLine) use ($costCentre) {
+					$budgetLine->expenses = $budgetLine->expenses / 100;
+					$budgetLine->income = $budgetLine->income / 100;
+					$budgetLine->deleted = $costCentre->budgetLines->map(function ($x) use ($budgetLine) {
+						return $x->suggestion_id == session('suggestion') && $x->parent == $budgetLine->id;
+					})->reduce(function ($a, $b) {
+						return $a || $b;
+					}, false);
+					return $budgetLine;
+				});
+			});
+		}
+
+		return $committees;
+	}
+
 	public static function findOrFailWithColumns($id) {
 		$committee = parent::findOrFail($id); 
 		$committee->expenses();

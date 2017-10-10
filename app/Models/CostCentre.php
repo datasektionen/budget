@@ -20,14 +20,42 @@ class CostCentre extends Model {
 		return $this->hasMany('App\Models\BudgetLine')
 			->where('budget_lines.valid_from', '<=', Carbon::now())
 			->where('budget_lines.valid_to', '>', Carbon::now())
-			->whereExists(function ($q) use ($s) {
-				$q->select(DB::raw(1))->from('suggestions')->whereRaw('suggestions.id = budget_lines.suggestion_id')
-				->whereNotNull('suggestions.implemented_at')
-				->orWhere('suggestions.id', $s);
+			->where(function ($q) use($s) {
+				$q->whereExists(function ($q) use ($s) {
+					$q->select(DB::raw(1))->from('suggestions')
+					->whereRaw('suggestions.id = budget_lines.suggestion_id')
+					->where(function ($q) use ($s) {
+						$q->whereNotNull('suggestions.implemented_at')
+						->orWhere('suggestions.id', $s);
+					});
+				})->orWhereExists(function ($q) {
+					$q->select(DB::raw(1))->from('budget_line_follow_up')
+					->whereRaw('budget_line_follow_up.budget_line_id = budget_lines.id');
+				});
 			})
 			->with('accounts')
 			->orderBy('budget_lines.name')
 			->orderBy('suggestion_id');
+	}
+	
+	public static function match($speedledgerId, $committeeName, $costCentreName) {
+		// First, try speedledger id. It overrides everything else
+		if (!empty($speedledgerId)) {
+			$costCentre = self::where('speedledger_id', $speedledgerId)->first();
+			if ($costCentre != null) {
+				return $costCentre;
+			}
+		}
+
+		// Otherwise, go by committee name and cost centre name
+		$costCentre = CostCentre::where('name', $costCentreName)->whereExists(function ($q) use ($committeeName) {
+			$q->select(DB::raw(1))
+				->from('committees')
+				->whereRaw('committees.id = cost_centres.committee_id')
+				->where('committees.name', $committeeName);
+		})->first();
+
+		return $costCentre;
 	}
 	
 	public function allBudgetLines() {
@@ -63,5 +91,11 @@ class CostCentre extends Model {
 
     public function committee() {
         return $this->belongsTo('App\Models\Committee');
+    }
+
+    public function budgetLineForAccount($acc) {
+    	return $this->budgetLines()->whereHas('accounts', function ($q) use ($acc) {
+    		$q->where('number', $acc);
+    	})->first();
     }
 }

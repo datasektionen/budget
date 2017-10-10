@@ -9,9 +9,10 @@
                 <th class="col-income plus cash"><span v-html="fmt(income)"></span> SEK</th>
                 <th class="col-expenses minus cash"><span v-html="fmt(expenses)"></span> SEK</th>
                 <th class="minus cash"><span v-html="fmt(this.balance)"></span> SEK</th>
+                <th class="minus cash" v-if="booked"><span v-html="fmt(committee_.booked)"></span> SEK</th>
             </tr>
         </thead>
-        <cost-centre v-for="cost_centre in committee_.cost_centres" :suggestion="suggestion" :cost-centre="cost_centre" :key="cost_centre.id" v-on:committee="setCommittee"></cost-centre>
+        <cost-centre v-for="cost_centre in committee_.cost_centres" :booked="booked" :suggestion="suggestion" :cost-centre="cost_centre" :key="cost_centre.id" v-on:committee="setCommittee"></cost-centre>
 
 
         <tbody v-if="suggestion">
@@ -34,6 +35,7 @@
                 <td class="col-income plus cash"><span v-html="fmt(0)"></span> SEK</td>
                 <td class="col-expenses minus cash"><span v-html="fmt(0)"></span> SEK</td>
                 <td v-bind:class="{ cash:true }"><span v-html="fmt(0)"></span> SEK</td>
+                <td v-bind:class="{ cash:true }" v-if="booked"><span v-html="fmt(0)"></span> SEK</td>
             </tr>
         </tbody>
     </table>
@@ -44,7 +46,7 @@
 
 <script>
 export default {
-    props: ['suggestion', 'committee', 'user'],
+    props: ['suggestion', 'committee', 'user', 'booked'],
     data: function () {
         return {
             committee_: this.committee,
