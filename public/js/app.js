@@ -42230,14 +42230,24 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _vm.booked
-                    ? _c("th", { staticClass: "minus cash" }, [
-                        _c("span", {
-                          domProps: {
-                            innerHTML: _vm._s(_vm.fmt(_vm.committee_.booked))
+                    ? _c(
+                        "th",
+                        {
+                          class: {
+                            cash: true,
+                            minus: _vm.committee_.booked < this.balance,
+                            plus: _vm.committee_.booked > this.balance
                           }
-                        }),
-                        _vm._v(" SEK")
-                      ])
+                        },
+                        [
+                          _c("span", {
+                            domProps: {
+                              innerHTML: _vm._s(_vm.fmt(_vm.committee_.booked))
+                            }
+                          }),
+                          _vm._v(" SEK")
+                        ]
+                      )
                     : _vm._e()
                 ])
               ]),

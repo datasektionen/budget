@@ -82,7 +82,6 @@ class FollowUp extends Model {
 		foreach ($followUp->committees as &$committee) { 
 			$committee->expenses();
 			$committee->income();
-			$committee->booked = 1000;
 			$committee->costCentres->map(function ($costCentre) use ($id) {
 				$costCentre->budgetLines->map(function ($budgetLine) use ($costCentre, $id) {
 					$budgetLine->expenses = $budgetLine->expenses / 100;
@@ -101,7 +100,11 @@ class FollowUp extends Model {
 				$costCentre->booked = $costCentre->budgetLines->sum(function ($budgetLine) {
 					return $budgetLine->booked;
 				});
-			});;
+			});
+
+			$committee->booked = $committee->costCentres->sum(function ($costCentre) {
+				return $costCentre->booked;
+			});
 		}
 
 		return $followUp;

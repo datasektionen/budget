@@ -23,7 +23,7 @@ class BudgetLine extends Model {
 
     public function followUps($id = null) {
         if ($id !== null) {
-            $this->belongsToMany('App\Models\FollowUp')->withPivot('booked')->where('follow_up_id', $id);
+            return $this->belongsToMany('App\Models\FollowUp')->withPivot('booked')->where('follow_up_id', $id);
         }
         return $this->belongsToMany('App\Models\FollowUp')->withPivot('booked');
     }

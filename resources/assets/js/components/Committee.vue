@@ -9,7 +9,7 @@
                 <th class="col-income plus cash"><span v-html="fmt(income)"></span> SEK</th>
                 <th class="col-expenses minus cash"><span v-html="fmt(expenses)"></span> SEK</th>
                 <th class="minus cash"><span v-html="fmt(this.balance)"></span> SEK</th>
-                <th class="minus cash" v-if="booked"><span v-html="fmt(committee_.booked)"></span> SEK</th>
+                <th v-bind:class="{cash:true, minus: committee_.booked < this.balance, plus: committee_.booked > this.balance}" v-if="booked"><span v-html="fmt(committee_.booked)"></span> SEK</th>
             </tr>
         </thead>
         <cost-centre v-for="cost_centre in committee_.cost_centres" :booked="booked" :suggestion="suggestion" :cost-centre="cost_centre" :key="cost_centre.id" v-on:committee="setCommittee"></cost-centre>

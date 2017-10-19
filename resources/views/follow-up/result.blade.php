@@ -41,9 +41,8 @@
 @endif
 
 <div id="app">
-	{{--@foreach ($followUp->committees as $committee)--}}
-	<?php $committee = $followUp->committees->get(15); ?>
+	@foreach ($followUp->committees as $committee)
 	<committee :booked="true" :committee="{{ $committee }}" :followUp="{{ $followUp }}" user="{{ Auth::user() === null ? 'null' : Auth::user() }}"></committee>
-	{{--@endforeach --}}
+	@endforeach
 </div>
 @endsection
