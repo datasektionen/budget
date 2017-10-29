@@ -123,8 +123,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 | **URL**              | /api/cost-centres/:id |
 | **Method**           | POST           |
 | **URL params**       | ```:id``` the id of the cost centre to update |
-| **Data params**      | ```name``` the new name of the cost centre<br> ```speedledger_id``` the new Speedledger identification for the cost centre<br>
-If any is left blank the field won't be updated<br> Example: ```{ name: 'Ettans fest', speedledger_id: 'MEtFe' }``` |
+| **Data params**      | ```name``` the new name of the cost centre<br> ```speedledger_id``` the new Speedledger identification for the cost centre<br> If any is left blank the field won't be updated<br> Example: ```{ name: 'Ettans fest', speedledger_id: 'MEtFe' }``` |
 | **Success response CODE** | 200 |
 | **Success response content** | JSON object with the cost centre. |
 | **Notes** |  |
@@ -196,8 +195,91 @@ If any is left blank the field won't be updated<br> Example: ```{ name: 'Ettans 
 | **URL**              | /api/budget-line/:id |
 | **Method**           | POST           |
 | **URL params**       | ```:id``` the id of the budget line to update |
-| **Data params**      | ```name``` the new name of the budget line<br> ```income``` the income value for the budget line (in smallest unit of currency)<br> ```expenses``` the expenses value for the budget line (in smallest unit of currency)<br> ```type``` the type the budget line (external or **internal**)<br> ```valid_from``` the start date of the validity of budget line (YYYY-MM-DD HH:II:SS)<br> ```valid_to``` the end date of the validity of budget line (YYYY-MM-DD HH:II:SS)<br>
-If any is left blank the field won't be updated<br> Example: ```{ 'name': 'Mat', 'income': '100000', 'expenses': '200000', 'type': 'external', 'valid_from': '2017-08-16 00:00:00', 'valid_to': '2017-12-31 23:59:59' }``` |
+| **Data params**      | ```name``` the new name of the budget line<br> ```income``` the income value for the budget line (in smallest unit of currency)<br> ```expenses``` the expenses value for the budget line (in smallest unit of currency)<br> ```type``` the type the budget line (external or **internal**)<br> ```valid_from``` the start date of the validity of budget line (YYYY-MM-DD HH:II:SS)<br> ```valid_to``` the end date of the validity of budget line (YYYY-MM-DD HH:II:SS)<br> If any is left blank the field won't be updated<br> Example: ```{ 'name': 'Mat', 'income': '100000', 'expenses': '200000', 'type': 'external', 'valid_from': '2017-08-16 00:00:00', 'valid_to': '2017-12-31 23:59:59' }``` |
 | **Success response CODE** | 200 |
 | **Success response content** | JSON object with the committee belonging to the budget line. |
+| **Notes** |  |
+
+
+
+### Add account to budget line
+
+| Property         | Value          |
+| ---------------- | -------------- |
+| **URL**              | /api/budget-line/:id/accounts/:aid |
+| **Method**           | POST           |
+| **URL params**       | ```:id``` the id of the budget line to update<br> ```:aid``` the id of the account (***NOTE:** this is not the account number!*) |
+| **Data params**      | None |
+| **Success response CODE** | 200 |
+| **Success response content** | JSON object with the budget line. |
+| **Notes** |  |
+
+
+
+### List all accounts
+
+| Property         | Value          |
+| ---------------- | -------------- |
+| **URL**              | /api/accounts |
+| **Method**           | GET           |
+| **URL params**       | None |
+| **Data params**      | None |
+| **Success response CODE** | 200 |
+| **Success response content** | JSON object with all accounts. |
+| **Notes** |  |
+
+
+
+### Add account
+
+| Property         | Value          |
+| ---------------- | -------------- |
+| **URL**              | /api/accounts |
+| **Method**           | POST           |
+| **URL params**       | None |
+| **Data params**      | ```name``` the new name of the account<br> ```description``` a description of what the account is used for<br> ```number``` the account number<br> Example: ```{ 'name': 'Försäljning biljett, alkohol', 'description': 'All försäljning av biljett till event som inkluderar alkohol', 'number': '3042' }``` |
+| **Success response CODE** | 200 |
+| **Success response content** | JSON object with the newly created account. |
+| **Notes** |  |
+
+
+
+### Get account
+
+| Property         | Value          |
+| ---------------- | -------------- |
+| **URL**              | /api/accounts/:id |
+| **Method**           | GET           |
+| **URL params**       | ```:id``` the id of the account to show |
+| **Data params**      | None |
+| **Success response CODE** | 200 |
+| **Success response content** | JSON object with the account. |
+| **Notes** |  |
+
+
+
+### Get account by account number
+
+| Property         | Value          |
+| ---------------- | -------------- |
+| **URL**              | /api/accounts/number/:number |
+| **Method**           | GET           |
+| **URL params**       | ```:number``` the number of the account to show, for example 3042 for "Försäljning biljett, alkohol" |
+| **Data params**      | None |
+| **Success response CODE** | 200 |
+| **Success response content** | JSON object with the account. |
+| **Notes** |  |
+
+
+
+### Get budget suggestion
+
+| Property         | Value          |
+| ---------------- | -------------- |
+| **URL**              | /api/suggestions/:id |
+| **Method**           | GET           |
+| **URL params**       | ```:id``` the id of the suggestion to show |
+| **Data params**      | None |
+| **Success response CODE** | 200 |
+| **Success response content** | JSON object with the suggestion. |
 | **Notes** |  |
