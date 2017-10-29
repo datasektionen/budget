@@ -21,6 +21,6 @@ A cost centre is called *resultatställe* in Swedish. A cost centre is part of a
 
 ### Budget lines
 
-A budget line is the smallest part of a budget, belonging to a cost centre. It consists of an income and expenses and a name. If a budget line named 'Food' has an income of 100000 and an expense of 200000, it means that someone predicts to spend 2 000 kr on food and earn 1 000 kr.
+A budget line is the smallest part of a budget, belonging to a cost centre. It consists of an income and expenses and a name. If a budget line named *Food* has an income of *100000* and an expense of *200000*, it means that someone predicts to spend 2 000 kr on food and earn 1 000 kr.
 
-Budget lines are valid between two dates, ```valid_from``` and ```valid_to```.
+Budget lines are valid between two dates, ```valid_from``` and ``valid_to```.
