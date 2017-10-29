@@ -8,7 +8,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 ### List all committees
 
-| Egenskap         | Värde          |
+| Property         | Value          |
 | ---------------- | -------------- |
 | **URL**              | /api/committees |
 | **Method**           | GET            |
@@ -21,7 +21,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 ### Create new committee
 
-| Egenskap         | Värde          |
+| Property         | Value          |
 | ---------------- | -------------- |
 | **URL**              | /api/committees |
 | **Method**           | POST           |
@@ -34,7 +34,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 ### Get committee
 
-| Egenskap         | Värde          |
+| Property         | Value          |
 | ---------------- | -------------- |
 | **URL**              | /api/committees/:id |
 | **Method**           | GET           |
@@ -48,12 +48,54 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 ### Update committee
 
-| Egenskap         | Värde          |
+| Property         | Value          |
 | ---------------- | -------------- |
 | **URL**              | /api/committees/:id |
 | **Method**           | POST           |
 | **URL params**       | ```:id``` the id of the committee to update |
 | **Data params**      | ```name``` the name of the committee<br> ```type``` the type of the committee (committee, project or other)<br> Example: ```{ name: 'New committee', type: 'committee' }``` |
 | **Success response CODE** | 200 |
-| **Success response content** | JSON object with the committee, including cost centres with budget lines |
+| **Success response content** | JSON object with the committee |
+| **Notes** |  |
+
+
+
+### Delete committee
+
+| Property         | Value          |
+| ---------------- | -------------- |
+| **URL**              | /api/committees/:id |
+| **Method**           | DELETE           |
+| **URL params**       | ```:id``` the id of the committee to delete |
+| **Data params**      | None |
+| **Success response CODE** | 200 |
+| **Success response content** | JSON object with the deleted committee |
+| **Notes** |  |
+
+
+
+### Get committee cost centres
+
+| Property         | Value          |
+| ---------------- | -------------- |
+| **URL**              | /api/committees/:id/cost-centres |
+| **Method**           | GET           |
+| **URL params**       | ```:id``` the id of the committee to get cost centres for |
+| **Data params**      | None |
+| **Success response CODE** | 200 |
+| **Success response content** | JSON object with the cost centres |
+| **Notes** |  |
+
+
+
+### Create committee cost centre
+
+| Property         | Value          |
+| ---------------- | -------------- |
+| **URL**              | /api/committees/:id/cost-centres |
+| **Method**           | POST           |
+| **URL params**       | ```:id``` the id of the committee to add cost centre to |
+| **Data params**      | ```name``` the name of the cost centre<br> ```speedledger_id``` the Speedledger identification for the cost centre<br> Example: ```{ name: 'Ettans fest', speedledger_id: 'MEtFe' }``` |
+| **Success response CODE** | 200 |
+| **Success response content** | JSON object with the cost centre and the committee. Example: ```{ "cost_centre": { "id" : 1, "name": "Ettans fest", "speedledger_id": "MEtFe", "committee_id": 1 ... }, "committee": {"id": 1, name": "Mottagningen" ...} }``` |
 | **Notes** |  |
