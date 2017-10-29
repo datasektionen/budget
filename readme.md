@@ -11,9 +11,9 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 | Egenskap         | Värde          |
 | ---------------- | -------------- |
-| URL              | /api/committee |
-| Method           | GET            |
-| URL params       | ```short``` (**optional**) If short is false or not given, the budgetlines for every committee is included |
-| Data params      | None           |
-| Success response CODE | 200 |
-| Success response content | JSON array of committees |
+| **URL**              | /api/committee |
+| **Method**           | GET            |
+| **URL params**       | ```short``` (**optional**) If short is false or not given, all budget lines for every committee is included |
+| **Data params**      | None           |
+| **Success response CODE** | 200 |
+| **Success response content** | JSON array of committees |

@@ -26,7 +26,7 @@ class FollowUpController extends BaseController {
 	 * @return view    form with pdf upload
 	 */
 	public function getImport() {
-		return view('follow-up.index');
+		return view('follow-up.index')->with('followUps', FollowUp::select('*')->orderBy('created_at', 'DESC')->take(10)->get());
 	}
 
 	/**
@@ -57,7 +57,12 @@ class FollowUpController extends BaseController {
 	 * @return view 	the follow-up
 	 */
 	public function getShow($id) {
-		$followUp = FollowUp::prepared($id);
+		$followUp = FollowUp::preparedOverview($id);
+		return view('follow-up.overview')->with('followUp', $followUp);
+	}
+
+	public function getShowCommittee($id, $committeeId) {
+		$followUp = FollowUp::prepared($id, $committeeId);
 		return view('follow-up.result')->with('followUp', $followUp);
 	}
 }

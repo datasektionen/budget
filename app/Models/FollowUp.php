@@ -75,39 +75,51 @@ class FollowUp extends Model {
 		return $this->belongsToMany('App\Models\BudgetLine')->withPivot('booked');
 	}
 
-	public static function prepared($id) {
+	public static function prepared($id, $committeeId) {
 		$followUp = self::findOrFail($id);
 
-		$followUp->committees = Committee::all();
-		foreach ($followUp->committees as &$committee) { 
-			$committee->expenses();
-			$committee->income();
-			$committee->costCentres->map(function ($costCentre) use ($id) {
-				$costCentre->budgetLines->map(function ($budgetLine) use ($costCentre, $id) {
-					$budgetLine->expenses = $budgetLine->expenses / 100;
-					$budgetLine->income = $budgetLine->income / 100;
-					$budgetLine->booked = $budgetLine->followUps($id)->get()->sum(function ($x) {
-						return $x->pivot->booked;
-					}) / 100;
-					$budgetLine->deleted = $costCentre->budgetLines->map(function ($x) use ($budgetLine) {
-						return $x->suggestion_id == session('suggestion') && $x->parent == $budgetLine->id;
-					})->reduce(function ($a, $b) {
-						return $a || $b;
-					}, false);
-					return $budgetLine;
-				});
-
-				$costCentre->booked = $costCentre->budgetLines->sum(function ($budgetLine) {
-					return $budgetLine->booked;
-				});
-			});
-
-			$committee->booked = $committee->costCentres->sum(function ($costCentre) {
-				return $costCentre->booked;
-			});
-		}
+		$followUp->committee = Committee::select('*')
+			->with('costCentres.budgetLines.followUps', 117)
+		    ->first();
 
 		return $followUp;
+	}
+
+	public static function preparedOverview($id) {
+		$followUp = self::findOrFail($id);
+
+		$followUp->committees = Committee::select('committees.*', 'c_income', 'c_expenses', 'c_booked')
+		    ->leftJoin(DB::raw('(SELECT 
+			        committees.id AS committee_id,
+			        SUM(budget_lines.income) AS c_income, 
+			        SUM(budget_lines.expenses) AS c_expenses,
+			        SUM(budget_line_follow_up.booked) AS c_booked
+			    FROM committees
+			    JOIN cost_centres ON cost_centres.committee_id = committees.id
+			    JOIN budget_lines ON budget_lines.cost_centre_id = cost_centres.id
+			    LEFT JOIN budget_line_follow_up ON budget_line_follow_up.budget_line_id = budget_lines.id
+			    WHERE (budget_line_follow_up.follow_up_id = ' . intval($id) . ' OR budget_line_follow_up.follow_up_id IS NULL)
+			    GROUP BY committees.id
+			) AS t1'), 'committees.id', 'committee_id')
+		    ->get();
+
+		return $followUp;
+
+		/*
+				SELECT t1.*, committees.name FROM committees LEFT JOIN (SELECT 
+		        committees.id AS committee_id,
+		        SUM(budget_lines.income) AS c_income, 
+		        SUM(budget_lines.expenses) AS c_expenses,
+		        SUM(budget_line_follow_up.booked) AS booked
+		    FROM committees
+		    JOIN cost_centres ON cost_centres.committee_id = committees.id
+		    JOIN budget_lines ON budget_lines.cost_centre_id = cost_centres.id
+		    LEFT JOIN budget_line_follow_up ON budget_line_follow_up.budget_line_id = budget_lines.id
+		    WHERE budget_line_follow_up.follow_up_id = 117
+		    GROUP BY committees.id
+		) AS t1
+		ON committees.id = t1.committee_id
+				 */
 	}
 }
 

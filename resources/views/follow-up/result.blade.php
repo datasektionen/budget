@@ -41,8 +41,6 @@
 @endif
 
 <div id="app">
-	@foreach ($followUp->committees as $committee)
-	<committee :booked="true" :committee="{{ $committee }}" :followUp="{{ $followUp }}" user="{{ Auth::user() === null ? 'null' : Auth::user() }}"></committee>
-	@endforeach
+	<committee :booked="true" :committee="{{ $followUp->committee }}" :followUp="{{ $followUp }}" user="{{ Auth::user() === null ? 'null' : Auth::user() }}"></committee>
 </div>
 @endsection

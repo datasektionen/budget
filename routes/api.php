@@ -17,7 +17,10 @@ use App\Models\Account;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('committees', function () {
+Route::get('committees', function (Request $request) {
+	if ($request->input('short') !== null && $request->input('short') !== 'false') {
+		return response()->json(Committee::select('*')->get());
+	}
 	return response()->json(Committee::select('*')->with('costCentres')->get());
 });
 
