@@ -11,9 +11,23 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 | Egenskap         | Värde          |
 | ---------------- | -------------- |
-| **URL**              | /api/committee |
+| **URL**              | /api/committees |
 | **Method**           | GET            |
 | **URL params**       | ```short``` (**optional**) If short is false or not given, all budget lines for every committee is included |
 | **Data params**      | None           |
 | **Success response CODE** | 200 |
 | **Success response content** | JSON array of committees |
+| **Notes** | Only get the budget lines when you really need it. It is quite heavy. |
+
+
+#### Create new committee
+
+| Egenskap         | Värde          |
+| ---------------- | -------------- |
+| **URL**              | /api/committees |
+| **Method**           | POST           |
+| **URL params**       | None |
+| **Data params**      | ```name``` the name of the committee<br> ```type``` the type of the committee (committee, project or other)<br> Example: ```{ name: 'New committee', type: 'committee' }``` |
+| **Success response CODE** | 200 |
+| **Success response content** | JSON object with the newly created committee |
+| **Notes** |  |
