@@ -10,6 +10,29 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 - [Update committee](#update-committee)
 - [Delete committee](#delete-committee)
 
+**Cost centres*
+- [Get cost centres for committee](#get-cost-centres-committees)
+- [Create cost centre for committee](#create-cost-centre)
+- [Get cost centre](#get-cost-centre)
+- [Get cost centre](#update-cost-centre)
+- [Delete cost centre](#delete-cost-centre)
+
+**Budget lines**
+- [Get budget lines for cost centre](#get-budget-lines-cost-centres)
+- [Add budget line to cost centre](#create-budget-line)
+- [Get budget line](#get-budget-line)
+- [Update budget line](#update-budget-line)
+
+**Accounts**
+- [Add account to budget line](#add-account-budget-line)
+- [List all accounts](#list-accounts)
+- [Create account](#create-account)
+- [Get account](#get-account)
+- [Get account by account number](#get-account-number)
+
+**Budget suggestions*
+- [Get budget suggestion](#get-suggestion)
+
 ## List all committees<a name="list-committees"></a>
 
 | Property         | Value          |
@@ -78,7 +101,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 
 
-## Get cost centres for committee
+## Get cost centres for committee<a name="get-cost-centres-committee"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -92,7 +115,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 
 
-## Create cost centre for committee
+## Create cost centre for committee<a name="create-cost-centre"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -106,7 +129,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 
 
-## Get cost centre
+## Get cost centre<a name="get-cost-centre"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -120,7 +143,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 
 
-## Update cost centre
+## Update cost centre<a name="update-cost-centre"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -135,7 +158,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 
 
-## Delete cost centre
+## Delete cost centre<a name="delete-cost-centre"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -149,7 +172,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 
 
-## Get budget lines for cost centre
+## Get budget lines for cost centre<a name="get-budget-lines-cost-centre"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -163,7 +186,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 
 
-## Add budget line to cost centre
+## Add budget line to cost centre<a name="add-budget-line-cost-centre"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -178,7 +201,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 
 
-## Get budget line
+## Get budget line<a name="get-budget-line"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -192,7 +215,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 
 
-## Update budget line
+## Update budget line<a name="update-budget-line"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -206,7 +229,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 
 
-## Add account to budget line
+## Add account to budget line<a name="add-account-budget-line"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -220,7 +243,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 
 
-## List all accounts
+## List all accounts<a name="list-accounts"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -234,7 +257,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 
 
-## Add account
+## Add account<a name="add-account"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -248,7 +271,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 
 
-## Get account
+## Get account<a name="get-account"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -262,7 +285,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 
 
-## Get account by account number
+## Get account by account number<a name="get-account-number"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -276,7 +299,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 
 
-## Get budget suggestion
+## Get budget suggestion<a name="get-suggestion"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
