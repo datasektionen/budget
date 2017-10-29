@@ -3,6 +3,8 @@ The API is located at ```/api``` (it is currently live at [budget.datasektionen.
 
 All API endpoints returns the response formatted as JSON if successful. If the request is invalid, the response is unspecified. Read the HTTP status code, all successful responses will have code 200, and every non-successful response will not.
 
+Please read the [README](README.md) to fully understand the enitities.
+
 **Committees**
 - [List all committees](#list-committees)
 - [Create new committee](#create-committee)
