@@ -30,7 +30,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 - [Get account](#get-account)
 - [Get account by account number](#get-account-number)
 
-**Budget suggestions*
+**Budget suggestions**
 - [Get budget suggestion](#get-suggestion)
 
 ## List all committees<a name="list-committees"></a>
