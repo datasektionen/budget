@@ -74,7 +74,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 
 
-### Get committee cost centres
+### Get cost centres for committee
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -88,7 +88,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 
 
-### Create committee cost centre
+### Create cost centre for committee
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -98,4 +98,62 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 | **Data params**      | ```name``` the name of the cost centre<br> ```speedledger_id``` the Speedledger identification for the cost centre<br> Example: ```{ name: 'Ettans fest', speedledger_id: 'MEtFe' }``` |
 | **Success response CODE** | 200 |
 | **Success response content** | JSON object with the cost centre and the committee. Example: ```{ "cost_centre": { "id" : 1, "name": "Ettans fest", "speedledger_id": "MEtFe", "committee_id": 1 ... }, "committee": {"id": 1, name": "Mottagningen" ...} }``` |
+| **Notes** |  |
+
+
+
+### Get cost centre
+
+| Property         | Value          |
+| ---------------- | -------------- |
+| **URL**              | /api/cost-centres/:id |
+| **Method**           | GET           |
+| **URL params**       | ```:id``` the id of the cost centre to get |
+| **Data params**      | None |
+| **Success response CODE** | 200 |
+| **Success response content** | JSON object with the cost centre. |
+| **Notes** |  |
+
+
+
+### Update cost centre
+
+| Property         | Value          |
+| ---------------- | -------------- |
+| **URL**              | /api/cost-centres/:id |
+| **Method**           | POST           |
+| **URL params**       | ```:id``` the id of the cost centre to update |
+| **Data params**      | ```name``` the new name of the cost centre<br> ```speedledger_id``` the new Speedledger identification for the cost centre<br>
+If any is left blank the field won't be updated<br> Example: ```{ name: 'Ettans fest', speedledger_id: 'MEtFe' }``` |
+| **Success response CODE** | 200 |
+| **Success response content** | JSON object with the cost centre. |
+| **Notes** |  |
+
+
+
+
+### Delete cost centre
+
+| Property         | Value          |
+| ---------------- | -------------- |
+| **URL**              | /api/cost-centres/:id |
+| **Method**           | DELETE           |
+| **URL params**       | ```:id``` the id of the cost centre to delete |
+| **Data params**      | None |
+| **Success response CODE** | 200 |
+| **Success response content** | JSON object with the deleted cost centre. |
+| **Notes** |  |
+
+
+
+### Get budget lines for cost centre
+
+| Property         | Value          |
+| ---------------- | -------------- |
+| **URL**              | /api/cost-centres/:id/budget-lines |
+| **Method**           | GET           |
+| **URL params**       | ```:id``` the id of the cost centre to list budget liens for |
+| **Data params**      | None |
+| **Success response CODE** | 200 |
+| **Success response content** | JSON object with the budget lines |
 | **Notes** |  |
