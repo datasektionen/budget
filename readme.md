@@ -152,8 +152,52 @@ If any is left blank the field won't be updated<br> Example: ```{ name: 'Ettans 
 | ---------------- | -------------- |
 | **URL**              | /api/cost-centres/:id/budget-lines |
 | **Method**           | GET           |
-| **URL params**       | ```:id``` the id of the cost centre to list budget liens for |
+| **URL params**       | ```:id``` the id of the cost centre to list budget lines for |
 | **Data params**      | None |
 | **Success response CODE** | 200 |
 | **Success response content** | JSON object with the budget lines |
+| **Notes** |  |
+
+
+
+### Add budget line to cost centre
+
+| Property         | Value          |
+| ---------------- | -------------- |
+| **URL**              | /api/cost-centres/:id/budget-lines |
+| **Method**           | POST           |
+| **URL params**       | ```:id``` the id of the cost centre to add budget line to |
+| **Data params**      | ```name``` the new name of the budget line<br> ```income``` the income value for the budget line (in smallest unit of currency)<br> ```expenses``` the expenses value for the budget line (in smallest unit of currency)<br> ```type``` the type the budget line (external or **internal**)<br> ```valid_from``` the start date of the validity of budget line (YYYY-MM-DD HH:II:SS)<br> ```valid_to``` the end date of the validity of budget line (YYYY-MM-DD HH:II:SS)<br> Example: ```{ 'name': 'Mat', 'income': '100000', 'expenses': '200000', 'type': 'external', 'valid_from': '2017-08-16 00:00:00', 'valid_to': '2017-12-31 23:59:59' }``` |
+| **Success response CODE** | 200 |
+| **Success response content** | JSON object with the budget line and the committee. Example: ```{ "budget_line": { "id" : 1, "name": "Mat", "income": "100000", ... }, "committee": {"id": 1, name": "Mottagningen" ...} }``` |
+| **Notes** |  |
+
+
+
+
+### Get budget line
+
+| Property         | Value          |
+| ---------------- | -------------- |
+| **URL**              | /api/budget-line/:id |
+| **Method**           | GET           |
+| **URL params**       | ```:id``` the id of the budget line to get |
+| **Data params**      | None |
+| **Success response CODE** | 200 |
+| **Success response content** | JSON object with the budget line. |
+| **Notes** |  |
+
+
+
+### Update budget line
+
+| Property         | Value          |
+| ---------------- | -------------- |
+| **URL**              | /api/budget-line/:id |
+| **Method**           | POST           |
+| **URL params**       | ```:id``` the id of the budget line to update |
+| **Data params**      | ```name``` the new name of the budget line<br> ```income``` the income value for the budget line (in smallest unit of currency)<br> ```expenses``` the expenses value for the budget line (in smallest unit of currency)<br> ```type``` the type the budget line (external or **internal**)<br> ```valid_from``` the start date of the validity of budget line (YYYY-MM-DD HH:II:SS)<br> ```valid_to``` the end date of the validity of budget line (YYYY-MM-DD HH:II:SS)<br>
+If any is left blank the field won't be updated<br> Example: ```{ 'name': 'Mat', 'income': '100000', 'expenses': '200000', 'type': 'external', 'valid_from': '2017-08-16 00:00:00', 'valid_to': '2017-12-31 23:59:59' }``` |
+| **Success response CODE** | 200 |
+| **Success response content** | JSON object with the committee belonging to the budget line. |
 | **Notes** |  |
