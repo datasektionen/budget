@@ -10,7 +10,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 - [Update committee](#update-committee)
 - [Delete committee](#delete-committee)
 
-**Cost centres*
+**Cost centres**
 - [Get cost centres for committee](#get-cost-centres-committees)
 - [Create cost centre for committee](#create-cost-centre)
 - [Get cost centre](#get-cost-centre)
