@@ -1,9 +1,16 @@
 # API
-The API is located at ```/api``` (https://bokning.datasektionen.se/api).
+The API is located at ```/api``` (it is currently live at [budget.datasektionen.se/api](https://budget.datasektionen.se/api)).
 
 All API endpoints returns the response formatted as JSON if successful. If the request is invalid, the response is unspecified. Read the HTTP status code, all successful responses will have code 200, and every non-successful response will not.
 
-## List all committees
+**Committees**
+- [List all committees](#list-committees)
+- [Create new committee](#create-committee)
+- [Get committee](#get-committee)
+- [Update committee](#update-committee)
+- [Delete committee](#delete-committee)
+
+## List all committees<a name="list-committees"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -16,7 +23,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 | **Notes** | Only get the budget lines when you really need it. It is quite heavy. |
 
 
-## Create new committee
+## Create new committee<a name="create-committee"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -29,7 +36,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 | **Notes** |  |
 
 
-## Get committee
+## Get committee<a name="get-committee"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -43,7 +50,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 
 
-## Update committee
+## Update committee<a name="update-committee"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -57,7 +64,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 
 
-## Delete committee
+## Delete committee<a name="delete-committee"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
