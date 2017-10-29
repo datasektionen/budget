@@ -9,6 +9,8 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 #### List all committees
 
+| Egenskap         | Värde          |
+| ---------------- | -------------- |
 | URL              | /api/committee |
 | Method           | GET            |
 | URL params       | ```short``` (**optional**) If short is false or not given, the budgetlines for every committee is included |
