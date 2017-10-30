@@ -27,7 +27,7 @@ class Suggestion extends Model {
     }
 
     public static function allPublic() {
-        return self::whereNotNull('public_at')->orderBy('public_at')->get();
+        return self::whereNotNull('public_at')->orderBy('public_at')->paginate(20);
     }
 
     public function implement() {

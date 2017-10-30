@@ -13,16 +13,16 @@ use App\Helpers\SpeedledgerParser;
 use Auth;
 
 /**
- * 
+ * Displays and handles budget follow-ups.
  *
  * @author  Jonas Dahl <jonas@jdahl.se>
- * @version 2017-10-02
+ * @version 2017-10-30
  */
 class FollowUpController extends BaseController {
 	use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
 	/**
-	 * Shows the import PDF from Speedledger view.
+	 * Shows the import PDF from Speedledger view, index for follow up.
 	 * @return view    form with pdf upload
 	 */
 	public function getIndex() {
@@ -62,6 +62,12 @@ class FollowUpController extends BaseController {
 		return view('follow-up.overview')->with('followUp', $followUp);
 	}
 
+	/**
+	 * Show a committee in follow up.
+	 * @param  integer $id          the follow up id
+	 * @param  integer $committeeId the committee id
+	 * @return view with the follow up
+	 */
 	public function getShowCommittee($id, $committeeId) {
 		$followUp = FollowUp::prepared($id, $committeeId);
 		return view('follow-up.result')->with('followUp', $followUp);

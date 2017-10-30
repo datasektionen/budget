@@ -14,7 +14,7 @@
 		</tr>
 	</thead>
 
-	@foreach ($account->budgetLines as $budgetLine)
+	@foreach ($budgetLines as $budgetLine)
 	<tr>
 		<td><a href="/admin/committees/{{ $budgetLine->costCentre->committee->id }}">{{ $budgetLine->costCentre->committee->name }}</a></td>
 		<td><a href="/admin/cost-centres/{{ $budgetLine->costCentre->id }}">{{ $budgetLine->costCentre->name }}</a></td>
@@ -24,4 +24,5 @@
 	</tr>
 	@endforeach
 </table>
+{!! $budgetLines->links() !!}
 @endsection

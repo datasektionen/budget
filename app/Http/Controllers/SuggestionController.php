@@ -102,7 +102,12 @@ class SuggestionController extends BaseController {
 		return redirect('suggestions/' . $id . '/share')->with('success', 'suggestions.shared');
 	}
 
-	public function getEdit($id, Request $request) {
+	/**
+	 * Editing a suggestion.
+	 * @param  integer  $id     the id of the suggestion to edit
+	 * @return redirect back to suggestions page
+	 */
+	public function getEdit($id) {
 		$suggestion = Suggestion::findOrFail($id);
 		if ($suggestion->isImplemented()) {
 			redirect('suggestions')->with('error', 'suggestion.error_implemented');
@@ -111,12 +116,22 @@ class SuggestionController extends BaseController {
 		return redirect('suggestions')->with('success', 'suggestion.changed');
 	}
 
-	public function getDone($id, Request $request) {
+	/**
+	 * Sending a suggestion to the kassör.
+	 * @param  integer $id the id of the suggestion
+	 * @return reidrect back to suggestions page
+	 */
+	public function getDone($id) {
 		session(['suggestion' => null]);
 		return redirect('suggestions')->with('success', 'suggestion.done');
 	}
 
-	public function getImplement($id, Request $request) {
+	/**
+	 * Implementing a suggestion into the budget.
+	 * @param  integer $id the id of the suggestion
+	 * @return redirect back to suggestions page
+	 */
+	public function getImplement($id) {
 		$suggestion = Suggestion::findOrFail($id);
 		$suggestion->implement();
 		if (session('suggestion') == $suggestion->id) {

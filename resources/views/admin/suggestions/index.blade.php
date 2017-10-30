@@ -26,4 +26,5 @@
 	</tr>
 	@endforeach
 </table>
+{!! $suggestions->links() !!}
 @endsection
