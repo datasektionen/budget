@@ -131,4 +131,57 @@ class Committee extends Model {
 	public static function balanceAll() {
 		return self::incomeAll() - self::expensesAll();
 	}
+
+	/**
+	 * Runs pretty SQL query to sum all budget lines per committee.
+	 * @return laravel collection of committees
+	 */
+	public static function overview() {
+		return DB::raw("SELECT 
+			    t1.id, 
+			    IFNULL(income,0) as income, 
+			    IFNULL(expenses,0) as expenses, 
+			    IFNULL(internal,0) as internal, 
+			    IFNULL(external,0) as external, 
+			    IFNULL(balance,0) as balance
+			FROM (
+			    SELECT t0.*, t0.income - t0.expenses AS balance FROM (
+			        SELECT 
+			            committees.id AS id, 
+			            SUM(budget_lines.expenses * cost_centres.repetitions) AS expenses,
+			            SUM(budget_lines.income * cost_centres.repetitions) AS income
+			        FROM committees
+			        LEFT JOIN cost_centres ON cost_centres.committee_id = committees.id
+			        LEFT JOIN budget_lines ON budget_lines.cost_centre_id = cost_centres.id
+			        WHERE budget_lines.valid_from < NOW() AND budget_lines.valid_to > NOW()
+			        GROUP BY committees.id
+			    ) AS t0
+			) AS t1
+
+
+			LEFT JOIN (
+			    SELECT 
+			        committees.id AS id, 
+			        SUM((cast(budget_lines.income as signed) - cast(budget_lines.expenses as signed)) * cost_centres.repetitions) AS internal
+			    FROM committees
+			    LEFT JOIN cost_centres ON cost_centres.committee_id = committees.id
+			    LEFT JOIN budget_lines ON budget_lines.cost_centre_id = cost_centres.id
+			    WHERE budget_lines.type = 'internal' AND budget_lines.valid_from < NOW() AND budget_lines.valid_to > NOW()
+			    GROUP BY committees.id
+			) AS t2
+			ON t1.id = t2.id
+
+
+			LEFT JOIN (
+			    SELECT 
+			        committees.id AS id, 
+			        SUM((cast(budget_lines.income as signed) - cast(budget_lines.expenses as signed)) * cost_centres.repetitions) AS external
+			    FROM committees
+			    LEFT JOIN cost_centres ON cost_centres.committee_id = committees.id
+			    LEFT JOIN budget_lines ON budget_lines.cost_centre_id = cost_centres.id
+			    WHERE budget_lines.type = 'external' AND budget_lines.valid_from < NOW() AND budget_lines.valid_to > NOW()
+			    GROUP BY committees.id
+			) AS t3
+			ON t1.id = t3.id")->get();
+	}
 }

@@ -9,11 +9,11 @@
 |
 */
 
-Route::get ('/',          'GeneralController@getWelcome');
-Route::get ('/fuzzyfile', 'GeneralController@getFuzzyfile');
+Route::get ('/',               'GeneralController@getWelcome');
+Route::get ('/fuzzyfile',      'GeneralController@getFuzzyfile');
 
 Route::get('/committees/{id}', 'BudgetController@getCommittee');
-Route::get('/overview', 'BudgetController@getOverview');
+Route::get('/overview',        'BudgetController@getOverview');
 
 Route::get ('/follow-up', 'FollowUpController@getImport');
 Route::post('/follow-up', 'FollowUpController@postImport');
