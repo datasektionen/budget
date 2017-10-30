@@ -138,7 +138,7 @@ class Committee extends Model {
 	 * @return laravel collection of committees
 	 */
 	public static function overview() {
-		return DB::select("SELECT
+		return collect(DB::select("SELECT
 			    t1.id, 
 			    t1.name,
 			    t1.type,
@@ -187,6 +187,6 @@ class Committee extends Model {
 			    WHERE budget_lines.type = 'external' AND budget_lines.valid_from < NOW() AND budget_lines.valid_to > NOW()
 			    GROUP BY committees.id
 			) AS t3
-			ON t1.id = t3.id");
+			ON t1.id = t3.id"));
 	}
 }

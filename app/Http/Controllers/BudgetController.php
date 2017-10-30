@@ -43,6 +43,15 @@ class BudgetController extends BaseController {
 	 * @return a view with all committees' budgets
 	 */
 	public function getOverview() {
-		return view('budget.overview')->with('committees', Committee::overview());
+		$committees = Committee::overview();
+		return view('budget.overview')
+			->with('committees', $committees)
+			->with([
+				'income'   => $committees->sum(function ($x) { return $x->income;   }),
+				'expenses' => $committees->sum(function ($x) { return $x->expenses; }),
+				'internal' => $committees->sum(function ($x) { return $x->internal; }),
+				'external' => $committees->sum(function ($x) { return $x->external; }),
+				'balance'  => $committees->sum(function ($x) { return $x->balance;   })
+			]);
 	}
 }
