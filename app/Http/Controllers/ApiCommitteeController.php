@@ -21,29 +21,56 @@ use App\Models\BudgetLine;
 class ApiCommitteeController extends BaseController {
 	use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+	/**
+	 * Returns all committees as JSON.
+	 * @param  Request $request the request
+	 * @return all committees as JSON, with or without cost centres depending on the verbose input
+	 */
 	public function all(Request $request) {
-		if ($request->input('short') !== null && $request->input('short') !== 'false') {
-			return response()->json(Committee::select('*')->get());
+		if (isset($request->verbose)) {
+			return response()->json(Committee::with('costCentres')->get());
 		}
-		return response()->json(Committee::select('*')->with('costCentres')->get());
+		return response()->json(Committee::all());
 	}
 
+	/**
+	 * Creates new committee.
+	 * @param  Request $request the request containg the data
+	 * @return the new committee as JSON
+	 */
 	public function create(Request $request) {
-		$data = json_decode($request->getContent(), true);
-		return Committee::create($data);
+		return response()->json(Committee::create($request->all()));
 	}
 
-	public function get($id) {
-		return response()->json(Committee::select('id', 'name')->where('id', $id)->with('costCentres')->first());
+	/**
+	 * Shows data about committee.
+	 * @param  integer $id the id of the committee to show
+	 * @return the committee as JSON, with or without cost centres depending on the verbose flag
+	 */
+	public function get($id, Request $request) {
+		if (isset($request->verbose)) {
+			return response()->json(Committee::where('id', $id)->with('costCentres')->first());
+		}
+		return response()->json(Committee::where('id', $id)->first());
 	}
 
+	/**
+	 * Edits a committee with given data.
+	 * @param  integer $id      id of the committee to edit
+	 * @param  Request $request the request
+	 * @return the updated committee as JSON
+	 */
 	public function edit($id, Request $request) {
-		$data = json_decode($request->getContent(), true);
 		$committee = Committee::findOrFail($id);
-		$committee->update($data);
-		return $committee;
+		$committee->update($request->all());
+		return response()->json($committee);
 	}
 
+	/**
+	 * Deletes a committee from the database.
+	 * @param  integer $id      id of the committee to delete
+	 * @return the deleted committee as JSON
+	 */
 	public function delete($id) {
 		$committee = Committee::findOrFail($id);
 		$committee->delete();

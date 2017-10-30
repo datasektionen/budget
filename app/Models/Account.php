@@ -8,7 +8,7 @@ class Account extends Model {
      *
      * @var array
      */
-    protected $hidden = ['updated_at', 'created_at'];
+    protected $hidden = ['updated_at', 'created_at', 'pivot'];
     protected $fillable = ['name', 'description', 'number'];
 
     public static function all($columns = []) {

@@ -36,6 +36,13 @@ class BudgetLine extends Model {
         return $this->income - $this->expenses;
     }
 
+    public function equals(array $data) {
+        return $this->type == @$data['type'] &&
+               $this->income == @$data['income'] &&
+               $this->expenses == @$data['expenses'] &&
+               $this->name == @$data['name'];
+    }
+
     public static function allNow() {
         return self::where('valid_to', '>', Carbon::now())
             ->where('valid_from', '<', Carbon::now())

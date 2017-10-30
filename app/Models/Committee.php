@@ -4,6 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Committee extends Model {
 	protected $fillable = ['name', 'type'];
+	protected $hidden = ['created_at', 'updated_at'];
 
 	public static function all($columns = []) {
 		return parent::select('*')->orderBy('name')->get();

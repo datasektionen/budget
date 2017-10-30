@@ -42,7 +42,9 @@ class ApiAccountController extends BaseController {
 	 * @return the newly updated account as json
 	 */
 	public function edit($id, Request $request) {
-		return response()->json(Account::findOrFail($id)->update($request->all()));
+		$account = Account::findOrFail($id);
+		$account->update($request->all());
+		return response()->json($account);
 	}
 
 	/**

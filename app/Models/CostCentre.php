@@ -7,6 +7,12 @@ use Carbon\Carbon;
 class CostCentre extends Model {
 	protected $fillable = ['name', 'committee_id', 'speedledger_id'];
 
+	protected $attributes = [
+		'name' => '',
+		'income' => 0,
+		'expenses' => 0,
+		'type' => 'internal'
+	];
 	/**
      * The attributes that should be hidden for arrays.
      *
@@ -14,6 +20,12 @@ class CostCentre extends Model {
      */
     protected $hidden = ['updated_at', 'created_at'];
 	
+    public function __construct() {
+        $this->attributes['valid_from'] = Carbon::now();
+        $this->attributes['valid_to'] = date("Y") . '-12-31 23:59:59';
+        parent::__construct();
+    }
+
 	public function budgetLines() {
 		$s = session('suggestion');
 		if (empty($s)) { $s = -1; }
