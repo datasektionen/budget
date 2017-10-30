@@ -5,7 +5,7 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 Please read the [README](README.md) to fully understand the enitities.
 
-**When sending Data params, please set the header ```Content-Type``` to ```application/json```, or it will not work.** The ```Accepts``` header should also be set to ```application/json`` as it will produce more manageable responses.
+**When sending Data params, please set the header ```Content-Type``` to ```application/json```, or it will not work.** The ```Accepts``` header should also be set to ```application/json``` as it will produce more manageable responses.
 
 ## Errors
 
