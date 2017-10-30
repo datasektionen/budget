@@ -52,9 +52,6 @@ export default {
             committee_: this.committee,
         }
     },
-    mounted: function () {
-        //window.onscroll = this.handleScroll
-    },
     methods: {
         setCommittee: function (c) {
             console.log("Sets committee: ", c)
@@ -81,9 +78,6 @@ export default {
                 }
             })
         },
-    },
-    updated () {
-        console.log('Updated!')
     },
     computed: {
         income: function () {

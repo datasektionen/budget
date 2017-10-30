@@ -42117,9 +42117,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             committee_: this.committee
         };
     },
-    mounted: function mounted() {
-        //window.onscroll = this.handleScroll
-    },
     methods: {
         setCommittee: function setCommittee(c) {
             console.log("Sets committee: ", c);
@@ -42149,10 +42146,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         }
     },
-    updated: function updated() {
-        console.log('Updated!');
-    },
-
     computed: {
         income: function income() {
             return [].concat.apply([], this.committee_.cost_centres.map(function (x) {
@@ -42666,7 +42659,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.costCentre.loading = true;
             fetch('/api/cost-centres/' + this.costCentre.id, {
-                method: 'POST',
+                method: 'PUT',
                 credentials: 'same-origin',
                 headers: {
                     'Accept': 'application/json, text/plain, */*',
@@ -42705,7 +42698,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (json) {
                 if (json !== false) {
                     _this2.costCentre.loading = false;
-                    _this2.$emit('committee', json.committee);
+                    //this.$emit('committee', json.committee)
                 }
             });
         },
@@ -43163,18 +43156,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['budgetLine', 'suggestion', 'booked'],
+    data: function data() {
+        return {
+            'data': undefined,
+            'loading': false
+        };
+    },
     created: function created() {
-        console.log(this.budgetLine);
+        this.data = this.budgetLine;
     },
 
     methods: {
         updateBudgetLine: function updateBudgetLine() {
             var _this = this;
 
-            this.budgetLine.loading = true;
+            this.loading = true;
             console.log('Updating');
-            fetch('/api/budget-lines/' + this.budgetLine.id, {
-                method: 'POST',
+            fetch('/api/budget-lines/' + this.data.id, {
+                method: 'PUT',
                 credentials: 'same-origin',
                 headers: {
                     'Accept': 'application/json',
@@ -43182,23 +43181,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 },
                 body: JSON.stringify({
                     'suggestion': this.suggestion ? this.suggestion.id : -1,
-                    'income': this.budgetLine.income * 100,
-                    'expenses': this.budgetLine.expenses * 100,
-                    'name': this.budgetLine.name,
+                    'income': this.data.income * 100,
+                    'expenses': this.data.expenses * 100,
+                    'name': this.data.name,
                     'type': this.budgetLine['type']
                 })
             }).then(function (res) {
                 return res.json();
             }).then(function (json) {
                 if (json !== false) {
-                    _this.budgetLine.loading = false;
-                    console.log(json);
-                    _this.$emit('committee', json);
+                    _this.loading = false;
+                    console.log('Done');
+                    //this.$emit('committee', json)
                 }
             });
         },
         replaceIntervals: function replaceIntervals(x) {
-            console.log(x);
             if (x.length <= 1) {
                 return x;
             }
@@ -43226,7 +43224,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             } else {
                 res.push(x[x.length - 1]);
             }
-            console.log(res);
             return res;
         }
     }
@@ -43240,216 +43237,219 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "tr",
-    {
-      class: {
-        suggestion:
-          _vm.suggestion && _vm.budgetLine.suggestion_id === _vm.suggestion.id,
-        deleted: _vm.budgetLine.deleted
-      }
-    },
-    [
-      _c("td", { staticClass: "description" }, [
-        _c("span", { class: { loading: _vm.budgetLine.loading } }),
-        _vm._v(" "),
-        _vm.suggestion
-          ? _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.budgetLine.name,
-                  expression: "budgetLine.name"
-                }
-              ],
-              staticClass: "name",
-              attrs: { type: "text" },
-              domProps: { value: _vm.budgetLine.name },
-              on: {
-                change: _vm.updateBudgetLine,
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.budgetLine.name = $event.target.value
-                }
-              }
-            })
-          : _c("span", {
-              staticClass: "input",
-              domProps: { innerHTML: _vm._s(_vm.budgetLine.name) }
-            })
-      ]),
-      _vm._v(" "),
-      _c("td", { staticClass: "accounts" }, [
-        _vm.suggestion
-          ? _c("div", { staticClass: "select small" }, [
-              _c(
-                "select",
-                {
+  return _vm.data
+    ? _c(
+        "tr",
+        {
+          class: {
+            suggestion:
+              _vm.suggestion && _vm.data.suggestion_id === _vm.suggestion.id,
+            deleted: _vm.data.deleted
+          }
+        },
+        [
+          _c("td", { staticClass: "description" }, [
+            _c("span", { class: { loading: _vm.loading } }),
+            _vm._v(" "),
+            _vm.suggestion
+              ? _c("input", {
                   directives: [
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.budgetLine["type"],
-                      expression: "budgetLine['type']"
+                      value: _vm.data.name,
+                      expression: "data.name"
                     }
                   ],
+                  staticClass: "name",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.data.name },
                   on: {
-                    change: [
-                      function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.budgetLine,
-                          "type",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      },
-                      _vm.updateBudgetLine
+                    change: _vm.updateBudgetLine,
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.data.name = $event.target.value
+                    }
+                  }
+                })
+              : _c("span", {
+                  staticClass: "input",
+                  domProps: { innerHTML: _vm._s(_vm.data.name) }
+                })
+          ]),
+          _vm._v(" "),
+          _c("td", { staticClass: "accounts" }, [
+            _vm.suggestion
+              ? _c("div", { staticClass: "select small" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.budgetLine["type"],
+                          expression: "budgetLine['type']"
+                        }
+                      ],
+                      on: {
+                        change: [
+                          function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.budgetLine,
+                              "type",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          },
+                          _vm.updateBudgetLine
+                        ]
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "internal" } }, [
+                        _vm._v("I")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "external" } }, [
+                        _vm._v("E")
+                      ])
                     ]
-                  }
-                },
-                [
-                  _c("option", { attrs: { value: "internal" } }, [_vm._v("I")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "external" } }, [_vm._v("E")])
-                ]
-              )
-            ])
-          : _c("span", {
-              domProps: {
-                innerHTML: _vm._s(
-                  _vm.budgetLine["type"] == "internal" ? "I" : "E"
-                )
-              }
-            })
-      ]),
-      _vm._v(" "),
-      _c("td", {
-        staticClass: "accounts",
-        domProps: {
-          innerHTML: _vm._s(
-            _vm
-              .replaceIntervals(
-                _vm.budgetLine.accounts.map(function(x) {
-                  return x.number
-                })
-              )
-              .join(", ")
-          )
-        }
-      }),
-      _vm._v(" "),
-      _c("td", { staticClass: "col-income cash plus" }, [
-        _c("span", { staticClass: "unit" }, [_vm._v("SEK")]),
-        _vm._v(" "),
-        _vm.suggestion
-          ? _c(
-              "span",
-              [
-                _c("currency-input", {
-                  staticClass: "income",
-                  on: { change: _vm.updateBudgetLine },
-                  model: {
-                    value: _vm.budgetLine.income,
-                    callback: function($$v) {
-                      _vm.budgetLine.income = $$v
-                    },
-                    expression: "budgetLine.income"
+                  )
+                ])
+              : _c("span", {
+                  domProps: {
+                    innerHTML: _vm._s(
+                      _vm.budgetLine["type"] == "internal" ? "I" : "E"
+                    )
                   }
                 })
-              ],
-              1
-            )
-          : _c("span", {
-              staticClass: "input income",
-              domProps: { innerHTML: _vm._s(_vm.fmt(_vm.budgetLine.income)) }
-            })
-      ]),
-      _vm._v(" "),
-      _c("td", { staticClass: "col-expenses cash minus" }, [
-        _c("span", { staticClass: "unit" }, [_vm._v("SEK")]),
-        _vm._v(" "),
-        _vm.suggestion
-          ? _c(
-              "span",
-              [
-                _c("currency-input", {
-                  staticClass: "expenses",
-                  on: { change: _vm.updateBudgetLine },
-                  model: {
-                    value: _vm.budgetLine.expenses,
-                    callback: function($$v) {
-                      _vm.budgetLine.expenses = $$v
-                    },
-                    expression: "budgetLine.expenses"
-                  }
-                })
-              ],
-              1
-            )
-          : _c("span", {
-              staticClass: "input expenses",
-              domProps: { innerHTML: _vm._s(_vm.fmt(_vm.budgetLine.expenses)) }
-            })
-      ]),
-      _vm._v(" "),
-      _c(
-        "td",
-        {
-          class: {
-            cash: true,
-            plus: _vm.budgetLine.income > _vm.budgetLine.expenses,
-            minus: _vm.budgetLine.income < _vm.budgetLine.expenses
-          }
-        },
-        [
-          _c("span", {
+          ]),
+          _vm._v(" "),
+          _c("td", {
+            staticClass: "accounts",
             domProps: {
               innerHTML: _vm._s(
-                _vm.fmt(_vm.budgetLine.income - _vm.budgetLine.expenses)
+                _vm
+                  .replaceIntervals(
+                    _vm.data.accounts.map(function(x) {
+                      return x.number
+                    })
+                  )
+                  .join(", ")
               )
             }
           }),
-          _vm._v(" SEK\n        ")
-        ]
-      ),
-      _vm._v(" "),
-      _vm.booked
-        ? _c(
+          _vm._v(" "),
+          _c("td", { staticClass: "col-income cash plus" }, [
+            _c("span", { staticClass: "unit" }, [_vm._v("SEK")]),
+            _vm._v(" "),
+            _vm.suggestion
+              ? _c(
+                  "span",
+                  [
+                    _c("currency-input", {
+                      staticClass: "income",
+                      on: { change: _vm.updateBudgetLine },
+                      model: {
+                        value: _vm.data.income,
+                        callback: function($$v) {
+                          _vm.data.income = $$v
+                        },
+                        expression: "data.income"
+                      }
+                    })
+                  ],
+                  1
+                )
+              : _c("span", {
+                  staticClass: "input income",
+                  domProps: { innerHTML: _vm._s(_vm.fmt(_vm.data.income)) }
+                })
+          ]),
+          _vm._v(" "),
+          _c("td", { staticClass: "col-expenses cash minus" }, [
+            _c("span", { staticClass: "unit" }, [_vm._v("SEK")]),
+            _vm._v(" "),
+            _vm.suggestion
+              ? _c(
+                  "span",
+                  [
+                    _c("currency-input", {
+                      staticClass: "expenses",
+                      on: { change: _vm.updateBudgetLine },
+                      model: {
+                        value: _vm.data.expenses,
+                        callback: function($$v) {
+                          _vm.data.expenses = $$v
+                        },
+                        expression: "data.expenses"
+                      }
+                    })
+                  ],
+                  1
+                )
+              : _c("span", {
+                  staticClass: "input expenses",
+                  domProps: { innerHTML: _vm._s(_vm.fmt(_vm.data.expenses)) }
+                })
+          ]),
+          _vm._v(" "),
+          _c(
             "td",
             {
               class: {
-                nowrap: true,
                 cash: true,
-                minus:
-                  _vm.budgetLine.booked <
-                  _vm.budgetLine.income - _vm.budgetLine.expenses,
-                plus:
-                  _vm.budgetLine.booked >
-                  _vm.budgetLine.income - _vm.budgetLine.expenses
+                plus: _vm.data.income > _vm.data.expenses,
+                minus: _vm.data.income < _vm.data.expenses
               }
             },
             [
               _c("span", {
-                domProps: { innerHTML: _vm._s(_vm.fmt(_vm.budgetLine.booked)) }
+                domProps: {
+                  innerHTML: _vm._s(
+                    _vm.fmt(_vm.data.income - _vm.data.expenses)
+                  )
+                }
               }),
               _vm._v(" SEK\n        ")
             ]
-          )
-        : _vm._e()
-    ]
-  )
+          ),
+          _vm._v(" "),
+          _vm.booked
+            ? _c(
+                "td",
+                {
+                  class: {
+                    nowrap: true,
+                    cash: true,
+                    minus:
+                      _vm.data.booked < _vm.data.income - _vm.data.expenses,
+                    plus: _vm.data.booked > _vm.data.income - _vm.data.expenses
+                  }
+                },
+                [
+                  _c("span", {
+                    domProps: { innerHTML: _vm._s(_vm.fmt(_vm.data.booked)) }
+                  }),
+                  _vm._v(" SEK\n        ")
+                ]
+              )
+            : _vm._e()
+        ]
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true

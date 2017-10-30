@@ -65,7 +65,7 @@ export default {
         updateCostCentre: function () {
             this.costCentre.loading = true;
             fetch('/api/cost-centres/' + this.costCentre.id, {
-                method: 'POST',
+                method: 'PUT',
                 credentials: 'same-origin',
                 headers: {
                     'Accept': 'application/json, text/plain, */*',
@@ -100,7 +100,7 @@ export default {
             .then(json => {
                 if (json !== false) {
                 	this.costCentre.loading = false;
-          			this.$emit('committee', json.committee)
+          			//this.$emit('committee', json.committee)
                 }
             })
         },
