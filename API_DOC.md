@@ -5,7 +5,13 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 Please read the [README](README.md) to fully understand the enitities.
 
-**When sending Data params, please set the header Content-Type to application/json, or it will not work.**
+**When sending Data params, please set the header ```Content-Type``` to ```application/json```, or it will not work.** The ```Accepts``` header should also be set to ```application/json``` as it will produce more manageable responses.
+
+## Errors
+
+Set the request header ```Accepts``` to ```application/json``` to get manageable errors. If not, errors will be hidden with HTML error pages. The JSON accepting requests will get a response in JSON with an error string (for example ```{"error": "Resource not found."}```) in addition to the HTTP status code.
+
+## Routes
 
 **Committees**
 - [List all committees](#list-committees)
@@ -37,7 +43,7 @@ Please read the [README](README.md) to fully understand the enitities.
 **Budget suggestions**
 - [Get budget suggestion](#get-suggestion)
 
-## List all committees<a name="list-committees"></a>
+### List all committees<a name="list-committees"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -50,7 +56,7 @@ Please read the [README](README.md) to fully understand the enitities.
 | **Notes** | Only get the budget lines when you really need it. It is quite heavy. |
 
 
-## Create new committee<a name="create-committee"></a>
+### Create new committee<a name="create-committee"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -63,7 +69,7 @@ Please read the [README](README.md) to fully understand the enitities.
 | **Notes** |  |
 
 
-## Get committee<a name="get-committee"></a>
+### Get committee<a name="get-committee"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -77,7 +83,7 @@ Please read the [README](README.md) to fully understand the enitities.
 
 
 
-## Update committee<a name="update-committee"></a>
+### Update committee<a name="update-committee"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -91,7 +97,7 @@ Please read the [README](README.md) to fully understand the enitities.
 
 
 
-## Delete committee<a name="delete-committee"></a>
+### Delete committee<a name="delete-committee"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -105,7 +111,7 @@ Please read the [README](README.md) to fully understand the enitities.
 
 
 
-## Get cost centres for committee<a name="get-cost-centres-committee"></a>
+### Get cost centres for committee<a name="get-cost-centres-committee"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -119,7 +125,7 @@ Please read the [README](README.md) to fully understand the enitities.
 
 
 
-## Create cost centre for committee<a name="create-cost-centre"></a>
+### Create cost centre for committee<a name="create-cost-centre"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -133,7 +139,7 @@ Please read the [README](README.md) to fully understand the enitities.
 
 
 
-## Get cost centre<a name="get-cost-centre"></a>
+### Get cost centre<a name="get-cost-centre"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -147,7 +153,7 @@ Please read the [README](README.md) to fully understand the enitities.
 
 
 
-## Update cost centre<a name="update-cost-centre"></a>
+### Update cost centre<a name="update-cost-centre"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -162,7 +168,7 @@ Please read the [README](README.md) to fully understand the enitities.
 
 
 
-## Delete cost centre<a name="delete-cost-centre"></a>
+### Delete cost centre<a name="delete-cost-centre"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -176,7 +182,7 @@ Please read the [README](README.md) to fully understand the enitities.
 
 
 
-## Get budget lines for cost centre<a name="get-budget-lines-cost-centre"></a>
+### Get budget lines for cost centre<a name="get-budget-lines-cost-centre"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -190,7 +196,7 @@ Please read the [README](README.md) to fully understand the enitities.
 
 
 
-## Add budget line to cost centre<a name="add-budget-line-cost-centre"></a>
+### Add budget line to cost centre<a name="add-budget-line-cost-centre"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -205,7 +211,7 @@ Please read the [README](README.md) to fully understand the enitities.
 
 
 
-## Get budget line<a name="get-budget-line"></a>
+### Get budget line<a name="get-budget-line"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -219,7 +225,7 @@ Please read the [README](README.md) to fully understand the enitities.
 
 
 
-## Update budget line<a name="update-budget-line"></a>
+### Update budget line<a name="update-budget-line"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -233,7 +239,7 @@ Please read the [README](README.md) to fully understand the enitities.
 
 
 
-## Add account to budget line<a name="add-account-budget-line"></a>
+### Add account to budget line<a name="add-account-budget-line"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -247,7 +253,7 @@ Please read the [README](README.md) to fully understand the enitities.
 
 
 
-## List all accounts<a name="list-accounts"></a>
+### List all accounts<a name="list-accounts"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -261,7 +267,7 @@ Please read the [README](README.md) to fully understand the enitities.
 
 
 
-## Add account<a name="add-account"></a>
+### Add account<a name="add-account"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -275,7 +281,7 @@ Please read the [README](README.md) to fully understand the enitities.
 
 
 
-## Get account<a name="get-account"></a>
+### Get account<a name="get-account"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -289,7 +295,7 @@ Please read the [README](README.md) to fully understand the enitities.
 
 
 
-## Get account by account number<a name="get-account-number"></a>
+### Get account by account number<a name="get-account-number"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
@@ -303,7 +309,7 @@ Please read the [README](README.md) to fully understand the enitities.
 
 
 
-## Get budget suggestion<a name="get-suggestion"></a>
+### Get budget suggestion<a name="get-suggestion"></a>
 
 | Property         | Value          |
 | ---------------- | -------------- |
