@@ -9,14 +9,18 @@ use Illuminate\Http\Request;
 use App\Models\Committee;
 
 /**
- * 
+ * Handles general routes such as fuzzyfile and index page.
  *
  * @author  Jonas Dahl <jonas@jdahl.se>
- * @version 2017-10-02
+ * @version 2017-10-30
  */
 class GeneralController extends BaseController {
 	use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+	/**
+	 * The frontpage view. Displays lists of committees, projects and others.
+	 * @return the view
+	 */
 	public function getWelcome() {
 		return view('welcome')
 			->with('committees', Committee::committees())
@@ -24,6 +28,12 @@ class GeneralController extends BaseController {
 			->with('others', Committee::other());
 	}
 
+	/**
+	 * A fuzzyfile for [Methone](https://github.com/datasektionen/Methone),
+	 * containing links to different parts of the site. The budget for each
+	 * committee is included.
+	 * @return fuzzes a JSON
+	 */
 	public function getFuzzyfile() {
 		$res['@type'] = 'fuzzyfile';
 		$res['fuzzes'] = [

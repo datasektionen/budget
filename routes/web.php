@@ -9,7 +9,8 @@
 |
 */
 
-Route::get('/', 'GeneralController@getWelcome');
+Route::get ('/',          'GeneralController@getWelcome');
+Route::get ('/fuzzyfile', 'GeneralController@getFuzzyfile');
 
 Route::get('/committees/{id}', 'BudgetController@getCommittee');
 Route::get('/overview', 'BudgetController@getOverview');
@@ -31,6 +32,16 @@ Route::get ('/suggestions/{id}/implement', 'SuggestionController@getImplement')-
 Route::get ('/suggestions/{id}/publish', 'SuggestionController@getPublish')->middleware('auth');
 Route::get ('/suggestions/{id}/pdf', 'SuggestionController@getPdf')->middleware('auth');
 
+/*
+| Authentication
+*/
+Route::get('login', 'AuthController@getLogin')->middleware('guest');
+Route::get('login-complete/{token}', 'AuthController@getLoginComplete');
+Route::get('logout', 'AuthController@getLogout')->middleware('auth');
+
+/*
+| Admin routes
+*/
 Route::get ('/admin', 'AdminController@getIndex')->middleware('admin');
 
 Route::get ('/admin/suggestions', 'AdminController@getSuggestions')->middleware('admin');
@@ -49,13 +60,5 @@ Route::post('/admin/accounts/new', 'AdminController@postAccountsNew')->middlewar
 Route::get ('/admin/accounts/{id}/budget-lines', 'AdminController@getAccountsBudgetLines')->middleware('admin');
 
 Route::get ('/admin/events', 'AdminController@getEvents')->middleware('admin');
-
-Route::get ('/fuzzyfile', 'GeneralController@getFuzzyfile');
-
-Route::get('login', 'AuthController@getLogin')->middleware('guest');
-Route::get('login-complete/{token}', 'AuthController@getLoginComplete');
-
-Route::get('logout', 'AuthController@getLogout')->middleware('auth');
-
 
 
