@@ -13,7 +13,7 @@ use App\Models\Suggestion;
 use App\Models\BudgetLine;
 
 /**
- * Controls committee API.
+ * Controls suggestions API.
  *
  * @author  Jonas Dahl <jonas@jdahl.se>
  * @version 2017-10-30
@@ -21,9 +21,15 @@ use App\Models\BudgetLine;
 class ApiSuggestionController extends BaseController {
 	use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+	/**
+	 * Deletes suggestion.
+	 * @param  integer  $id      the id of the suggestion to delete
+	 * @param  Request  $request the request
+	 * @return the deleted suggestion as json
+	 */
 	public function delete($id, Request $request) {
 		$suggestion = Suggestion::findOrFail($id);
 		$suggestion->delete();
-		return $suggestion;
+		return reponse()->json($suggestion);
 	}
 }

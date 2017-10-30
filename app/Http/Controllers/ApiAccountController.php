@@ -8,12 +8,10 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
-use App\Models\Committee;
-use App\Models\Suggestion;
-use App\Models\BudgetLine;
+use App\Models\Account;
 
 /**
- * Controls committee API.
+ * Controls account API.
  *
  * @author  Jonas Dahl <jonas@jdahl.se>
  * @version 2017-10-30
@@ -21,20 +19,47 @@ use App\Models\BudgetLine;
 class ApiAccountController extends BaseController {
 	use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-	public function list(Request $request) {
-		return Account::all();
+	/**
+	 * Returns a list of every account as json.
+	 * @return the account plan as json
+	 */
+	public function all() {
+		return response()->json(Account::all());
 	}
 
+	/**
+	 * Creates a new account from request data.
+	 * @param  Request $request the request containing the data
+	 * @return the newly created account as json
+	 */
 	public function create(Request $request) {
-		$data = json_decode($request->getContent(), true);
-		return Account::create($data);
+		return response()->json(Account::create($request->all()));
 	}
 
-	public function get($id, Request $request) {
-		return Account::findOrFail($id);
+	/**
+	 * Updates an account from request data.
+	 * @param  Request $request the request containing the data
+	 * @return the newly updated account as json
+	 */
+	public function edit($id, Request $request) {
+		return response()->json(Account::findOrFail($id)->update($request->all()));
 	}
 
-	public function getByNumber($number, Request $request) {
-		return Account::where('number', $number)->firstOrFail();
+	/**
+	 * Returns the account for given $id.
+	 * @param  integer $id      the id of the account to show
+	 * @return the account as json
+	 */
+	public function get($id) {
+		return response()->json(Account::findOrFail($id));
+	}
+
+	/**
+	 * Returns the account for given account number.
+	 * @param  integer $number  the account number (not the id)
+	 * @return the account as json
+	 */
+	public function getByNumber($number) {
+		return response()->json(Account::findByNumberOrFail($number));
 	}
 }

@@ -5,6 +5,8 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 Please read the [README](README.md) to fully understand the enitities.
 
+**When sending Data params, please set the header Content-Type to application/json, or it will not work.**
+
 **Committees**
 - [List all committees](#list-committees)
 - [Create new committee](#create-committee)
@@ -80,7 +82,7 @@ Please read the [README](README.md) to fully understand the enitities.
 | Property         | Value          |
 | ---------------- | -------------- |
 | **URL**              | /api/committees/:id |
-| **Method**           | POST           |
+| **Method**           | PUT           |
 | **URL params**       | ```:id``` the id of the committee to update |
 | **Data params**      | ```name``` the name of the committee<br> ```type``` the type of the committee (committee, project or other)<br> Example: ```{ name: 'New committee', type: 'committee' }``` |
 | **Success response CODE** | 200 |
@@ -150,7 +152,7 @@ Please read the [README](README.md) to fully understand the enitities.
 | Property         | Value          |
 | ---------------- | -------------- |
 | **URL**              | /api/cost-centres/:id |
-| **Method**           | POST           |
+| **Method**           | PUT           |
 | **URL params**       | ```:id``` the id of the cost centre to update |
 | **Data params**      | ```name``` the new name of the cost centre<br> ```speedledger_id``` the new Speedledger identification for the cost centre<br> If any is left blank the field won't be updated<br> Example: ```{ name: 'Ettans fest', speedledger_id: 'MEtFe' }``` |
 | **Success response CODE** | 200 |
@@ -222,7 +224,7 @@ Please read the [README](README.md) to fully understand the enitities.
 | Property         | Value          |
 | ---------------- | -------------- |
 | **URL**              | /api/budget-line/:id |
-| **Method**           | POST           |
+| **Method**           | PUT           |
 | **URL params**       | ```:id``` the id of the budget line to update |
 | **Data params**      | ```name``` the new name of the budget line<br> ```income``` the income value for the budget line (in smallest unit of currency)<br> ```expenses``` the expenses value for the budget line (in smallest unit of currency)<br> ```type``` the type the budget line (external or **internal**)<br> ```valid_from``` the start date of the validity of budget line (YYYY-MM-DD HH:II:SS)<br> ```valid_to``` the end date of the validity of budget line (YYYY-MM-DD HH:II:SS)<br> If any is left blank the field won't be updated<br> Example: ```{ 'name': 'Mat', 'income': '100000', 'expenses': '200000', 'type': 'external', 'valid_from': '2017-08-16 00:00:00', 'valid_to': '2017-12-31 23:59:59' }``` |
 | **Success response CODE** | 200 |

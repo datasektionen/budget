@@ -21,7 +21,7 @@ use App\Models\BudgetLine;
 class ApiBudgetLineController extends BaseController {
 	use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-	public function list($id) {
+	public function all($id) {
 		return CostCentre::findOrFail($id)->budgetLines;
 	}
 

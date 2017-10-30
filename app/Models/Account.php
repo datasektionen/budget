@@ -15,6 +15,10 @@ class Account extends Model {
     	return self::select('*')->orderBy('number')->get();
     }
 
+    public static function findByNumberOrFail($number) {
+        return self::where('number', $number)->firstOrFail();
+    }
+
     public function budgetLines() {
         return $this->belongsToMany('App\Models\BudgetLine')->with('costCentre.committee');
     }

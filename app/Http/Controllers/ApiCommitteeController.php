@@ -21,7 +21,7 @@ use App\Models\BudgetLine;
 class ApiCommitteeController extends BaseController {
 	use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-	public function list(Request $request) {
+	public function all(Request $request) {
 		if ($request->input('short') !== null && $request->input('short') !== 'false') {
 			return response()->json(Committee::select('*')->get());
 		}

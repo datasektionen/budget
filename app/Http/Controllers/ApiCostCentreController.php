@@ -21,7 +21,7 @@ use App\Models\BudgetLine;
 class ApiCostCentreController extends BaseController {
 	use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-	public function list($committeeId, Request $request) {
+	public function all($committeeId, Request $request) {
 		$data = json_decode($request->getContent(), true);
 		$committee = Committee::findOrFail($committeeId);
 		return $committee->costCentres;
