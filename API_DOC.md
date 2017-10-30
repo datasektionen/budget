@@ -5,11 +5,11 @@ All API endpoints returns the response formatted as JSON if successful. If the r
 
 Please read the [README](README.md) to fully understand the enitities.
 
-**When sending Data params, please set the header ```Content-Type``` to ```application/json```, or it will not work.** The ```Accepts``` header should also be set to ```application/json``` as it will produce more manageable responses.
+**When sending Data params, please set the header ```Content-Type``` to ```application/json```, or it will not work.** The ```Accepts``` header should also be set to ```application/json`` as it will produce more manageable responses.
 
 ## Errors
 
-Set the request header ```Accepts``` to ```application/json``` to get manageable errors. If not, errors will be hidden with HTML error pages. The JSON accepting requests will get a response in JSON with an error string (for example ```{"error": "Resource not found."}```) in addition to the HTTP status code.
+Set the request header ```Accepts``` to ```application/json``` to get manageable errors. If not, errors will be hidden with HTML error pages. The JSON accepting requests will get a response in JSON with an error string (for example ```{"error": "Resource not found."}```) in addition to the HTTP status code. The HTTP status code will be 200 for all OK requests.
 
 ## Routes
 
