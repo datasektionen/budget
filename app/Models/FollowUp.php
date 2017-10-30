@@ -12,6 +12,10 @@ class FollowUp extends Model {
 
 	var $unidentified = [];
 
+	public static function all($limit = null) {
+		return self::orderBy('created_at', 'DESC')->take($limit)->get();
+	}
+
 	public static function createFromSpeedledger($speedledger, $name, $createdBy) {
 		$followUp = self::create([
 			'name' => $name,

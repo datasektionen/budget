@@ -1,6 +1,7 @@
 <?php namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Committee extends Model {
 	protected $fillable = ['name', 'type'];
@@ -137,8 +138,10 @@ class Committee extends Model {
 	 * @return laravel collection of committees
 	 */
 	public static function overview() {
-		return DB::raw("SELECT 
+		return DB::select("SELECT
 			    t1.id, 
+			    t1.name,
+			    t1.type,
 			    IFNULL(income,0) as income, 
 			    IFNULL(expenses,0) as expenses, 
 			    IFNULL(internal,0) as internal, 
@@ -148,6 +151,8 @@ class Committee extends Model {
 			    SELECT t0.*, t0.income - t0.expenses AS balance FROM (
 			        SELECT 
 			            committees.id AS id, 
+			            committees.name AS name,
+			            committees.type AS type, 
 			            SUM(budget_lines.expenses * cost_centres.repetitions) AS expenses,
 			            SUM(budget_lines.income * cost_centres.repetitions) AS income
 			        FROM committees
@@ -182,6 +187,6 @@ class Committee extends Model {
 			    WHERE budget_lines.type = 'external' AND budget_lines.valid_from < NOW() AND budget_lines.valid_to > NOW()
 			    GROUP BY committees.id
 			) AS t3
-			ON t1.id = t3.id")->get();
+			ON t1.id = t3.id");
 	}
 }

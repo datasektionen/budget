@@ -15,7 +15,7 @@ Route::get ('/fuzzyfile',      'GeneralController@getFuzzyfile');
 Route::get('/committees/{id}', 'BudgetController@getCommittee');
 Route::get('/overview',        'BudgetController@getOverview');
 
-Route::get ('/follow-up', 'FollowUpController@getImport');
+Route::get ('/follow-up', 'FollowUpController@getIndex');
 Route::post('/follow-up', 'FollowUpController@postImport');
 Route::get ('/follow-up/{id}', 'FollowUpController@getShow');
 Route::get ('/follow-up/{id}/committees/{committeeId}', 'FollowUpController@getShowCommittee');

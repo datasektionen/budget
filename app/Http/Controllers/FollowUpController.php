@@ -25,8 +25,9 @@ class FollowUpController extends BaseController {
 	 * Shows the import PDF from Speedledger view.
 	 * @return view    form with pdf upload
 	 */
-	public function getImport() {
-		return view('follow-up.index')->with('followUps', FollowUp::select('*')->orderBy('created_at', 'DESC')->take(10)->get());
+	public function getIndex() {
+		return view('follow-up.index')
+			->with('followUps', FollowUp::all());
 	}
 
 	/**
