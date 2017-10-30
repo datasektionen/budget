@@ -5,7 +5,7 @@
 | API Routes
 |--------------------------------------------------------------------------
 |
-| Defines the API routes as a REST-ish API.
+| Defines the API routes as a REST-ful API.
 |
 */
 Route::get   ('committees',                       'ApiCommitteeController@all');
