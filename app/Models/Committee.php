@@ -167,7 +167,7 @@ class Committee extends Model {
 			LEFT JOIN (
 			    SELECT 
 			        committees.id AS id, 
-			        SUM((cast(budget_lines.income as signed) - cast(budget_lines.expenses as signed)) * cost_centres.repetitions) AS internal
+			        SUM((budget_lines.income - budget_lines.expenses) * cost_centres.repetitions) AS internal
 			    FROM committees
 			    LEFT JOIN cost_centres ON cost_centres.committee_id = committees.id
 			    LEFT JOIN budget_lines ON budget_lines.cost_centre_id = cost_centres.id
@@ -180,7 +180,7 @@ class Committee extends Model {
 			LEFT JOIN (
 			    SELECT 
 			        committees.id AS id, 
-			        SUM((cast(budget_lines.income as signed) - cast(budget_lines.expenses as signed)) * cost_centres.repetitions) AS external
+			        SUM((budget_lines.income - budget_lines.expenses) * cost_centres.repetitions) AS external
 			    FROM committees
 			    LEFT JOIN cost_centres ON cost_centres.committee_id = committees.id
 			    LEFT JOIN budget_lines ON budget_lines.cost_centre_id = cost_centres.id

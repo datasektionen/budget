@@ -16,8 +16,8 @@ class CreateLineTable extends Migration
         Schema::create('budget_lines', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('income')->unsigned();
-            $table->integer('expenses')->unsigned();
+            $table->integer('income');
+            $table->integer('expenses');
             $table->timestamps();
         });
     }

@@ -39,7 +39,7 @@ class ApiBudgetLineController extends BaseController {
 	 */
 	public function create($id, Request $request) {
 		$costCentre = CostCentre::findOrFail($id);
-		$budgetLine = BudgetLine::create($request->all() + ['cost_centre_id' => $costCentre->id]);
+		$budgetLine = BudgetLine::create(array_merge(['valid_from' => null, 'valid_to' => null, 'name' => '', 'income' => 0, 'expenses' => 0, 'type' => 'internal'], $request->all()) + ['cost_centre_id' => $costCentre->id]);
 		return response()->json($budgetLine);
 	}
 

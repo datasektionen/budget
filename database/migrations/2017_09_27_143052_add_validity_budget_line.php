@@ -15,8 +15,8 @@ class AddValidityBudgetLine extends Migration
     {
         Schema::table('budget_lines', function (Blueprint $table) {
             $table->enum('type', ['internal', 'external'])->default('internal');
-            $table->datetime('valid_from');
-            $table->datetime('valid_to');
+            $table->datetime('valid_from')->nullable();
+            $table->datetime('valid_to')->nullable();
             $table->integer('suggestion_id');
         });
     }
