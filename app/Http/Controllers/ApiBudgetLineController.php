@@ -49,7 +49,7 @@ class ApiBudgetLineController extends BaseController {
 	 * @return the budget line as JSON
 	 */
 	public function get(Request $request, $id) {
-		return response()->json(BudgetLine::where('id', $id)->with('accounts')->firstOrFail());
+		return response()->json(BudgetLine::where('id', $id)->with('accounts')->with('costCentre.committee')->firstOrFail());
 	}
 
 	/**

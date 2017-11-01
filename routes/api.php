@@ -22,6 +22,7 @@ Route::delete('cost-centres/{id}',                'ApiCostCentreController@delet
 
 Route::get   ('cost-centres/{id}/budget-lines',   'ApiBudgetLineController@all');
 Route::post  ('cost-centres/{id}/budget-lines',   'ApiBudgetLineController@create');
+Route::any   ('budget-lines',                     'ApiBudgetLineController@query');
 Route::get   ('budget-lines/{id}',                'ApiBudgetLineController@get');
 Route::put   ('budget-lines/{id}',                'ApiBudgetLineController@edit');
 Route::post  ('budget-lines/{id}/accounts/{aid}', 'ApiBudgetLineController@addAccount')->middleware('auth.pls:admin-accounts');
