@@ -46,6 +46,7 @@ class BudgetController extends BaseController {
 		$committees = Committee::overview();
 		return view('budget.overview')
 			->with('committees', $committees)
+			->with('suggestion', Suggestion::find(session('suggestion')))
 			->with([
 				'income'   => $committees->sum(function ($x) { return $x->income;   }),
 				'expenses' => $committees->sum(function ($x) { return $x->expenses; }),

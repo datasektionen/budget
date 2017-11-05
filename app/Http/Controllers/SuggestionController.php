@@ -9,7 +9,9 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
 use App\Models\Suggestion;
+use App\Models\Committee;
 use App\Models\User;
+use App\Helpers\CsvParser;
 use Auth;
 
 /**
@@ -149,5 +151,36 @@ class SuggestionController extends BaseController {
 		$suggestion = Suggestion::findOrFail($id);
 		$suggestion->publish();
 		return redirect('/suggestions')->with('success', 'suggestions.published');
+	}
+
+	/**
+	 * Shows form with import details.
+	 * @param  $id 	     the id of the suggestion to import to
+	 * @return view with the import form
+	 */
+	public function getImport($id) {
+		$suggestion = Suggestion::findOrFail($id);
+		return view('suggestions.import');
+	}
+
+	public function postImport($id, Request $request) {
+		$suggestion = Suggestion::findOrFail($id);
+		$parser = new CsvParser;
+		$committees = $parser->parse($request->file('csv')->path(), $request->all());
+
+		session(['importCommittees' => $committees]);
+		session(['importType' => $request->input('type')]);
+
+		return view('suggestions.import-verify')
+			->with('type', $request->input('type'))
+			->with('suggestion', $suggestion)
+			->with('committees', $committees);
+	}
+
+	public function postImportComplete($id, Request $request) {
+		$suggestion = Suggestion::findOrFail($id);
+		$suggestion->import(session('importCommittees'), session('importType'));
+		return redirect('suggestions')
+			->with('success', 'Importen lades till ditt förslag.');
 	}
 }

@@ -15,7 +15,7 @@
 		<th style="width:85px"></th>
 		<th>Benämning</th>
 		<th>Status</th>
-		<th colspan="1">Hantera</th>
+		<th colspan="3">Hantera</th>
 	</thead>
 	@foreach ($suggestions as $suggestion)
 		<tr>
@@ -39,11 +39,18 @@
 			@endif
 			</td>
 			<td>
+				@if (!Auth::user()->isAdmin() && !$suggestion->isPublic() && !$suggestion->isImplemented())
+					<a href="/suggestions/{{ $suggestion->id }}/publish">Skicka in</a>
+				@endif 
+			</td>
+			<td>
 				@if (Auth::user()->isAdmin() && !$suggestion->isImplemented())
 					<a href="/suggestions/{{ $suggestion->id }}/implement">Genomför</a>
 				@endif
-				@if (!Auth::user()->isAdmin() && !$suggestion->isPublic() && !$suggestion->isImplemented())
-					<a href="/suggestions/{{ $suggestion->id }}/publish">Skicka in</a>
+			</td>
+			<td>
+				@if (!$suggestion->isPublic() && !$suggestion->isImplemented())
+					<a href="/suggestions/{{ $suggestion->id }}/import">Importera CSV</a>
 				@endif
 			</td>
 		</tr>

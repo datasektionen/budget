@@ -39,6 +39,10 @@ class AuroraForm extends FormFacade {
         return self::surround(parent::text($id, $default, ['id' => $id]), $label, $id);
     }
 
+    public static function number($id, $label, $default = null, array $options = []) {
+        return self::surround(parent::input('number', $id, $default, $options + ['id' => $id]), $label, $id);
+    }
+
     public static function textarea($id, $label, $default = null) {
         return self::surround(parent::textarea($id, $default, ['id' => $id]), $label, $id);
     }
@@ -58,7 +62,7 @@ class AuroraForm extends FormFacade {
         return '<div class="form-entry">' .
                     ($label !== null ?
                     '<span class="description">' . 
-                        $label .
+                        $label .  ':' .
                     '</span>' 
                     : '') .
                     '<div class="input file">' . 
@@ -68,6 +72,18 @@ class AuroraForm extends FormFacade {
                     '</div>' .
                     '<div class="clear"></div>' .
                 '</div>';
+    }
+
+    public static function radio($name, $value, $label, array $options = [], $default = false) {
+        return '<div class="radio">' . parent::radio($name, $value, $default, $options + ['id' => $name . $value]) . '<label for="' . $name . $value . '">' . $label . '</label></div>';
+    }
+
+    public static function radioList($name, $label, $list, $default = null) {
+        $res = "";
+        foreach ($list as $value => $lab) {
+            $res .= self::radio($name, $value, $lab);
+        }
+        return self::surround($res, $label);
     }
 
     public static function submit($label) {

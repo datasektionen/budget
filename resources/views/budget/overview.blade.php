@@ -11,6 +11,7 @@
 @endsection
 
 @section('content')
+<div id="app">
 <div id="budget">
 <table class="budget">
 	<thead>
@@ -68,5 +69,9 @@
 		</tr>
 	</tfoot>
 </table>
+@if ($suggestion != null)
+	<alert :suggestion="{{ $suggestion }}"></alert>
+@endif
+</div>
 </div>
 @endsection

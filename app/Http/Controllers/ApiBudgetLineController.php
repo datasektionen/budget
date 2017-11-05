@@ -73,6 +73,8 @@ class ApiBudgetLineController extends BaseController {
 			$budgetLine = $oldBudgetLine->replicate();
 			$budgetLine->parent = intval($id);
 			$budgetLine->suggestion_id = $suggestion->id;
+            $budgetLine->valid_to = null;
+            $budgetLine->valid_from = null;
 			$budgetLine->save();
 			$budgetLine->accounts()->sync($oldBudgetLine->accounts->pluck('id'));
 		}

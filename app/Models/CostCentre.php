@@ -17,21 +17,24 @@ class CostCentre extends Model {
 		$s = session('suggestion');
 		if (empty($s)) { $s = -1; }
 		return $this->hasMany('App\Models\BudgetLine')
-			->where('budget_lines.valid_from', '<=', Carbon::now())
-			->where('budget_lines.valid_to', '>', Carbon::now())
 			->where(function ($q) use($s) {
-				$q->whereExists(function ($q) use ($s) {
-					$q->select(DB::raw(1))->from('suggestions')
-					->whereRaw('suggestions.id = budget_lines.suggestion_id')
-					->where(function ($q) use ($s) {
-						$q->whereNotNull('suggestions.implemented_at')
-						->orWhere('suggestions.id', $s);
+				$q->where('budget_lines.valid_from', '<=', Carbon::now())
+					->where('budget_lines.valid_to', '>', Carbon::now())
+					->where(function ($q) use($s) {
+						$q->whereExists(function ($q) use ($s) {
+							$q->select(DB::raw(1))->from('suggestions')
+							->whereRaw('suggestions.id = budget_lines.suggestion_id')
+							->where(function ($q) use ($s) {
+								$q->whereNotNull('suggestions.implemented_at')
+								->orWhere('suggestions.id', $s);
+							});
+						})->orWhereExists(function ($q) {
+							$q->select(DB::raw(1))->from('budget_line_follow_up')
+							->whereRaw('budget_line_follow_up.budget_line_id = budget_lines.id');
+						});
 					});
-				})->orWhereExists(function ($q) {
-					$q->select(DB::raw(1))->from('budget_line_follow_up')
-					->whereRaw('budget_line_follow_up.budget_line_id = budget_lines.id');
-				});
 			})
+			->orWhere('suggestion_id', session('suggestion', -1))
 			->with('accounts')
 			->orderBy('budget_lines.name')
 			->orderBy('suggestion_id');

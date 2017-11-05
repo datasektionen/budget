@@ -142,11 +142,11 @@ class Committee extends Model {
 			    t1.id, 
 			    t1.name,
 			    t1.type,
-			    IFNULL(income,0) as income, 
-			    IFNULL(expenses,0) as expenses, 
-			    IFNULL(internal,0) as internal, 
-			    IFNULL(external,0) as external, 
-			    IFNULL(balance,0) as balance
+			    income, 
+			    expenses, 
+			    internal, 
+			    external, 
+			    balance
 			FROM (
 			    SELECT t0.*, t0.income - t0.expenses AS balance FROM (
 			        SELECT 
@@ -159,6 +159,7 @@ class Committee extends Model {
 			        LEFT JOIN cost_centres ON cost_centres.committee_id = committees.id
 			        LEFT JOIN budget_lines ON budget_lines.cost_centre_id = cost_centres.id
 			        WHERE budget_lines.valid_from < NOW() AND budget_lines.valid_to > NOW()
+			        OR budget_lines.suggestion_id = :suggid1
 			        GROUP BY committees.id
 			    ) AS t0
 			) AS t1
@@ -172,6 +173,7 @@ class Committee extends Model {
 			    LEFT JOIN cost_centres ON cost_centres.committee_id = committees.id
 			    LEFT JOIN budget_lines ON budget_lines.cost_centre_id = cost_centres.id
 			    WHERE budget_lines.type = 'internal' AND budget_lines.valid_from < NOW() AND budget_lines.valid_to > NOW()
+			    OR budget_lines.suggestion_id = :suggid2
 			    GROUP BY committees.id
 			) AS t2
 			ON t1.id = t2.id
@@ -185,8 +187,13 @@ class Committee extends Model {
 			    LEFT JOIN cost_centres ON cost_centres.committee_id = committees.id
 			    LEFT JOIN budget_lines ON budget_lines.cost_centre_id = cost_centres.id
 			    WHERE budget_lines.type = 'external' AND budget_lines.valid_from < NOW() AND budget_lines.valid_to > NOW()
+			    OR budget_lines.suggestion_id = :suggid3
 			    GROUP BY committees.id
 			) AS t3
-			ON t1.id = t3.id"));
+			ON t1.id = t3.id", [
+				'suggid1' => session('suggestion', -1),
+				'suggid2' => session('suggestion', -1),
+				'suggid3' => session('suggestion', -1)
+			]));
 	}
 }

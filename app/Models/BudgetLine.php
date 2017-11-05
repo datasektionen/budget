@@ -11,7 +11,19 @@ class BudgetLine extends Model {
      * @var array
      */
     protected $hidden = ['updated_at', 'created_at'];   
-    protected $fillable = ['name', 'income', 'expenses', 'cost_centre_id', 'type', 'valid_from', 'valid_to', 'suggestion_id'];
+    protected $fillable = ['name', 'income', 'expenses', 'cost_centre_id', 'type', 'valid_from', 'valid_to', 'suggestion_id', 'parent'];
+
+    public static function now() {
+        return self::where('valid_from', '<', DB::raw('NOW()'))
+            ->where('valid_to', '>', DB::raw('NOW()'))
+            ->whereExists(function ($q) {
+                $q->select(DB::raw(1))
+                    ->from('suggestions')
+                    ->whereNotNull('implemented_at')
+                    ->whereRaw('suggestions.id = budget_lines.suggestion_id');
+            })
+            ->get();
+    }
 
     public function accounts() {
         return $this->belongsToMany('App\Models\Account')->orderBy('number');
