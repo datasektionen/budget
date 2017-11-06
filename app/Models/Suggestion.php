@@ -89,7 +89,7 @@ class Suggestion extends Model {
                             'income' => $bl['income'] * 100, 
                             'expenses' => $bl['expenses'] * 100,
                             'suggestion_id' => $this->id,
-                            'type' => !isset($bl['type']) ? 'internal' : $bl['type'],
+                            'type' => empty($bl['type']) ? 'external' : $bl['type'],
                             'valid_from' => null,
                             'valid_to' => null,
                             'parent' => null,
@@ -104,7 +104,7 @@ class Suggestion extends Model {
                                 'income' => $bl['income'] * 100, 
                                 'expenses' => $bl['expenses'] * 100,
                                 'suggestion_id' => $this->id,
-                                'type' => !isset($bl['type']) ? 'internal' : $bl['type'],
+                                'type' => empty($bl['type']) ? 'external' : $bl['type'],
                                 'valid_from' => null,
                                 'valid_to' => null,
                                 'parent' => ($oldBudgetLine != null) ? $oldBudgetLine->id : null,
@@ -114,7 +114,7 @@ class Suggestion extends Model {
                             $budgetLine->update([
                                 'income' => $bl['income'] * 100, 
                                 'expenses' => $bl['expenses'] * 100,
-                                'type' => !isset($bl['type']) ? 'internal' : $bl['type'],
+                                'type' => empty($bl['type']) ? 'external' : $bl['type'],
                                 'valid_from' => null,
                                 'valid_to' => null
                             ]);

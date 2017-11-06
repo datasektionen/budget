@@ -19,6 +19,15 @@
 	<p>Om du godkänner detta kommer ditt förslag bestå av att lägga till samtliga budgetposter nedan, trots att det redan finns poster med samma namn (det kommer då skapas dubletter).</p>
 @endif
 
+<ul>
+	@foreach ($nonMatchedCommittees as $c)
+		<li>Nämnden {{ $c['name'] }} hittades inte och kommer skapas</li>
+	@endforeach
+	@foreach ($nonMatchedCostCentres as $cc)
+		<li>Kostnadsstället {{ $cc['name'] }} i {{ $cc['committee'] }} hittades inte och kommer skapas</li>
+	@endforeach
+</ul>
+
 <div id="budget">
 	<table class="budget">
 		@foreach ($committees as $committee)
@@ -70,7 +79,7 @@
 				            <span class="input expenses">{{ Fmt::cash($budgetLine['expenses'], 0, 0) }}</span>
 				        </td>
 				        <td class="cash{{ $budgetLine['income'] > $budgetLine['expenses'] ? ' plus' : ($budgetLine['income'] < $budgetLine['expenses'] ? ' minus' : '') }}">
-				            {{ Fmt::cash($budgetLine['income'], 0, 0 - $budgetLine['expenses']) }} SEK
+				            {{ Fmt::cash($budgetLine['income'] - $budgetLine['expenses'], 0, 0) }} SEK
 				        </td>
 				    </tr>
 				@endforeach

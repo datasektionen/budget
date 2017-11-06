@@ -21,8 +21,11 @@ class CsvParser {
 
 	private $idx = [];
 
-	public function getFileAsArray($filePath, $startAt) {
+	public function getFileAsArray($filePath, $startAt, $endAt) {
 		$content = array_map('str_getcsv', file($filePath));
+		if ($endAt > $startAt && $endAt < count($content)) {
+			array_splice($content, $endAt);
+		}
 		array_splice($content, 0, $startAt);
 		$this->fileContent = $content;
 		return $this->fileContent;
@@ -35,7 +38,8 @@ class CsvParser {
 		$this->idx['budgetLine']         = intval($options['budget-line-col']) - 1;
 		$this->idx['budgetLineIncome']   = intval($options['budget-line-income-col']) - 1;
 		$this->idx['budgetLineExpenses'] = intval($options['budget-line-expenses-col']) - 1;
-		$this->idx['speedledgerId'] = intval($options['speedledger-id-col']) - 1;
+		$this->idx['speedledgerId']      = intval($options['speedledger-id-col']) - 1;
+		$this->idx['type']               = intval($options['type-col']) - 1;
 	}
 
 	public function washMoney($in) {
@@ -74,7 +78,7 @@ class CsvParser {
 
 	public function parseAccounts($row) {
 		$accounts = [];
-		if ($row[$this->idx['accounts']] <= 0) {
+		if ($this->idx['accounts'] <= 0) {
 			return [];
 		}
 
@@ -88,6 +92,31 @@ class CsvParser {
 			}
 		}
 		return $accounts;
+	}
+
+	public function parseType($row) {
+		if ($this->idx['type'] < 0) {
+			return null;
+		}
+
+		$t = strtolower($row[$this->idx['type']]);
+		if (in_array($t, [
+			'internal',
+			'i',
+			'intern'
+		])) {
+			return 'internal';
+		}
+
+		if (in_array($t, [
+			'external',
+			'e',
+			'extern'
+		])) {
+			return 'external';
+		}
+
+		return null;
 	}
 
 	public function precalculateSum() {
@@ -113,8 +142,18 @@ class CsvParser {
 
 	public function parse($filePath, $options) {
 		$this->filePath = $filePath;
-		$this->getFileAsArray($filePath, intval($options['start-at']) - 1);
+		$this->getFileAsArray($filePath, intval($options['start-at']) - 1, intval($options['end-at']));
 		$this->initIdx($options);
+
+		if ($this->idx['committee'] < 0) {
+			$this->committees[] = [
+				'name' => $options['committee-name'],
+				'model' => Committee::where('name', $options['committee-name'])->first(),
+				'costCentres' => []
+			];
+		}
+
+		$type = 'internal';
 
 		// Loop through each line, and as we find new committee, add to list.
 		// Always add budget lines and cost centres to the last cost centres committees
@@ -123,7 +162,12 @@ class CsvParser {
 				continue;
 			}
 
-			if (!empty($row[$this->idx['committee']])) {
+			$temp = $this->parseType($row);
+			if ($temp != null) {
+				$type = $temp;
+			}
+
+			if ($this->idx['committee'] >= 0 && !empty($row[$this->idx['committee']])) {
 				$this->committees[] = [
 					'name' => $row[$this->idx['committee']],
 					'model' => Committee::where('name', $row[$this->idx['committee']])->first(),
@@ -154,7 +198,8 @@ class CsvParser {
 					'income' => $this->washMoney($row[$this->idx['budgetLineIncome']]),
 					'expenses' => $this->washMoney($row[$this->idx['budgetLineExpenses']]),
 					'model' => $this->findBudgetLineModel($row[$this->idx['budgetLine']], $this->committees[count($this->committees)-1]['costCentres'][count($this->committees[count($this->committees)-1]['costCentres'])-1]['model']),
-					'accounts' => $this->parseAccounts($row)
+					'accounts' => $this->parseAccounts($row),
+					'type' => $type
 				];
 			}
 		}

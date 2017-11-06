@@ -168,10 +168,26 @@ class SuggestionController extends BaseController {
 		$parser = new CsvParser;
 		$committees = $parser->parse($request->file('csv')->path(), $request->all());
 
+		$nonMatchedCommittees = [];
+		$nonMatchedCostCentres = [];
+		foreach ($committees as $committee) {
+			if ($committee['model'] == null) {
+				$nonMatchedCommittees[] = $committee;
+			}
+			foreach ($committee['costCentres'] as $costCentre) {
+				if ($costCentre['model'] == null) {
+					$costCentre['committee'] = $committee['name'];
+					$nonMatchedCostCentres[] = $costCentre;
+				}
+			}
+		}
+
 		session(['importCommittees' => $committees]);
 		session(['importType' => $request->input('type')]);
 
 		return view('suggestions.import-verify')
+			->with('nonMatchedCommittees', $nonMatchedCommittees)
+			->with('nonMatchedCostCentres', $nonMatchedCostCentres)
 			->with('type', $request->input('type'))
 			->with('suggestion', $suggestion)
 			->with('committees', $committees);
