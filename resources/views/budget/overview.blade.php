@@ -24,7 +24,22 @@
 			<th class="cash">Balans</th>
 		</tr>
 	</thead>
+	<?php $last = ''; ?>
 	@foreach ($committees as $committee)
+	@if ($committee->type != $last)
+		<tr class="section">
+			<td colspan="6">
+				@if ($committee->type === 'committee')
+					Nämnder
+				@elseif ($committee->type === 'project')
+					Projekt
+				@else
+					Övrigt
+				@endif
+			</td>
+		</tr>
+		<?php $last = $committee->type; ?>
+	@endif
 	<tr>
 		<td class="name">
 			<span class="input"><a href="/committees/{{ $committee->id }}">{{ $committee->name }}</a></span>

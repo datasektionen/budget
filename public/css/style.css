@@ -5,18 +5,19 @@
       margin-top: 8px;
 }
 tr.section {
-      background: #ddd !important;
+      background: #eee !important;
       transition: none;
 }
 tr.section td {
+      background: #eee !important;
       color: #000 !important;
       font-weight: bold;
-      border-bottom: 3px solid #607d8b;
+      border-bottom: 3px solid #607d8b !important;
       text-align: center !important;
       transition: none;
 }
 tr.section:hover td {
-      background: #ddd !important;
+      background: #eee !important;
 }
 
 

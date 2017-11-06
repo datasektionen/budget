@@ -215,7 +215,9 @@ class Committee extends Model {
 		        )
 			    GROUP BY committees.id
 			) AS t3
-			ON t1.id = t3.id", [
+			ON t1.id = t3.id
+
+			ORDER BY t1.type, t1.name, balance", [
 				'suggid1' => session('suggestion', -1),
 				'suggid2' => session('suggestion', -1),
 				'suggid3' => session('suggestion', -1),
