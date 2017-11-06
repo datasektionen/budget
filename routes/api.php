@@ -17,7 +17,7 @@ Route::delete('committees/{id}',                  'ApiCommitteeController@delete
 Route::get   ('committees/{id}/cost-centres',     'ApiCostCentreController@all');
 Route::post  ('committees/{id}/cost-centres',     'ApiCostCentreController@create');
 Route::get   ('cost-centres/{id}',                'ApiCostCentreController@get');
-Route::put   ('cost-centres/{id}',                'ApiCostCentreController@edit')      ->middleware('auth.pls:admin-cost-centres');
+Route::put   ('cost-centres/{id}',                'ApiCostCentreController@edit');
 Route::delete('cost-centres/{id}',                'ApiCostCentreController@delete')    ->middleware('auth.pls:admin-cost-centres');
 
 Route::get   ('cost-centres/{id}/budget-lines',   'ApiBudgetLineController@all');
