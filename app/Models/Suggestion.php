@@ -53,6 +53,20 @@ class Suggestion extends Model {
             }
         }
 
+        if ($type === 'replace_committees') {
+            $committeeIds = array_map(function ($x) {
+                if (!empty($x['model'])) {
+                    return $x['model']->id;
+                }
+                return -1;
+            }, $committees);
+            foreach (BudgetLine::now() as $budgetLine) {
+                if (in_array($budgetLine->costCentre->committee->id, $committeeIds)) {
+                    $this->reset($budgetLine);
+                }
+            }
+        }
+
         foreach ($committees as $c) {
             $committee = Committee::where('name', $c['name'])->first();
             if ($committee === null) {
@@ -69,9 +83,7 @@ class Suggestion extends Model {
                 }
 
                 foreach ($cc['budgetLines'] as $bl) {
-                    $budgetLine = $this->budgetLines()->where('name', $bl['name'])->where('cost_centre_id', $costCentre->id)->first();
-                    if ($budgetLine === null) {
-                        $oldBudgetLine = $costCentre->budgetLines()->where('name', $bl['name'])->first();
+                    if ($type === 'add') {
                         $budgetLine = BudgetLine::create([
                             'name' => $bl['name'], 
                             'income' => $bl['income'] * 100, 
@@ -80,17 +92,33 @@ class Suggestion extends Model {
                             'type' => !isset($bl['type']) ? 'internal' : $bl['type'],
                             'valid_from' => null,
                             'valid_to' => null,
-                            'parent' => $oldBudgetLine != null ? $oldBudgetLine->id : null,
+                            'parent' => null,
                             'cost_centre_id' => $costCentre->id
                         ]);
                     } else {
-                        $budgetLine->update([
-                            'income' => $bl['income'] * 100, 
-                            'expenses' => $bl['expenses'] * 100,
-                            'type' => !isset($bl['type']) ? 'internal' : $bl['type'],
-                            'valid_from' => null,
-                            'valid_to' => null
-                        ]);
+                        $budgetLine = $this->budgetLines()->where('name', $bl['name'])->where('cost_centre_id', $costCentre->id)->first();
+                        if ($budgetLine === null) {
+                            $oldBudgetLine = $costCentre->budgetLines()->where('name', $bl['name'])->first();
+                            $budgetLine = BudgetLine::create([
+                                'name' => $bl['name'], 
+                                'income' => $bl['income'] * 100, 
+                                'expenses' => $bl['expenses'] * 100,
+                                'suggestion_id' => $this->id,
+                                'type' => !isset($bl['type']) ? 'internal' : $bl['type'],
+                                'valid_from' => null,
+                                'valid_to' => null,
+                                'parent' => ($oldBudgetLine != null) ? $oldBudgetLine->id : null,
+                                'cost_centre_id' => $costCentre->id
+                            ]);
+                        } else {
+                            $budgetLine->update([
+                                'income' => $bl['income'] * 100, 
+                                'expenses' => $bl['expenses'] * 100,
+                                'type' => !isset($bl['type']) ? 'internal' : $bl['type'],
+                                'valid_from' => null,
+                                'valid_to' => null
+                            ]);
+                        }
                     }
                 }
             }

@@ -22,6 +22,7 @@ class BudgetLine extends Model {
                     ->whereNotNull('implemented_at')
                     ->whereRaw('suggestions.id = budget_lines.suggestion_id');
             })
+            ->with('costCentre.committee')
             ->get();
     }
 

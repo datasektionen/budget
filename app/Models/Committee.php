@@ -158,8 +158,15 @@ class Committee extends Model {
 			        FROM committees
 			        LEFT JOIN cost_centres ON cost_centres.committee_id = committees.id
 			        LEFT JOIN budget_lines ON budget_lines.cost_centre_id = cost_centres.id
-			        WHERE budget_lines.valid_from < NOW() AND budget_lines.valid_to > NOW()
-			        OR budget_lines.suggestion_id = :suggid1
+			        WHERE (
+			        	budget_lines.valid_from < NOW() 
+			        	AND budget_lines.valid_to > NOW()
+			        	AND NOT EXISTS (
+			        		SELECT 1 FROM budget_lines AS bl 
+			        		WHERE bl.parent = budget_lines.id AND bl.suggestion_id = :suggid1
+			        	)
+			        )
+			        OR budget_lines.suggestion_id = :suggid2
 			        GROUP BY committees.id
 			    ) AS t0
 			) AS t1
@@ -172,8 +179,17 @@ class Committee extends Model {
 			    FROM committees
 			    LEFT JOIN cost_centres ON cost_centres.committee_id = committees.id
 			    LEFT JOIN budget_lines ON budget_lines.cost_centre_id = cost_centres.id
-			    WHERE budget_lines.type = 'internal' AND budget_lines.valid_from < NOW() AND budget_lines.valid_to > NOW()
-			    OR budget_lines.suggestion_id = :suggid2
+			    WHERE budget_lines.type = 'internal' AND (
+			    	(
+			        	budget_lines.valid_from < NOW() 
+			        	AND budget_lines.valid_to > NOW()
+			        	AND NOT EXISTS (
+			        		SELECT 1 FROM budget_lines AS bl 
+			        		WHERE bl.parent = budget_lines.id AND bl.suggestion_id = :suggid3
+			        	)
+		        	)
+			    	OR budget_lines.suggestion_id = :suggid4
+		        )
 			    GROUP BY committees.id
 			) AS t2
 			ON t1.id = t2.id
@@ -186,14 +202,26 @@ class Committee extends Model {
 			    FROM committees
 			    LEFT JOIN cost_centres ON cost_centres.committee_id = committees.id
 			    LEFT JOIN budget_lines ON budget_lines.cost_centre_id = cost_centres.id
-			    WHERE budget_lines.type = 'external' AND budget_lines.valid_from < NOW() AND budget_lines.valid_to > NOW()
-			    OR budget_lines.suggestion_id = :suggid3
+			    WHERE budget_lines.type = 'external' AND (
+			    	(
+			        	budget_lines.valid_from < NOW() 
+			        	AND budget_lines.valid_to > NOW()
+			        	AND NOT EXISTS (
+			        		SELECT 1 FROM budget_lines AS bl 
+			        		WHERE bl.parent = budget_lines.id AND bl.suggestion_id = :suggid5
+			        	)
+		        	)
+			    	OR budget_lines.suggestion_id = :suggid6
+		        )
 			    GROUP BY committees.id
 			) AS t3
 			ON t1.id = t3.id", [
 				'suggid1' => session('suggestion', -1),
 				'suggid2' => session('suggestion', -1),
-				'suggid3' => session('suggestion', -1)
+				'suggid3' => session('suggestion', -1),
+				'suggid4' => session('suggestion', -1),
+				'suggid5' => session('suggestion', -1),
+				'suggid6' => session('suggestion', -1)
 			]));
 	}
 }
