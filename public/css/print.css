@@ -6,7 +6,7 @@ body {
 }
 table td, table th {
 	font-size: 10pt !important;
-	padding: 10px;
+	padding: 4px 6px;
 	white-space: nowrap;
 	width: 100%;
 	border: 1px solid #ddd;
@@ -26,10 +26,12 @@ table {
 	text-align: right;
 }
 .old {
-	opacity: 0.5;
+	opacity: 0.8;
 }
-.nochange {
-	opacity: 0.4;
+.change {
+	opacity: 1;
+	background: #afa;
+	font-weight: bold;
 }
 .content {
 	margin: 0 auto;

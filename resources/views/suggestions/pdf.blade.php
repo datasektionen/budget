@@ -14,8 +14,7 @@
 		<table class="budget">
 			<thead>
 				<tr>
-					<th>Nämnd/projekt</th>
-					<th>Sekundärt resultatställe</th>
+					<th>Nämnd/projekt/sekundärt resultatställe</th>
 					<th>Budgetpost</th>
 					<th class="cash">In <span class="old">(tidigare värde)</span></th>
 					<th class="cash">Ut <span class="old">(tidigare värde)</span></th>
@@ -24,36 +23,35 @@
 			</thead>
 			@foreach ($suggestion->committees() as $committee)
 			<tr class="committee">
-				<td colspan="9"><span class="input">{{ $committee->name }}</span></td>
+				<td colspan="8"><span class="input">{{ $committee->name }}</span></td>
 			</tr>
 			@foreach ($suggestion->costCentresForCommittee($committee->id) as $costCentre)
 			<tr class="cost-centre">
-				<td></td>
 				<td colspan="8"><span class="input">{{ $costCentre->name }}</span></td>
 			</tr>
 			@foreach ($suggestion->budgetLinesForCostCentre($costCentre->id) as $budgetLine)
-			<tr>
-				<td colspan="2"></td>
-				<td class="{{ $budgetLine->parentLine !== null && $budgetLine->parentLine->name === $budgetLine->name ? 'nochange' : '' }}">
+			<tr class="{{ $budgetLine->suggestion_id == $suggestion->id && (($budgetLine->parentLine == null && $budgetLine->valid_from == null) || ($budgetLine->parentLine != null && ($budgetLine->parentLine->income != $budgetLine->income || $budgetLine->parentLine->expenses != $budgetLine->expenses || $budgetLine->parentLine->type != $budgetLine->type || $budgetLine->parentLine->name != $budgetLine->name))) ? 'change' : '' }}">
+				<td></td>
+				<td>
 					{{ $budgetLine->name }}
 					@if ($budgetLine->parentLine !== null && $budgetLine->parentLine->name != $budgetLine->name)
 					<br>
 					<span class="old">(fd {{ $budgetLine->parentLine->name }})</span>
 					@endif
 				</td>
-				<td class="cash {{ $budgetLine->parentLine !== null && $budgetLine->parentLine->income === $budgetLine->income ? 'nochange' : '' }}">
+				<td class="cash">
 					{{ Fmt::cash($budgetLine->income, 2, 0) }} kr 
 					@if ($budgetLine->parentLine !== null)
 					<span class="old">({{ Fmt::cash($budgetLine->parentLine->income, 2, 0) }} kr)</span>
 					@endif
 				</td>
-				<td class="cash {{ $budgetLine->parentLine !== null && $budgetLine->parentLine->expenses === $budgetLine->expenses ? 'nochange' : '' }}">
+				<td class="cash">
 					{{ Fmt::cash($budgetLine->expenses, 2, 0) }} kr 
 					@if ($budgetLine->parentLine !== null)
 					<span class="old">({{ Fmt::cash($budgetLine->parentLine->expenses, 2, 0) }} kr)</span>
 					@endif
 				</td>
-				<td class="cash {{ $budgetLine->parentLine !== null && $budgetLine->parentLine->balance === $budgetLine->balance ? 'nochange' : '' }}">
+				<td class="cash">
 					{{ Fmt::cash($budgetLine->balance, 2, 0) }} kr
 					<?php $total += $budgetLine->balance; ?> 
 					@if ($budgetLine->parentLine !== null)
