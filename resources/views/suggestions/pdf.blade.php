@@ -34,27 +34,27 @@
 				<td></td>
 				<td>
 					{{ $budgetLine->name }}
-					@if ($budgetLine->parentLine !== null && $budgetLine->parentLine->name != $budgetLine->name && $budgetLine->suggestion_id == $suggestion->id && $budgetLine->valid_from == null)
+					@if ($budgetLine->parentLine !== null && $budgetLine->parentLine->name != $budgetLine->name)
 					<br>
 					<span class="old">(fd {{ $budgetLine->parentLine->name }})</span>
 					@endif
 				</td>
 				<td class="cash">
 					{{ Fmt::cash($budgetLine->income, 2, 0) }} kr 
-					@if ($budgetLine->parentLine !== null && $budgetLine->suggestion_id == $suggestion->id && $budgetLine->valid_from == null)
+					@if ($budgetLine->parentLine !== null && $budgetLine->parentLine->income != $budgetLine->income)
 					<span class="old">({{ Fmt::cash($budgetLine->parentLine->income, 2, 0) }} kr)</span>
 					@endif
 				</td>
 				<td class="cash">
 					{{ Fmt::cash($budgetLine->expenses, 2, 0) }} kr 
-					@if ($budgetLine->parentLine !== null && $budgetLine->suggestion_id == $suggestion->id && $budgetLine->valid_from == null)
+					@if ($budgetLine->parentLine !== null && $budgetLine->parentLine->expenses != $budgetLine->expenses)
 					<span class="old">({{ Fmt::cash($budgetLine->parentLine->expenses, 2, 0) }} kr)</span>
 					@endif
 				</td>
 				<td class="cash">
 					{{ Fmt::cash($budgetLine->balance, 2, 0) }} kr
 					<?php $total += $budgetLine->balance; ?> 
-					@if ($budgetLine->parentLine !== null && $budgetLine->suggestion_id == $suggestion->id && $budgetLine->valid_from == null)
+					@if ($budgetLine->parentLine !== null && $budgetLine->parentLine->balance != $budgetLine->balance)
 					<span class="old">({{ Fmt::cash($budgetLine->parentLine->balance, 2, 0) }} kr)</span>
 					<?php $totalBefore += $budgetLine->parentLine->balance; ?>
 					@endif
