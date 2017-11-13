@@ -53,12 +53,12 @@
 					<span class="old">({{ Fmt::cash($budgetLine->parentLine->expenses, 2, 0) }} kr)</span>
 					@endif
 				</td>
-				<td class="cash {{ $budgetLine->parentLine !== null && $budgetLine->parentLine->balance() === $budgetLine->balance() ? 'nochange' : '' }}">
-					{{ Fmt::cash($budgetLine->balance(), 2, 0) }} kr
-					<?php $total += $budgetLine->balance(); ?> 
+				<td class="cash {{ $budgetLine->parentLine !== null && $budgetLine->parentLine->balance === $budgetLine->balance ? 'nochange' : '' }}">
+					{{ Fmt::cash($budgetLine->balance, 2, 0) }} kr
+					<?php $total += $budgetLine->balance; ?> 
 					@if ($budgetLine->parentLine !== null)
-					<span class="old">({{ Fmt::cash($budgetLine->parentLine->balance(), 2, 0) }} kr)</span>
-					<?php $totalBefore += $budgetLine->parentLine->balance(); ?>
+					<span class="old">({{ Fmt::cash($budgetLine->parentLine->balance, 2, 0) }} kr)</span>
+					<?php $totalBefore += $budgetLine->parentLine->balance; ?>
 					@endif
 				</td>
 			</tr>
