@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Suggestion;
 use App\Models\Committee;
+use App\Models\BudgetLine;
 use App\Models\User;
 use App\Helpers\CsvParser;
 use Auth;
@@ -57,6 +58,36 @@ class SuggestionController extends BaseController {
 
 		return redirect('/suggestions')
 			->with('success', 'suggestions.created');
+	}
+
+	/**
+	 * Shows form for extending a committee's budget in a suggestion
+	 * @return view    with the form
+	 */
+	public function getExtend($id) {
+		$suggestion = Suggestion::findOrFail($id);
+		return view('suggestions.extend')
+			->with('committees', Committee::all())
+			->with('suggestion', $suggestion);
+	}
+
+	/**
+	 * Shows form for extending a committee's budget in a suggestion
+	 * @return view    with the form
+	 */
+	public function postExtend($id, Request $request) {
+		$suggestion = Suggestion::findOrFail($id);
+		foreach ($request->committees as $committeeId) {
+			$committee = Committee::findOrFail($committeeId);
+			foreach ($committee->costCentres as &$costCentre) {
+				foreach ($costCentre->budgetLines as &$budgetLine) {
+					if (BudgetLine::where('parent', $budgetLine->id)->where('suggestion_id', $suggestion->id)->count() == 0) {
+						$budgetLine->copy($suggestion);
+					}
+				}
+			}
+		}
+		return redirect('suggestions/' . $suggestion->id)->with('extend.success');
 	}
 
 	/**

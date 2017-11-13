@@ -1,8 +1,8 @@
 <template>
 <tr v-if="data && !data.deleted" v-bind:class="{ deleted: data.deleted || (data.income == 0 && data.expenses == 0), suggestion: suggestion && data.suggestion_id === suggestion.id }">
-        <td style="padding:2px;">
+        <td v-if="suggestion" style="padding:2px;">
             <button v-if="suggestion" v-on:click="deleteBudgetLine" class="delete">
-                <i v-if="!data.parent" class="fa fa-trash" aria-hidden="true"></i>
+                <i v-if="!data.valid_from && !data.valid_to && !data.parent" class="fa fa-trash" aria-hidden="true"></i>
                 <span v-else>0</span>
             </button>
         </td>

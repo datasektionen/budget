@@ -15,7 +15,7 @@
 		<th style="width:85px"></th>
 		<th>Benämning</th>
 		<th>Status</th>
-		<th colspan="3">Hantera</th>
+		<th colspan="4">Hantera</th>
 	</thead>
 	@foreach ($suggestions as $suggestion)
 		<tr>
@@ -51,6 +51,11 @@
 			<td>
 				@if (!$suggestion->isPublic() && !$suggestion->isImplemented())
 					<a href="/suggestions/{{ $suggestion->id }}/import">Importera CSV</a>
+				@endif
+			</td>
+			<td>
+				@if (!$suggestion->isPublic() && !$suggestion->isImplemented())
+					<a href="/suggestions/{{ $suggestion->id }}/extend">Förläng aktuell</a>
 				@endif
 			</td>
 		</tr>

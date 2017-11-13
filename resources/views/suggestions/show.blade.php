@@ -73,14 +73,14 @@
 		<td>{{ $budgetLine->parentLine->name }}</td>
 		<td class="cash">{{ Fmt::cash($budgetLine->parentLine->income, 2, 0) }}</td>
 		<td class="cash">{{ Fmt::cash($budgetLine->parentLine->expenses, 2, 0) }}</td>
-		<td class="cash">{{ Fmt::cash($budgetLine->parentLine->balance(), 2, 0) }}</td>
-		<?php $post += $budgetLine->parentLine->balance(); ?>
+		<td class="cash">{{ Fmt::cash($budgetLine->parentLine->balance, 2, 0) }}</td>
+		<?php $post += $budgetLine->parentLine->balance; ?>
 		@endif
 		<td><span class="input">{{ $budgetLine->name }}</span></td>
 		<td class="cash">{{ Fmt::cash($budgetLine->income, 2, 0) }}</td>
 		<td class="cash">{{ Fmt::cash($budgetLine->expenses, 2, 0) }}</td>
-		<td class="cash">{{ Fmt::cash($budgetLine->balance(), 2, 0) }}</td>
-		<?php $pre += $budgetLine->balance(); ?>
+		<td class="cash">{{ Fmt::cash($budgetLine->balance, 2, 0) }}</td>
+		<?php $pre += $budgetLine->balance; ?>
 	</tr>
 	@endif
 	@endforeach

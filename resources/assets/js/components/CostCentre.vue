@@ -1,7 +1,8 @@
 <template>
 	<tbody>
 	<tr class="space">
-        <td colspan="2"></td>
+        <td v-if="suggestion"></td>
+        <td></td>
         <td class="accounts"></td>
         <td class="accounts"></td>
         <td class="col-income"></td>
@@ -10,7 +11,7 @@
         <td></td>
     </tr>
     <tr class="header">
-        <td></td>
+        <td v-if="suggestion"></td>
         <td class="name">
             <span v-bind:class="{loading:costCentre.loading}"></span>
             <input v-if="suggestion" type="text" placeholder="Namn på kostnadsställe" v-model="costCentre.name" v-on:change="updateCostCentre()">
@@ -27,7 +28,7 @@
     </tr>
     <budget-line v-for="budget_line in costCentre.budget_lines" :booked="booked" :suggestion="suggestion" :budget-line="budget_line" :key="budget_line.id" v-on:committee="setCommittee"></budget-line>
     <tr class="vague" v-if="suggestion">
-        <td></td>
+        <td v-if="suggestion"></td>
         <td class="description">
             <input class="name" type="text" v-model="costCentre.new_name" v-on:change="createBudgetLine()" placeholder="Skapa ny...">
         </td>

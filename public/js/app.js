@@ -42193,7 +42193,7 @@ var render = function() {
             [
               _c("thead", { attrs: { id: "thead" } }, [
                 _c("tr", { attrs: { id: "tr" } }, [
-                  _c("th"),
+                  _vm.suggestion ? _c("th") : _vm._e(),
                   _vm._v(" "),
                   _c("th", { staticClass: "name" }, [
                     _c("span", {
@@ -42208,21 +42208,25 @@ var render = function() {
                   _vm._v(" "),
                   _c("th", { staticClass: "col-income plus cash" }, [
                     _c("span", {
-                      domProps: { innerHTML: _vm._s(_vm.fmt(_vm.income)) }
+                      domProps: { innerHTML: _vm._s(_vm.fmt(_vm.income / 100)) }
                     }),
                     _vm._v(" SEK")
                   ]),
                   _vm._v(" "),
                   _c("th", { staticClass: "col-expenses minus cash" }, [
                     _c("span", {
-                      domProps: { innerHTML: _vm._s(_vm.fmt(_vm.expenses)) }
+                      domProps: {
+                        innerHTML: _vm._s(_vm.fmt(_vm.expenses / 100))
+                      }
                     }),
                     _vm._v(" SEK")
                   ]),
                   _vm._v(" "),
                   _c("th", { staticClass: "minus cash" }, [
                     _c("span", {
-                      domProps: { innerHTML: _vm._s(_vm.fmt(this.balance)) }
+                      domProps: {
+                        innerHTML: _vm._s(_vm.fmt(this.balance / 100))
+                      }
                     }),
                     _vm._v(" SEK")
                   ]),
@@ -42240,7 +42244,9 @@ var render = function() {
                         [
                           _c("span", {
                             domProps: {
-                              innerHTML: _vm._s(_vm.fmt(_vm.committee_.booked))
+                              innerHTML: _vm._s(
+                                _vm.fmt(_vm.committee_.booked / 100)
+                              )
                             }
                           }),
                           _vm._v(" SEK")
@@ -42264,10 +42270,24 @@ var render = function() {
               _vm._v(" "),
               _vm.suggestion
                 ? _c("tbody", [
-                    _vm._m(0),
+                    _c("tr", { staticClass: "space" }, [
+                      _vm.suggestion ? _c("td") : _vm._e(),
+                      _vm._v(" "),
+                      _c("td"),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "accounts" }),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "accounts" }),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "col-income" }),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "col-expenses" }),
+                      _vm._v(" "),
+                      _c("td")
+                    ]),
                     _vm._v(" "),
                     _c("tr", { staticClass: "header" }, [
-                      _c("td"),
+                      _vm.suggestion ? _c("td") : _vm._e(),
                       _vm._v(" "),
                       _c("td", { staticClass: "name" }, [
                         _c("span", {
@@ -42381,28 +42401,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", { staticClass: "space" }, [
-      _c("td"),
-      _vm._v(" "),
-      _c("td"),
-      _vm._v(" "),
-      _c("td", { staticClass: "accounts" }),
-      _vm._v(" "),
-      _c("td", { staticClass: "accounts" }),
-      _vm._v(" "),
-      _c("td", { staticClass: "col-income" }),
-      _vm._v(" "),
-      _c("td", { staticClass: "col-expenses" }),
-      _vm._v(" "),
-      _c("td")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -42662,6 +42661,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['costCentre', 'suggestion', 'booked'],
@@ -42755,10 +42755,26 @@ var render = function() {
   return _c(
     "tbody",
     [
-      _vm._m(0),
+      _c("tr", { staticClass: "space" }, [
+        _vm.suggestion ? _c("td") : _vm._e(),
+        _vm._v(" "),
+        _c("td"),
+        _vm._v(" "),
+        _c("td", { staticClass: "accounts" }),
+        _vm._v(" "),
+        _c("td", { staticClass: "accounts" }),
+        _vm._v(" "),
+        _c("td", { staticClass: "col-income" }),
+        _vm._v(" "),
+        _c("td", { staticClass: "col-expenses" }),
+        _vm._v(" "),
+        _c("td"),
+        _vm._v(" "),
+        _c("td")
+      ]),
       _vm._v(" "),
       _c("tr", { staticClass: "header" }, [
-        _c("td"),
+        _vm.suggestion ? _c("td") : _vm._e(),
         _vm._v(" "),
         _c("td", { staticClass: "name" }, [
           _c("span", { class: { loading: _vm.costCentre.loading } }),
@@ -42892,7 +42908,7 @@ var render = function() {
       _vm._v(" "),
       _vm.suggestion
         ? _c("tr", { staticClass: "vague" }, [
-            _c("td"),
+            _vm.suggestion ? _c("td") : _vm._e(),
             _vm._v(" "),
             _c("td", { staticClass: "description" }, [
               _c("input", {
@@ -43053,28 +43069,7 @@ var render = function() {
     2
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", { staticClass: "space" }, [
-      _c("td", { attrs: { colspan: "2" } }),
-      _vm._v(" "),
-      _c("td", { staticClass: "accounts" }),
-      _vm._v(" "),
-      _c("td", { staticClass: "accounts" }),
-      _vm._v(" "),
-      _c("td", { staticClass: "col-income" }),
-      _vm._v(" "),
-      _c("td", { staticClass: "col-expenses" }),
-      _vm._v(" "),
-      _c("td"),
-      _vm._v(" "),
-      _c("td")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -43309,25 +43304,29 @@ var render = function() {
           }
         },
         [
-          _c("td", { staticStyle: { padding: "2px" } }, [
-            _vm.suggestion
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "delete",
-                    on: { click: _vm.deleteBudgetLine }
-                  },
-                  [
-                    !_vm.data.parent
-                      ? _c("i", {
-                          staticClass: "fa fa-trash",
-                          attrs: { "aria-hidden": "true" }
-                        })
-                      : _c("span", [_vm._v("0")])
-                  ]
-                )
-              : _vm._e()
-          ]),
+          _vm.suggestion
+            ? _c("td", { staticStyle: { padding: "2px" } }, [
+                _vm.suggestion
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "delete",
+                        on: { click: _vm.deleteBudgetLine }
+                      },
+                      [
+                        !_vm.data.valid_from &&
+                        !_vm.data.valid_to &&
+                        !_vm.data.parent
+                          ? _c("i", {
+                              staticClass: "fa fa-trash",
+                              attrs: { "aria-hidden": "true" }
+                            })
+                          : _c("span", [_vm._v("0")])
+                      ]
+                    )
+                  : _vm._e()
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "td",

@@ -24,6 +24,8 @@ Route::get ('/suggestions',                             'SuggestionController@ge
 Route::get ('/suggestions/new',                         'SuggestionController@getNew')       ->middleware('auth');
 Route::post('/suggestions/new',                         'SuggestionController@postNew')      ->middleware('auth');
 Route::get ('/suggestions/{id}',                        'SuggestionController@getShow')      ->middleware('auth');
+Route::get ('/suggestions/{id}/extend',                 'SuggestionController@getExtend')    ->middleware('auth');
+Route::post('/suggestions/{id}/extend',                 'SuggestionController@postExtend')   ->middleware('auth');
 Route::get ('/suggestions/{id}/import',                 'SuggestionController@getImport')    ->middleware('auth');
 Route::post('/suggestions/{id}/import',                 'SuggestionController@postImport')   ->middleware('auth');
 Route::post('/suggestions/{id}/import/complete',        'SuggestionController@postImportComplete')->middleware('auth');
