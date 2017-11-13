@@ -31,7 +31,7 @@ class BudgetController extends BaseController {
 	public function getCommittee($id) {
 		$suggestion = Suggestion::find(session('suggestion'));
 		$suggestion = ($suggestion != null && $suggestion->isImplemented()) ? null : $suggestion;
-		$committee = Committee::findOrFailWithColumns($id);
+		$committee = Committee::findOrFail($id);
 		return view('budget.committee')
 			->with('committee', $committee)
 			->with('suggestion', $suggestion);

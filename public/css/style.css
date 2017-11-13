@@ -392,11 +392,23 @@ table thead th {
 #content #budget table.budget tr td {
 	background: #fff;
 	border-bottom: 1px solid #eee;
+      color: #333;
 }
 
 #content #budget table.budget tr.space td {
-	padding: 7px 0;
+      padding: 7px 0;
       border-bottom: none;
+}
+#content #budget table.budget tr td button.delete {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      padding: 0;
+      background: transparent;
+}
+#content #budget table.budget tr td button.delete:hover {
+      background: #d00;
+      color: #fff;
 }
 
 #content #budget table.budget thead th {
@@ -415,8 +427,9 @@ table thead th {
       background: #fff !important;
 }
 
-#content #budget table.budget tr.deleted {
-	display: none;
+#content #budget table.budget tr.deleted td {
+      color: #555;
+      background: #fcc !important;
 }
 
 #content #budget table.budget td.cash, #content #budget table.budget th.cash {

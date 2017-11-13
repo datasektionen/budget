@@ -6,51 +6,10 @@ use DB;
 class Committee extends Model {
 	protected $fillable = ['name', 'type'];
 	protected $hidden = ['created_at', 'updated_at'];
+	protected $appends = ['cost_centres'];
 
 	public static function all($columns = []) {
 		return parent::select('*')->orderBy('name')->get();
-	}
-
-	public static function allWithColumns() {
-		$committees = self::all();
-		foreach ($committees as $committee) { 
-			$committee->expenses();
-			$committee->income();
-			$committee->costCentres->map(function ($costCentre) {
-				return $costCentre->budgetLines->map(function ($budgetLine) use ($costCentre) {
-					$budgetLine->expenses = $budgetLine->expenses / 100;
-					$budgetLine->income = $budgetLine->income / 100;
-					$budgetLine->deleted = $costCentre->budgetLines->map(function ($x) use ($budgetLine) {
-						return $x->suggestion_id == session('suggestion') && $x->parent == $budgetLine->id;
-					})->reduce(function ($a, $b) {
-						return $a || $b;
-					}, false);
-					return $budgetLine;
-				});
-			});
-		}
-
-		return $committees;
-	}
-
-	public static function findOrFailWithColumns($id) {
-		$committee = parent::findOrFail($id); 
-		$committee->expenses();
-		$committee->income();
-		$committee->costCentres->map(function ($costCentre) {
-			return $costCentre->budgetLines->map(function ($budgetLine) use ($costCentre) {
-				$budgetLine->expenses = $budgetLine->expenses / 100;
-				$budgetLine->income = $budgetLine->income / 100;
-				$budgetLine->deleted = $costCentre->budgetLines->map(function ($x) use ($budgetLine) {
-					return $x->suggestion_id == session('suggestion') && $x->parent == $budgetLine->id;
-				})->reduce(function ($a, $b) {
-					return $a || $b;
-				}, false);
-				return $budgetLine;
-			});
-		});;
-
-		return $committee;
 	}
 
 	public static function committees() {
@@ -73,63 +32,67 @@ class Committee extends Model {
 		return $this->hasMany('App\Models\CostCentre')->with('budgetLines')->orderBy('name');
 	}
 
+	public function getCostCentresAttribute() {
+		return $this->costCentres()->get();
+	}
+
 	public function allCostCentres() {
 		return $this->hasMany('App\Models\CostCentre')->with('allBudgetLines')->orderBy('name');
 	}
 
-	public function external() {
+	public function getExternalAttribute() {
 		return $this->costCentres->sum(function ($x) {
-			return $x->external();
+			return $x->external;
 		});
 	}
 
-	public function internal() {
+	public function getInternalAttribute() {
 		return $this->costCentres->sum(function ($x) {
-			return $x->internal();
+			return $x->internal;
 		});
 	}
 
-	public function expenses() {
+	public function getExpensesAttribute() {
 		return $this->costCentres->sum(function ($x) {
-			return $x->expenses();
+			return $x->expenses;
 		});
 	}
 
-	public function income() {
+	public function getIncomeAttribute() {
 		return $this->costCentres->sum(function ($x) {
-			return $x->income();
+			return $x->income;
 		});
 	}
 
-	public function balance() {
-		return $this->income() - $this->expenses();
+	public function getBalanceAttribute() {
+		return $this->income - $this->expenses;
 	}
 
-	public static function externalAll() {
+	public static function getExternalAllAttribute() {
 		return self::all()->sum(function ($x) {
-			return $x->external();
+			return $x->external;
 		});
 	}
 
-	public static function internalAll() {
+	public static function getInternalAllAttribute() {
 		return self::all()->sum(function ($x) {
-			return $x->internal();
+			return $x->internal;
 		});
 	}
 
 	public static function expensesAll() {
 		return self::all()->sum(function ($x) {
-			return $x->expenses();
+			return $x->expenses;
 		});
 	}
 
 	public static function incomeAll() {
 		return self::all()->sum(function ($x) {
-			return $x->income();
+			return $x->income;
 		});
 	}
 
-	public static function balanceAll() {
+	public static function getBalanceAllAttribute() {
 		return self::incomeAll() - self::expensesAll();
 	}
 

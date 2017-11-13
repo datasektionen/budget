@@ -39,7 +39,14 @@ class ApiBudgetLineController extends BaseController {
 	 */
 	public function create($id, Request $request) {
 		$costCentre = CostCentre::findOrFail($id);
-		$budgetLine = BudgetLine::create(array_merge(['valid_from' => null, 'valid_to' => null, 'name' => '', 'income' => 0, 'expenses' => 0, 'type' => 'internal'], $request->all()) + ['cost_centre_id' => $costCentre->id]);
+		$budgetLine = BudgetLine::create(array_merge([
+			'valid_from' => null, 
+			'valid_to' => null, 
+			'name' => '', 
+			'income' => 0, 
+			'expenses' => 0, 
+			'type' => 'internal'
+		], $request->all()) + ['cost_centre_id' => $costCentre->id]);
 		return response()->json($budgetLine);
 	}
 
@@ -53,6 +60,25 @@ class ApiBudgetLineController extends BaseController {
 	}
 
 	/**
+	 * Deletes a budget line (only if in suggestion).
+	 * @param  integer $id   the id of the budget line to delete
+	 * @return the budget line as JSON
+	 */
+	public function delete(Request $request, $id) {
+		$suggestion = Suggestion::findOrFail($request->suggestion);
+		$oldBudgetLine = BudgetLine::findOrFail($id);
+		if ($oldBudgetLine->parent == null) {
+			$oldBudgetLine->delete();
+			return response()->json(true);
+		}
+		$budgetLine = $oldBudgetLine->copy($suggestion);
+		$budgetLine->income = 0;
+		$budgetLine->expenses = 0;
+		$budgetLine->save();
+		return response()->json($budgetLine);
+	}
+
+	/**
 	 * Edits a budget line. However, a new budget line will instead be created if the current budget line
 	 * is not in the given suggestion. The new line (or old, if none created) is returned.
 	 * @param  integer $id      the id of the budget line to edit
@@ -61,28 +87,17 @@ class ApiBudgetLineController extends BaseController {
 	 */
 	public function edit($id, Request $request) {
 		$suggestion = Suggestion::findOrFail($request->suggestion);
-		$data = $request->all();
-		$oldBudgetLine = BudgetLine::where('id', $id)->with('accounts')->firstOrFail();
+		$oldBudgetLine = BudgetLine::findOrFail($id);
 		if ($oldBudgetLine->equals($request->all())) {
 			return response()->json(null);
 		}
 
 		// Create the new budget line (copy the old) if not already existed in suggestion
-		$budgetLine = BudgetLine::where('id', $id)->where('suggestion_id', $suggestion->id)->first();
-		if ($budgetLine === null) {
-			$budgetLine = $oldBudgetLine->replicate();
-			$budgetLine->parent = intval($id);
-			$budgetLine->suggestion_id = $suggestion->id;
-            $budgetLine->valid_to = null;
-            $budgetLine->valid_from = null;
-			$budgetLine->save();
-			$budgetLine->accounts()->sync($oldBudgetLine->accounts->pluck('id'));
-		}
-
+		$budgetLine = $oldBudgetLine->copy($suggestion);
 		// Update with new data
-		$budgetLine->update($data);
+		$budgetLine->update($request->all());
 
-		return $budgetLine;
+		return response()->json($budgetLine);
 	}
 
 	/**

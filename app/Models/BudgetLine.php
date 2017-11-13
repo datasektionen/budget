@@ -12,6 +12,7 @@ class BudgetLine extends Model {
      */
     protected $hidden = ['updated_at', 'created_at'];   
     protected $fillable = ['name', 'income', 'expenses', 'cost_centre_id', 'type', 'valid_from', 'valid_to', 'suggestion_id', 'parent'];
+    protected $appends = ['accounts', 'deleted', 'balance'];
 
     public static function now() {
         return self::where('valid_from', '<', DB::raw('NOW()'))
@@ -24,6 +25,32 @@ class BudgetLine extends Model {
             })
             ->with('costCentre.committee')
             ->get();
+    }
+
+    public function copy($suggestion) {
+        if ($this->suggestion_id === $suggestion->id) {
+            return $this;
+        }
+
+        $budgetLine = $this->replicate();
+        $budgetLine->parent = $this->id;
+        $budgetLine->suggestion_id = $suggestion->id;
+        $budgetLine->valid_to = null;
+        $budgetLine->valid_from = null;
+        $budgetLine->save();
+        $budgetLine->accounts()->sync($this->accounts->pluck('id'));
+        return $budgetLine;
+    }
+
+    public function getDeletedAttribute() {
+        return BudgetLine::where('cost_centre_id', $this->cost_centre_id)
+            ->where('suggestion_id', session('suggestion'))
+            ->where('parent', $this->id)
+            ->count() > 0;
+    }
+
+    public function getAccountsAttribute() {
+        return $this->accounts()->get();
     }
 
     public function accounts() {
@@ -45,7 +72,7 @@ class BudgetLine extends Model {
         return $this->belongsTo('App\Models\BudgetLine', 'parent');
     }
 
-    public function balance() {
+    public function getBalanceAttribute() {
         return $this->income - $this->expenses;
     }
 

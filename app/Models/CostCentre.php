@@ -6,6 +6,8 @@ use Carbon\Carbon;
 
 class CostCentre extends Model {
 	protected $fillable = ['name', 'committee_id', 'speedledger_id'];
+	protected $appends = ['expenses', 'income', 'external', 'internal'];
+	
 	/**
      * The attributes that should be hidden for arrays.
      *
@@ -67,28 +69,28 @@ class CostCentre extends Model {
 			->orderBy('suggestion_id');
 	}
 
-	public function expenses() {
-		return $this->budgetLines->sum('expenses') * $this->repetitions;
+	public function getExpensesAttribute() {
+		return $this->budgetLines->sum('expenses');
 	}
 
-	public function income() {
-		return $this->budgetLines->sum('income') * $this->repetitions;
+	public function getIncomeAttribute() {
+		return $this->budgetLines->sum('income');
 	}
 
-	public function external() {
+	public function getExternalAttribute() {
 		return $this->budgetLines->filter(function ($x) {
 			return $x->type === 'external';
 		})->sum(function ($x) {
-			return $x->income - $x->expenses;
-		}) * $this->repetitions;
+			return $x->balance;
+		});
 	}
 
-	public function internal() {
+	public function getInternalAttribute() {
 		return $this->budgetLines->filter(function ($x) {
 			return $x->type === 'internal';
 		})->sum(function ($x) {
-			return $x->income - $x->expenses;
-		}) * $this->repetitions;
+			return $x->balance;
+		});
 	}
 
     public function committee() {

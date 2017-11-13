@@ -1,7 +1,7 @@
 <template>
 	<tbody>
 	<tr class="space">
-        <td></td>
+        <td colspan="2"></td>
         <td class="accounts"></td>
         <td class="accounts"></td>
         <td class="col-income"></td>
@@ -10,6 +10,7 @@
         <td></td>
     </tr>
     <tr class="header">
+        <td></td>
         <td class="name">
             <span v-bind:class="{loading:costCentre.loading}"></span>
             <input v-if="suggestion" type="text" placeholder="Namn på kostnadsställe" v-model="costCentre.name" v-on:change="updateCostCentre()">
@@ -19,13 +20,14 @@
             <input v-if="suggestion" type="text" class="speedledger-id" placeholder="Bokf.-id" v-model="costCentre.speedledger_id" v-on:change="updateCostCentre()">
             <span v-else class="input" v-html="costCentre.speedledger_id"></span>
 		</td>
-        <td class="col-income plus cash"><span v-html="fmt(income)"></span> SEK</td>
-        <td class="col-expenses minus cash"><span v-html="fmt(expenses)"></span> SEK</td>
-        <td v-bind:class="{ cash:true, minus: balance < 0, plus: balance > 0}"><span v-html="fmt(balance)"></span> SEK</td>
-        <td v-if="booked" v-bind:class="{ cash:true, plus: balance < costCentre.booked, minus: balance > costCentre.booked}"><span v-html="fmt(costCentre.booked)"></span> SEK</td>
+        <td class="col-income plus cash"><span v-html="fmt(income / 100)"></span> SEK</td>
+        <td class="col-expenses minus cash"><span v-html="fmt(expenses / 100)"></span> SEK</td>
+        <td v-bind:class="{ cash:true, minus: balance < 0, plus: balance > 0}"><span v-html="fmt(balance / 100)"></span> SEK</td>
+        <td v-if="booked" v-bind:class="{ cash:true, plus: balance < costCentre.booked, minus: balance > costCentre.booked}"><span v-html="fmt(costCentre.booked / 100)"></span> SEK</td>
     </tr>
     <budget-line v-for="budget_line in costCentre.budget_lines" :booked="booked" :suggestion="suggestion" :budget-line="budget_line" :key="budget_line.id" v-on:committee="setCommittee"></budget-line>
     <tr class="vague" v-if="suggestion">
+        <td></td>
         <td class="description">
             <input class="name" type="text" v-model="costCentre.new_name" v-on:change="createBudgetLine()" placeholder="Skapa ny...">
         </td>
@@ -99,7 +101,12 @@ export default {
             .then(res => res.json())
             .then(json => {
                 if (json !== false) {
+                    this.costCentre.new_income = 0
+                    this.costCentre.new_expenses = 0
+                    this.costCentre.new_name = ''
+                    this.costCentre.new_type = 'internal'
                 	this.costCentre.loading = false;
+                    this.costCentre.budget_lines.push(json)
           			//this.$emit('committee', json.committee)
                 }
             })
@@ -110,12 +117,12 @@ export default {
     }, 
     computed: {
     	income: function () {
-    		return this.costCentre.repetitions * this.costCentre.budget_lines.map(x => 
+    		return this.costCentre.budget_lines.map(x => 
     			x.deleted ? 0 : x.income
     		).reduce((a, b) => parseInt(a) + parseInt(b), 0)
     	},
     	expenses: function () {
-    		return this.costCentre.repetitions * this.costCentre.budget_lines.map(x => 
+    		return this.costCentre.budget_lines.map(x => 
     			x.deleted ? 0 : x.expenses
     		).reduce((a, b) => parseInt(a) + parseInt(b), 0)
     	},

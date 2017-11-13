@@ -3,6 +3,7 @@
     <table v-bind:class="{budget:true, edit:suggestion}" v-if="committee_">
         <thead id="thead">
             <tr id="tr">
+                <th></th>
                 <th class="name"><span class="input" v-html="committee_.name"></span></th>
                 <th class="accounts"></th>
                 <th class="accounts"></th>
@@ -18,6 +19,7 @@
         <tbody v-if="suggestion">
             <tr class="space">
                 <td></td>
+                <td></td>
                 <td class="accounts"></td>
                 <td class="accounts"></td>
                 <td class="col-income"></td>
@@ -25,6 +27,7 @@
                 <td></td>
             </tr>
             <tr class="header">
+                <td></td>
                 <td class="name">
                     <span v-bind:class="{loading:committee_.loading}"></span>
                     <input type="text" placeholder="Skapa nytt kostnadsställe..." v-model="committee_.new_name" v-on:change="createCostCentre()">

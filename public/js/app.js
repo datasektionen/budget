@@ -42109,6 +42109,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['suggestion', 'committee', 'user', 'booked'],
@@ -42190,6 +42193,8 @@ var render = function() {
             [
               _c("thead", { attrs: { id: "thead" } }, [
                 _c("tr", { attrs: { id: "tr" } }, [
+                  _c("th"),
+                  _vm._v(" "),
                   _c("th", { staticClass: "name" }, [
                     _c("span", {
                       staticClass: "input",
@@ -42262,6 +42267,8 @@ var render = function() {
                     _vm._m(0),
                     _vm._v(" "),
                     _c("tr", { staticClass: "header" }, [
+                      _c("td"),
+                      _vm._v(" "),
                       _c("td", { staticClass: "name" }, [
                         _c("span", {
                           class: { loading: _vm.committee_.loading }
@@ -42382,6 +42389,8 @@ var staticRenderFns = [
     return _c("tr", { staticClass: "space" }, [
       _c("td"),
       _vm._v(" "),
+      _c("td"),
+      _vm._v(" "),
       _c("td", { staticClass: "accounts" }),
       _vm._v(" "),
       _c("td", { staticClass: "accounts" }),
@@ -42471,9 +42480,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         displayValue: {
             get: function get() {
                 if (this.isInputActive) {
-                    return this.value.toString();
+                    return isNaN(this.value) ? 0 : (this.value / 100).toString();
                 } else {
-                    return this.fmt(this.value);
+                    return this.fmt(this.value / 100);
                 }
             },
             set: function set(modifiedValue) {
@@ -42481,6 +42490,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (isNaN(newValue)) {
                     newValue = 0;
                 }
+                newValue *= 100;
                 this.$emit('input', newValue);
             }
         }
@@ -42650,6 +42660,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['costCentre', 'suggestion', 'booked'],
@@ -42697,7 +42709,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return res.json();
             }).then(function (json) {
                 if (json !== false) {
+                    _this2.costCentre.new_income = 0;
+                    _this2.costCentre.new_expenses = 0;
+                    _this2.costCentre.new_name = '';
+                    _this2.costCentre.new_type = 'internal';
                     _this2.costCentre.loading = false;
+                    _this2.costCentre.budget_lines.push(json);
                     //this.$emit('committee', json.committee)
                 }
             });
@@ -42708,14 +42725,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {
         income: function income() {
-            return this.costCentre.repetitions * this.costCentre.budget_lines.map(function (x) {
+            return this.costCentre.budget_lines.map(function (x) {
                 return x.deleted ? 0 : x.income;
             }).reduce(function (a, b) {
                 return parseInt(a) + parseInt(b);
             }, 0);
         },
         expenses: function expenses() {
-            return this.costCentre.repetitions * this.costCentre.budget_lines.map(function (x) {
+            return this.costCentre.budget_lines.map(function (x) {
                 return x.deleted ? 0 : x.expenses;
             }).reduce(function (a, b) {
                 return parseInt(a) + parseInt(b);
@@ -42741,6 +42758,8 @@ var render = function() {
       _vm._m(0),
       _vm._v(" "),
       _c("tr", { staticClass: "header" }, [
+        _c("td"),
+        _vm._v(" "),
         _c("td", { staticClass: "name" }, [
           _c("span", { class: { loading: _vm.costCentre.loading } }),
           _vm._v(" "),
@@ -42811,13 +42830,15 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("td", { staticClass: "col-income plus cash" }, [
-          _c("span", { domProps: { innerHTML: _vm._s(_vm.fmt(_vm.income)) } }),
+          _c("span", {
+            domProps: { innerHTML: _vm._s(_vm.fmt(_vm.income / 100)) }
+          }),
           _vm._v(" SEK")
         ]),
         _vm._v(" "),
         _c("td", { staticClass: "col-expenses minus cash" }, [
           _c("span", {
-            domProps: { innerHTML: _vm._s(_vm.fmt(_vm.expenses)) }
+            domProps: { innerHTML: _vm._s(_vm.fmt(_vm.expenses / 100)) }
           }),
           _vm._v(" SEK")
         ]),
@@ -42829,7 +42850,7 @@ var render = function() {
           },
           [
             _c("span", {
-              domProps: { innerHTML: _vm._s(_vm.fmt(_vm.balance)) }
+              domProps: { innerHTML: _vm._s(_vm.fmt(_vm.balance / 100)) }
             }),
             _vm._v(" SEK")
           ]
@@ -42848,7 +42869,7 @@ var render = function() {
               [
                 _c("span", {
                   domProps: {
-                    innerHTML: _vm._s(_vm.fmt(_vm.costCentre.booked))
+                    innerHTML: _vm._s(_vm.fmt(_vm.costCentre.booked / 100))
                   }
                 }),
                 _vm._v(" SEK")
@@ -42871,6 +42892,8 @@ var render = function() {
       _vm._v(" "),
       _vm.suggestion
         ? _c("tr", { staticClass: "vague" }, [
+            _c("td"),
+            _vm._v(" "),
             _c("td", { staticClass: "description" }, [
               _c("input", {
                 directives: [
@@ -43036,7 +43059,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", { staticClass: "space" }, [
-      _c("td"),
+      _c("td", { attrs: { colspan: "2" } }),
       _vm._v(" "),
       _c("td", { staticClass: "accounts" }),
       _vm._v(" "),
@@ -43153,6 +43176,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['budgetLine', 'suggestion', 'booked'],
@@ -43181,8 +43210,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 },
                 body: JSON.stringify({
                     'suggestion': this.suggestion ? this.suggestion.id : -1,
-                    'income': this.data.income * 100,
-                    'expenses': this.data.expenses * 100,
+                    'income': this.data.income,
+                    'expenses': this.data.expenses,
                     'name': this.data.name,
                     'type': this.budgetLine['type']
                 })
@@ -43191,8 +43220,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (json) {
                 if (json !== false) {
                     _this.loading = false;
-                    console.log('Done');
-                    //this.$emit('committee', json)
+                    console.log('Done', json);
+                    _this.data = json;
+                }
+            });
+        },
+        deleteBudgetLine: function deleteBudgetLine() {
+            var _this2 = this;
+
+            this.loading = true;
+            fetch('/api/budget-lines/' + this.data.id, {
+                method: 'DELETE',
+                credentials: 'same-origin',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'suggestion': this.suggestion ? this.suggestion.id : -1
+                })
+            }).then(function (res) {
+                return res.json();
+            }).then(function (json) {
+                if (json === true) {
+                    _this2.loading = false;
+                    _this2.data.deleted = true;
+                    _this2.data.income = 0;
+                    _this2.data.expenses = 0;
+                    return;
+                }
+                if (json !== false) {
+                    _this2.loading = false;
+                    _this2.data = json;
                 }
             });
         },
@@ -43237,48 +43296,74 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.data
+  return _vm.data && !_vm.data.deleted
     ? _c(
         "tr",
         {
           class: {
+            deleted:
+              _vm.data.deleted ||
+              (_vm.data.income == 0 && _vm.data.expenses == 0),
             suggestion:
-              _vm.suggestion && _vm.data.suggestion_id === _vm.suggestion.id,
-            deleted: _vm.data.deleted
+              _vm.suggestion && _vm.data.suggestion_id === _vm.suggestion.id
           }
         },
         [
-          _c("td", { staticClass: "description" }, [
-            _c("span", { class: { loading: _vm.loading } }),
-            _vm._v(" "),
+          _c("td", { staticStyle: { padding: "2px" } }, [
             _vm.suggestion
-              ? _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.data.name,
-                      expression: "data.name"
-                    }
-                  ],
-                  staticClass: "name",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.data.name },
-                  on: {
-                    change: _vm.updateBudgetLine,
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.data.name = $event.target.value
-                    }
-                  }
-                })
-              : _c("span", {
-                  staticClass: "input",
-                  domProps: { innerHTML: _vm._s(_vm.data.name) }
-                })
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "delete",
+                    on: { click: _vm.deleteBudgetLine }
+                  },
+                  [
+                    !_vm.data.parent
+                      ? _c("i", {
+                          staticClass: "fa fa-trash",
+                          attrs: { "aria-hidden": "true" }
+                        })
+                      : _c("span", [_vm._v("0")])
+                  ]
+                )
+              : _vm._e()
           ]),
+          _vm._v(" "),
+          _c(
+            "td",
+            { staticClass: "description", staticStyle: { width: "400px" } },
+            [
+              _c("span", { class: { loading: _vm.loading } }),
+              _vm._v(" "),
+              _vm.suggestion
+                ? _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.data.name,
+                        expression: "data.name"
+                      }
+                    ],
+                    staticClass: "name",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.data.name },
+                    on: {
+                      change: _vm.updateBudgetLine,
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.data.name = $event.target.value
+                      }
+                    }
+                  })
+                : _c("span", {
+                    staticClass: "input",
+                    domProps: { innerHTML: _vm._s(_vm.data.name) }
+                  })
+            ]
+          ),
           _vm._v(" "),
           _c("td", { staticClass: "accounts" }, [
             _vm.suggestion
@@ -43375,7 +43460,9 @@ var render = function() {
                 )
               : _c("span", {
                   staticClass: "input income",
-                  domProps: { innerHTML: _vm._s(_vm.fmt(_vm.data.income)) }
+                  domProps: {
+                    innerHTML: _vm._s(_vm.fmt(_vm.data.income / 100))
+                  }
                 })
           ]),
           _vm._v(" "),
@@ -43402,7 +43489,9 @@ var render = function() {
                 )
               : _c("span", {
                   staticClass: "input expenses",
-                  domProps: { innerHTML: _vm._s(_vm.fmt(_vm.data.expenses)) }
+                  domProps: {
+                    innerHTML: _vm._s(_vm.fmt(_vm.data.expenses / 100))
+                  }
                 })
           ]),
           _vm._v(" "),
@@ -43419,7 +43508,7 @@ var render = function() {
               _c("span", {
                 domProps: {
                   innerHTML: _vm._s(
-                    _vm.fmt(_vm.data.income - _vm.data.expenses)
+                    _vm.fmt((_vm.data.income - _vm.data.expenses) / 100)
                   )
                 }
               }),
@@ -43441,7 +43530,9 @@ var render = function() {
                 },
                 [
                   _c("span", {
-                    domProps: { innerHTML: _vm._s(_vm.fmt(_vm.data.booked)) }
+                    domProps: {
+                      innerHTML: _vm._s(_vm.fmt(_vm.data.booked / 100))
+                    }
                   }),
                   _vm._v(" SEK\n        ")
                 ]

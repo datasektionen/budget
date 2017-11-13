@@ -14,9 +14,9 @@ export default {
         displayValue: {
             get: function() {
                 if (this.isInputActive) {
-                    return this.value.toString()
+                    return isNaN(this.value) ? 0 : (this.value / 100).toString();
                 } else {
-                    return this.fmt(this.value)
+                    return this.fmt(this.value / 100)
                 }
             },
             set: function(modifiedValue) {
@@ -24,6 +24,7 @@ export default {
                 if (isNaN(newValue)) {
                     newValue = 0
                 }
+                newValue *= 100
                 this.$emit('input', newValue)
             }
         }
