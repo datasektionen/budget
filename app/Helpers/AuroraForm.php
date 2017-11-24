@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Helpers;
+use URL;
+use Request;
 
 use Collective\Html\FormFacade;
 
 class AuroraForm extends FormFacade {
     public static function open($options = []) {
-        return parent::open($options) . '<div class="form">';
+        return parent::open(array_merge(['url' => URL::to(Request::path(), [], env('APP_SECURE', true))], $options)) . '<div class="form">';
     }
 
     private static function surround($element, $label = null, $id = null) {
