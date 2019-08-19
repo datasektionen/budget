@@ -55,7 +55,7 @@
 			            <span class="input">{{ $costCentre['name'] }}</span>
 			        </td>
 			        <td class="accounts speedledger-id" colspan="2">
-			            <span class="input">{{ $costCentre['speedledger_id'] or '' }}</span>
+			            <span class="input">{{ $costCentre['speedledger_id'] ?? '' }}</span>
 					</td>
 			        <td class="col-income plus cash">{{ Fmt::cash($costCentre['income'], 0, 0) }} SEK</td>
 			        <td class="col-expenses minus cash">{{ Fmt::cash($costCentre['expenses'], 0, 0) }} SEK</td>
