@@ -9,9 +9,8 @@
 |
 */
 
-// Denna rad används under mottagningen
-// https://stackoverflow.com/a/13297541
-Route::any ('(.*)',                                     'GeneralController@getWelcome');
+// Denna rad används under mottagningen och skickar allt till startsidan.
+// Kommentera bort alla routes förutom '/' och fuzzyfile
 Route::fallback ('GeneralController@getWelcome');
 Route::get ('/',                                        'GeneralController@getWelcome');
 Route::get ('/fuzzyfile',                               'GeneralController@getFuzzyfile');
