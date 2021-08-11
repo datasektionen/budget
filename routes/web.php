@@ -9,6 +9,9 @@
 |
 */
 
+// Denna rad används under mottagningen
+// https://stackoverflow.com/a/13297541
+Route::any ('(.*)'                            'GeneralController@getWelcome');
 Route::get ('/',                                        'GeneralController@getWelcome');
 Route::get ('/fuzzyfile',                               'GeneralController@getFuzzyfile');
 
