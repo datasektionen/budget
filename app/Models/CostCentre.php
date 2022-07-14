@@ -6,7 +6,7 @@ use Carbon\Carbon;
 
 class CostCentre extends Model {
 	protected $fillable = ['name', 'committee_id', 'speedledger_id'];
-	protected $appends = ['expenses', 'income', 'external', 'internal'];
+	protected $appends = ['expenses', 'income', 'external', 'internal', 'deleted'];
 	
 	/**
      * The attributes that should be hidden for arrays.
@@ -91,6 +91,13 @@ class CostCentre extends Model {
 		})->sum(function ($x) {
 			return $x->balance;
 		});
+	}
+	
+	public function getDeletedAttribute() {
+		if(!strcmp($this->name, '') && $this->expenses === 0 && $this->income === 0)
+			return true;
+		else
+			return false;
 	}
 
     public function committee() {
