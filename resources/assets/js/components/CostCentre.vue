@@ -1,5 +1,5 @@
 <template>
-	<tbody>
+	<tbody v-if="costCentre && !costCentre.deleted">
 	<tr class="space">
         <td v-if="suggestion"></td>
         <td></td>
