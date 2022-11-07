@@ -94,7 +94,7 @@ class CostCentre extends Model {
 	}
 	
 	public function getDeletedAttribute() {
-		if(!strcmp($this->name, '') && $this->expenses === 0 && $this->income === 0)
+		if(strcmp($this->name, '') == 0 && $this->expenses === 0 && $this->income === 0)
 			return true;
 		else
 			return false;
