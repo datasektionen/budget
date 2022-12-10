@@ -24,9 +24,9 @@ class AuthController extends BaseController {
 
 	/**
 	* The logout url. Redirects to main page with success message.
-	* 
-	* @return view the welcome view
-	*/
+	*
+	 * @return view the welcome view
+	 */
 	public function getLogout() {
 		Auth::logout();
 		Session::forget('admin');
@@ -36,9 +36,9 @@ class AuthController extends BaseController {
 
 	/**
 	* The login page. Just redirects to login2.
-	* 
-	* @return redirect to login2.datasektionen.se
-	*/
+	 *
+	 * @return redirect to login2.datasektionen.se
+	 */
 	public function getLogin(Request $request) {
 		return redirect(env('LOGIN_API_URL') . '/login?callback=' . url('/login-complete') . '/');
 	}
@@ -46,20 +46,15 @@ class AuthController extends BaseController {
 	/**
 	* When login is complete, login2 will redirect us here. Now verify the login and ask PLS
 	* for admin privileges. The admin privileges will be stored in Session['admin'] as an array of
-	* pls permissions.
-	* 
-	* @param  string $token the token from login2
-	* @return redirect to main page or intended page
-	*/
+	 * pls permissions.
+	 *
+	 * @param  string $token the token from login2
+	 * @return redirect to main page or intended page
+	 */
 	public function getLoginComplete($token) {
 		// Send get request to login server
 		$client = new Client();
-		$res = $client->request('GET', env('LOGIN_API_URL') . '/verify/' . $token . '.json', [
-			'form_params' => [
-				'format' => 'json',
-				'api_key' => env('LOGIN_API_KEY')
-			]
-		]);
+		$res = $client->request('GET', env('LOGIN_API_URL') . '/verify/' . $token . '?api_key=' . env('LOGIN_API_KEY'));
 
 		// We now have a response. If it is good, parse the json and login user
 		if ($res->getStatusCode() == 200) {

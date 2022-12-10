@@ -92,6 +92,10 @@ class AuroraForm extends FormFacade {
         return '<div class="checkbox">' . parent::checkbox($name, $value, $default, $options + ['id' => $name . $value]) . '<label for="' . $name . $value . '">' . $label . '</label></div>';
     }
 
+    public static function singleCheckbox($name, $value, $label, array $options = [], $default = false) {
+        return self::surround(self::checkbox($name, $value, "", $options, $default), $label);
+    }
+
     public static function checkboxList($name, $label, $list, $default = null) {
         $res = "";
         foreach ($list as $value => $lab) {
