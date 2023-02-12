@@ -45,7 +45,7 @@
 	</tr>
 	@foreach ($others as $other)
 	<tr>
-		<td><a href="/admin/committees/{{ $other->id }}/edit">{{ $other->name }}</a></td>
+	  <td><a href="/admin/committees/{{ $other->id }}/edit">{{ $other->displayName() }}</a></td>
 	</tr>
 	@endforeach
 
@@ -56,7 +56,7 @@
       @if ($committee->inactive)
         <tr>
 	      <td><a href="/admin/committees/{{ $committee->id }}/edit">
-            {!! $committee->name !!}
+            {!! $committee->displayName() !!}
           </a></td>
 	    </tr>
       @endif
