@@ -7,25 +7,25 @@
 <div class="col">
 	<h3>Nämnderna</h3>
 	<ul>
-		@foreach ($committees as $committee)
-		<li><a href="/committees/{{ $committee->id }}">{{ $committee->name }}</a></li>
-		@endforeach
+	  @foreach ($committees as $committee)
+		<li><a href="/committees/{{ $committee->id }}">{!! $committee->displayName() !!}</a></li>
+	  @endforeach
 	</ul>
 </div>
 <div class="col">
 	<h3>Projekten</h3>
 	<ul>
-		@foreach ($projects as $project)
-		<li><a href="/committees/{{ $project->id }}">{{ $project->name }}</a></li>
-		@endforeach
+	  @foreach ($projects as $project)
+		<li><a href="/committees/{{ $project->id }}">{!! $project->displayName() !!}</a></li>
+	  @endforeach
 	</ul>
 </div>
 <div class="col">
 	<h3>Övrigt</h3>
 	<ul>
-		@foreach ($others as $other)
-		<li><a href="/committees/{{ $other->id }}">{{ $other->name }}</a></li>
-		@endforeach
+	  @foreach ($others as $other)
+		<li><a href="/committees/{{ $other->id }}">{!! $other->displayName() !!}</a></li>
+	  @endforeach
 	</ul>
 </div>
 <div class="clear"></div>

@@ -23,8 +23,8 @@ class GeneralController extends BaseController {
 	 */
 	public function getWelcome() {
 		return view('welcome')
-			->with('committees', Committee::committees())
-			->with('projects', Committee::projects())
+			->with('committees', Committee::activeCommittees())
+			->with('projects', Committee::activeProjects())
 			->with('others', Committee::other());
 	}
 

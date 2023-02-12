@@ -21,8 +21,24 @@ class Committee extends Model {
 		return self::select('*')->where('type', 'project')->orderBy('name')->get();
 	}
 
+    public static function active() {
+        return self::select('*')->where('inactive', false)->orderBy('name')->get();
+    }
+
+    public static function activeCommittees() {
+		return self::select('*')->where('type', 'committee')->where('inactive', false)->orderBy('name')->get();
+	}
+
+	public static function activeProjects() {
+		return self::select('*')->where('type', 'project')->where('inactive', false)->orderBy('name')->get();
+	}
+
 	public static function other() {
 		return self::select('*')->where('type', 'other')->orderBy('name')->get();
+	}
+
+    public static function activeOther() {
+		return self::select('*')->where('type', 'other')->where('inactive', false)->orderBy('name')->get();
 	}
 
 	public static function now() {
@@ -96,6 +112,14 @@ class Committee extends Model {
 	public static function getBalanceAllAttribute() {
 		return self::incomeAll() - self::expensesAll();
 	}
+
+    public function displayName() {
+        if (trim($this->name) == "") {
+            return "<i>(namn saknas)</i>";
+        } else {
+            return htmlspecialchars($this->name);
+        }
+    }
 
 	/**
 	 * Runs pretty SQL query to sum all budget lines per committee.
