@@ -18,18 +18,26 @@
 		<td colspan="1">Nämnder</td>
 	</tr>
 	@foreach ($committees as $committee)
-	<tr>
-		<td><a href="/admin/committees/{{ $committee->id }}/edit">{{ $committee->name }}</a></td>
-	</tr>
+      @if (!$committee->inactive)
+	    <tr>
+	      <td><a href="/admin/committees/{{ $committee->id }}/edit">
+            {!! $committee->displayName() !!}
+          </a></td>
+	    </tr>
+      @endif
 	@endforeach
 
 	<tr class="section">
 		<td colspan="1">Projekt</td>
 	</tr>
 	@foreach ($projects as $project)
-	<tr>
-		<td><a href="/admin/committees/{{ $project->id }}/edit">{{ $project->name }}</a></td>
-	</tr>
+      @if (!$project->inactive)
+	    <tr>
+		  <td><a href="/admin/committees/{{ $project->id }}/edit">
+            {!! $project->displayName() !!}
+          </a></td>
+	    </tr>
+      @endif
 	@endforeach
 
 	<tr class="section">
@@ -40,5 +48,28 @@
 		<td><a href="/admin/committees/{{ $other->id }}/edit">{{ $other->name }}</a></td>
 	</tr>
 	@endforeach
+
+    <tr class="section">
+	  <td colspan="1">Inaktiva objekt</td>
+	</tr>
+    @foreach ($committees as $committee)
+      @if ($committee->inactive)
+        <tr>
+	      <td><a href="/admin/committees/{{ $committee->id }}/edit">
+            {!! $committee->name !!}
+          </a></td>
+	    </tr>
+      @endif
+    @endforeach
+
+    @foreach ($projects as $project)
+      @if ($project->inactive)
+	    <tr>
+		  <td><a href="/admin/committees/{{ $project->id }}/edit">
+            {!! $project->displayName() !!}
+          </a></td>
+	    </tr>
+      @endif
+    @endforeach
 </table>
 @endsection
