@@ -85,9 +85,9 @@ export default {
     computed: {
         income: function () {
             return [].concat.apply(
-                [], 
-                this.committee_.cost_centres.map(x => 
-                    x.budget_lines.map(y => 
+                [],
+                this.committee_.cost_centres.map(x =>
+                    x.budget_lines.map(y =>
                         y.deleted ? 0 : (y.income * x.repetitions)
                     )
                 )
@@ -95,9 +95,9 @@ export default {
         },
         expenses: function () {
             return [].concat.apply(
-                [], 
-                this.committee_.cost_centres.map(x => 
-                    x.budget_lines.map(y => 
+                [],
+                this.committee_.cost_centres.map(x =>
+                    x.budget_lines.map(y =>
                         y.deleted ? 0 : (y.expenses * x.repetitions)
                     )
                 )
@@ -106,6 +106,9 @@ export default {
         balance: function () {
             return this.income - this.expenses
         }
+    },
+    mounted: function () {
+        this.committee_.cost_centres = this.committee_.cost_centres.filter(cc => cc.budget_lines.length > 0);
     }
 }
 </script>

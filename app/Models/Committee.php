@@ -134,13 +134,15 @@ class Committee extends Model {
 			    expenses,
 			    internal,
 			    external,
-			    balance
+			    balance,
+                inactive
 			FROM (
 			    SELECT t0.*, t0.income - t0.expenses AS balance FROM (
 			        SELECT
 			            committees.id AS id,
 			            committees.name AS name,
 			            committees.type AS type,
+                        committees.inactive as inactive,
 			            SUM(budget_lines.expenses * cost_centres.repetitions) AS expenses,
 			            SUM(budget_lines.income * cost_centres.repetitions) AS income
 			        FROM committees
@@ -149,6 +151,7 @@ class Committee extends Model {
 			        WHERE (
 			        	budget_lines.valid_from < NOW()
 			        	AND budget_lines.valid_to > NOW()
+                        AND NOT inactive
 			        	AND NOT EXISTS (
 			        		SELECT 1 FROM budget_lines AS bl
 			        		WHERE bl.parent = budget_lines.id AND bl.suggestion_id = :suggid1

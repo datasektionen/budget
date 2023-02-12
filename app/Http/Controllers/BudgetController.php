@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
@@ -32,6 +32,9 @@ class BudgetController extends BaseController {
 		$suggestion = Suggestion::find(session('suggestion'));
 		$suggestion = ($suggestion != null && $suggestion->isImplemented()) ? null : $suggestion;
 		$committee = Committee::findOrFail($id);
+        $committee->costCentres = $committee->costCentres->filter(function ($cc) {
+            return $cc->budgetLines->count() > 0;
+        });
 		return view('budget.committee')
 			->with('committee', $committee)
 			->with('suggestion', $suggestion);
