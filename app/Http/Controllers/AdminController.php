@@ -57,9 +57,10 @@ class AdminController extends BaseController {
 	 * @param  integer $id      id of the committee
 	 * @param  Request $request the request
 	 * @return redirect back when saved
-	 */	
+	 */
 	public function postCommitteesEdit($id, Request $request) {
 		$committee = Committee::findOrFail($id);
+        $committee->inactive = $request->input('inactive', false);
 		$committee->update($request->all());
 		return redirect('admin/committees')->with('success', 'committees.saved');
 	}
@@ -76,7 +77,7 @@ class AdminController extends BaseController {
 	 * Handles the create committee post request.
 	 * @param  Request $request the request
 	 * @return redirect back when saved
-	 */	
+	 */
 	public function postCommitteesNew(Request $request) {
 		Committee::create($request->all());
 		return redirect('admin/committees')->with('success', 'committees.saved');
@@ -105,7 +106,7 @@ class AdminController extends BaseController {
 	 * Handles the edit account post request.
 	 * @param  Request $request the request
 	 * @return redirect back when saved
-	 */	
+	 */
 	public function postAccountsEdit($id, Request $request) {
 		$account = Account::findOrFail($id);
 		$account->update($request->all());
@@ -124,7 +125,7 @@ class AdminController extends BaseController {
 	 * Handles the create account post request.
 	 * @param  Request $request the request
 	 * @return redirect back when saved
-	 */	
+	 */
 	public function postAccountsNew(Request $request) {
 		Account::create($request->all());
 		return redirect('admin/accounts')->with('success', 'accounts.saved');

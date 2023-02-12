@@ -4,9 +4,10 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 
 class Committee extends Model {
-	protected $fillable = ['name', 'type'];
+	protected $fillable = ['name', 'type', 'inactive'];
 	protected $hidden = ['created_at', 'updated_at'];
 	protected $appends = ['cost_centres'];
+    protected $booleans = ['inactive'];
 
 	public static function all($columns = []) {
 		return parent::select('*')->orderBy('name')->get();
@@ -102,30 +103,30 @@ class Committee extends Model {
 	 */
 	public static function overview() {
 		return collect(DB::select("SELECT
-			    t1.id, 
+			    t1.id,
 			    t1.name,
 			    t1.type,
-			    income, 
-			    expenses, 
-			    internal, 
-			    external, 
+			    income,
+			    expenses,
+			    internal,
+			    external,
 			    balance
 			FROM (
 			    SELECT t0.*, t0.income - t0.expenses AS balance FROM (
-			        SELECT 
-			            committees.id AS id, 
+			        SELECT
+			            committees.id AS id,
 			            committees.name AS name,
-			            committees.type AS type, 
+			            committees.type AS type,
 			            SUM(budget_lines.expenses * cost_centres.repetitions) AS expenses,
 			            SUM(budget_lines.income * cost_centres.repetitions) AS income
 			        FROM committees
 			        LEFT JOIN cost_centres ON cost_centres.committee_id = committees.id
 			        LEFT JOIN budget_lines ON budget_lines.cost_centre_id = cost_centres.id
 			        WHERE (
-			        	budget_lines.valid_from < NOW() 
+			        	budget_lines.valid_from < NOW()
 			        	AND budget_lines.valid_to > NOW()
 			        	AND NOT EXISTS (
-			        		SELECT 1 FROM budget_lines AS bl 
+			        		SELECT 1 FROM budget_lines AS bl
 			        		WHERE bl.parent = budget_lines.id AND bl.suggestion_id = :suggid1
 			        	)
 			        )
@@ -136,18 +137,18 @@ class Committee extends Model {
 
 
 			LEFT JOIN (
-			    SELECT 
-			        committees.id AS id, 
+			    SELECT
+			        committees.id AS id,
 			        SUM((budget_lines.income - budget_lines.expenses) * cost_centres.repetitions) AS internal
 			    FROM committees
 			    LEFT JOIN cost_centres ON cost_centres.committee_id = committees.id
 			    LEFT JOIN budget_lines ON budget_lines.cost_centre_id = cost_centres.id
 			    WHERE budget_lines.type = 'internal' AND (
 			    	(
-			        	budget_lines.valid_from < NOW() 
+			        	budget_lines.valid_from < NOW()
 			        	AND budget_lines.valid_to > NOW()
 			        	AND NOT EXISTS (
-			        		SELECT 1 FROM budget_lines AS bl 
+			        		SELECT 1 FROM budget_lines AS bl
 			        		WHERE bl.parent = budget_lines.id AND bl.suggestion_id = :suggid3
 			        	)
 		        	)
@@ -159,18 +160,18 @@ class Committee extends Model {
 
 
 			LEFT JOIN (
-			    SELECT 
-			        committees.id AS id, 
+			    SELECT
+			        committees.id AS id,
 			        SUM((budget_lines.income - budget_lines.expenses) * cost_centres.repetitions) AS external
 			    FROM committees
 			    LEFT JOIN cost_centres ON cost_centres.committee_id = committees.id
 			    LEFT JOIN budget_lines ON budget_lines.cost_centre_id = cost_centres.id
 			    WHERE budget_lines.type = 'external' AND (
 			    	(
-			        	budget_lines.valid_from < NOW() 
+			        	budget_lines.valid_from < NOW()
 			        	AND budget_lines.valid_to > NOW()
 			        	AND NOT EXISTS (
-			        		SELECT 1 FROM budget_lines AS bl 
+			        		SELECT 1 FROM budget_lines AS bl
 			        		WHERE bl.parent = budget_lines.id AND bl.suggestion_id = :suggid5
 			        	)
 		        	)
@@ -187,6 +188,6 @@ class Committee extends Model {
 				'suggid4' => session('suggestion', -1),
 				'suggid5' => session('suggestion', -1),
 				'suggid6' => session('suggestion', -1)
-			]));
+		]));
 	}
 }
