@@ -7,6 +7,6 @@
 
 @section('content')
 <div id="app">
-	<committee :committee="{{ $committee->toJson() }}" :suggestion="{{ empty($suggestion) ? 'null' : $suggestion }}" user="{{ Auth::user() === null ? 'null' : Auth::user() }}"></committee>
+  <committee :committee="{{ $committee->toJson() }}" :suggestion="{{ empty($suggestion) ? 'null' : $suggestion }}" user="{{ Auth::user() === null ? 'null' : Auth::user() }}"></committee>
 </div>
 @endsection
