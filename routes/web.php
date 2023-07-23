@@ -11,34 +11,34 @@
 
 // Denna rad används under mottagningen och skickar allt till startsidan.
 // Kommentera bort alla routes förutom '/' och fuzzyfile
-// Route::fallback ('GeneralController@getWelcome');
+Route::fallback ('GeneralController@getWelcome');
 Route::get ('/',                                        'GeneralController@getWelcome');
 Route::get ('/fuzzyfile',                               'GeneralController@getFuzzyfile');
 
-Route::get('/committees/{id}',                          'BudgetController@getCommittee');
-Route::get('/overview',                                 'BudgetController@getOverview');
+// Route::get('/committees/{id}',                          'BudgetController@getCommittee');
+// Route::get('/overview',                                 'BudgetController@getOverview');
 
-Route::get ('/follow-up',                               'FollowUpController@getIndex');
-Route::post('/follow-up',                               'FollowUpController@postImport');
-Route::get ('/follow-up/{id}',                          'FollowUpController@getShow');
-Route::get ('/follow-up/{id}/committees/{committeeId}', 'FollowUpController@getShowCommittee');
+// Route::get ('/follow-up',                               'FollowUpController@getIndex');
+// Route::post('/follow-up',                               'FollowUpController@postImport');
+// Route::get ('/follow-up/{id}',                          'FollowUpController@getShow');
+// Route::get ('/follow-up/{id}/committees/{committeeId}', 'FollowUpController@getShowCommittee');
 
-Route::get ('/suggestions',                             'SuggestionController@getList')      ->middleware('auth');
-Route::get ('/suggestions/new',                         'SuggestionController@getNew')       ->middleware('auth');
-Route::post('/suggestions/new',                         'SuggestionController@postNew')      ->middleware('auth');
-Route::get ('/suggestions/{id}',                        'SuggestionController@getShow')      ->middleware('auth');
-Route::get ('/suggestions/{id}/extend',                 'SuggestionController@getExtend')    ->middleware('auth');
-Route::post('/suggestions/{id}/extend',                 'SuggestionController@postExtend')   ->middleware('auth');
-Route::get ('/suggestions/{id}/import',                 'SuggestionController@getImport')    ->middleware('auth');
-Route::post('/suggestions/{id}/import',                 'SuggestionController@postImport')   ->middleware('auth');
-Route::post('/suggestions/{id}/import/complete',        'SuggestionController@postImportComplete')->middleware('auth');
-Route::get ('/suggestions/{id}/share',                  'SuggestionController@getShare')     ->middleware('auth');
-Route::post('/suggestions/{id}/share',                  'SuggestionController@postShare')    ->middleware('auth');
-Route::get ('/suggestions/{id}/edit',                   'SuggestionController@getEdit')      ->middleware('auth');
-Route::get ('/suggestions/{id}/done',                   'SuggestionController@getDone')      ->middleware('auth');
-Route::get ('/suggestions/{id}/implement',              'SuggestionController@getImplement') ->middleware('auth');
-Route::get ('/suggestions/{id}/publish',                'SuggestionController@getPublish')   ->middleware('auth');
-Route::get ('/suggestions/{id}/pdf',                    'SuggestionController@getPdf')       ->middleware('auth');
+// Route::get ('/suggestions',                             'SuggestionController@getList')      ->middleware('auth');
+// Route::get ('/suggestions/new',                         'SuggestionController@getNew')       ->middleware('auth');
+// Route::post('/suggestions/new',                         'SuggestionController@postNew')      ->middleware('auth');
+// Route::get ('/suggestions/{id}',                        'SuggestionController@getShow')      ->middleware('auth');
+// Route::get ('/suggestions/{id}/extend',                 'SuggestionController@getExtend')    ->middleware('auth');
+// Route::post('/suggestions/{id}/extend',                 'SuggestionController@postExtend')   ->middleware('auth');
+// Route::get ('/suggestions/{id}/import',                 'SuggestionController@getImport')    ->middleware('auth');
+// Route::post('/suggestions/{id}/import',                 'SuggestionController@postImport')   ->middleware('auth');
+// Route::post('/suggestions/{id}/import/complete',        'SuggestionController@postImportComplete')->middleware('auth');
+// Route::get ('/suggestions/{id}/share',                  'SuggestionController@getShare')     ->middleware('auth');
+// Route::post('/suggestions/{id}/share',                  'SuggestionController@postShare')    ->middleware('auth');
+// Route::get ('/suggestions/{id}/edit',                   'SuggestionController@getEdit')      ->middleware('auth');
+// Route::get ('/suggestions/{id}/done',                   'SuggestionController@getDone')      ->middleware('auth');
+// Route::get ('/suggestions/{id}/implement',              'SuggestionController@getImplement') ->middleware('auth');
+// Route::get ('/suggestions/{id}/publish',                'SuggestionController@getPublish')   ->middleware('auth');
+// Route::get ('/suggestions/{id}/pdf',                    'SuggestionController@getPdf')       ->middleware('auth');
 
 /*
 | Authentication
