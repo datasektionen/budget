@@ -15,13 +15,13 @@ Route::fallback ('GeneralController@getWelcome');
 Route::get ('/',                                        'GeneralController@getWelcome');
 Route::get ('/fuzzyfile',                               'GeneralController@getFuzzyfile');
 
-// Route::get('/committees/{id}',                          'BudgetController@getCommittee');
-// Route::get('/overview',                                 'BudgetController@getOverview');
+Route::get('/committees/{id}',                          'BudgetController@getCommittee');
+Route::get('/overview',                                 'BudgetController@getOverview');
 
-// Route::get ('/follow-up',                               'FollowUpController@getIndex');
-// Route::post('/follow-up',                               'FollowUpController@postImport');
-// Route::get ('/follow-up/{id}',                          'FollowUpController@getShow');
-// Route::get ('/follow-up/{id}/committees/{committeeId}', 'FollowUpController@getShowCommittee');
+Route::get ('/follow-up',                               'FollowUpController@getIndex');
+Route::post('/follow-up',                               'FollowUpController@postImport');
+Route::get ('/follow-up/{id}',                          'FollowUpController@getShow');
+Route::get ('/follow-up/{id}/committees/{committeeId}', 'FollowUpController@getShowCommittee');
 
 Route::get ('/suggestions',                             'SuggestionController@getList')      ->middleware('auth');
 Route::get ('/suggestions/new',                         'SuggestionController@getNew')       ->middleware('auth');
