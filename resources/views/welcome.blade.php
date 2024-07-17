@@ -3,6 +3,7 @@
 @section('title', 'Datasektionens budgetsystem')
 
 @section('content')
+<p>Varning: Budgeten på denna webbsida kan vara utdaterad och ej längre korrekt. Kolla med din nämnds ordförande eller ekonomiansvarig för att få en uppdaterad version.</p>
 <p>Budgeten styr sektionens arbete. Varje nämnd och projekt har en egen budget. Centralt är det primära resultatställe där allmänna utgifter hamnar. Därtill kan pengar användas efter till exempel SM-beslut. Välj en nämnd, projekt eller övrigt resultatställe nedan för att se dess detaljbudget. Du kan också välja att <a href="/overview">visa rambudgeten för alltsammans</a>.</p>
 <div class="col">
 	<h3>Nämnderna</h3>
